@@ -54,6 +54,7 @@ My blog 我的博客：[blog](http://marktony.github.io/)
 
 ## 支持我的工作
 如果你认为我值得获得一定的报酬，请使用微信扫描下面的二维码向我捐赠。
+
 ![Wechat_QRCode](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/wechat_qrcode.png)
 
 ## 许可证
