@@ -41,10 +41,20 @@ Name | Introduction
 [Android Support Libraries](https://developer.android.com/topic/libraries/support-library/index.html) | The Android Support Library offers a number of features that are not built into the framework. These libraries offer backward-compatible versions of new features, provide useful UI elements that are not included in the framework, and provide a range of utilities that apps can draw on.
 [Gson](https://github.com/google/gson) | A Java serialization/deserialization library that can convert Java Objects into JSON and back.
 
+## Other repository of mine
++ [Zhihu Zhuanlan](https://github.com/marktony/zhuanlan) -- Analysis of Zhihu Zhuanlan's API + Unofficial Android App of Zhihu Zhuanlan
++ [Fanfou Handpick](https://github.com/marktony/FanfouHandpick) -- A Fanfou Handpick Client Developed by Kotlin
++ [Translator](https://github.com/marktony/Translator) -- A translation App Based on Android
++ [Reader](https://github.com/marktony/Reader) -- MVP + Volley + Gson, the content comes from Qiubai, Jiandan and Neihanduanzi
+
 ## Contact Me
 marktonymengyi#gmail.com (replace '#' with '@')
 
 My blog：[blog](http://marktony.github.io/)
+
+## Support Me
+If you think, I deserve to get paid for my work, you can leave me a little money here by scanning the QR code through Wechat.
+![Wechat_QRCode](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/screenshot.png)
 
 ## License
 

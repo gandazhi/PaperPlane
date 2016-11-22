@@ -41,10 +41,20 @@
 [Android Support Libraries](https://developer.android.com/topic/libraries/support-library/index.html) | The Android Support Library offers a number of features that are not built into the framework. These libraries offer backward-compatible versions of new features, provide useful UI elements that are not included in the framework, and provide a range of utilities that apps can draw on.
 [Gson](https://github.com/google/gson) | A Java serialization/deserialization library that can convert Java Objects into JSON and back.
 
+## 我的其他项目
++ [知乎专栏](https://github.com/marktony/zhuanlan) -- 知乎专栏API分析 + 第三方知乎专栏Android客户端
++ [饭否精选](https://github.com/marktony/FanfouHandpick) -- 使用Kotlin开发的饭否精选客户端
++ [简单翻译](https://github.com/marktony/Translator) -- 翻译App
++ [Reader](https://github.com/marktony/Reader) -- MVP + Volley + Gson, 内容包含了糗事百科，煎蛋和内涵段子
+
 ## 联系我
 marktonymengyi#gmail.com (替换#为@)
 
 My blog 我的博客：[blog](http://marktony.github.io/)
+
+## 支持我的工作
+如果你认为我值得获得一定的报酬，请使用微信扫描下面的二维码向我捐赠。
+![Wechat_QRCode](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/screenshot.png)
 
 ## 许可证
 
