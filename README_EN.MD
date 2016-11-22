@@ -54,7 +54,7 @@ My blog：[blog](http://marktony.github.io/)
 
 ## Support Me
 If you think, I deserve to get paid for my work, you can leave me a little money here by scanning the QR code through Wechat.
-![Wechat_QRCode](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/screenshot.png)
+![Wechat_QRCode](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/wechat_qrcode.png)
 
 ## License
 
