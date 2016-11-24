@@ -128,6 +128,12 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                 view.stopLoading();
                 view.showResults(list);
 
+                //当第一次安装应用，并且没有打开网络时
+                //此时既无法网络加载，也无法本地加载
+                if (list.isEmpty()) {
+                    view.showNetworkError();
+                }
+
             } else {
                 view.showNetworkError();
             }
