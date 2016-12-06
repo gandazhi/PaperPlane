@@ -4,7 +4,7 @@
     <string-array name="page_titles">
         <item>Zhihu Daily</item>
         <item>Guokr Handpick</item>
-        <item>Douban Daily</item>
+        <item>Douban Moment</item>
     </string-array>
 
 </resources>

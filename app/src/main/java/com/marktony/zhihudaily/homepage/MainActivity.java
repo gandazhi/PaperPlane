@@ -27,7 +27,8 @@ import com.marktony.zhihudaily.settings.SettingsPreferenceActivity;
 import com.marktony.zhihudaily.util.Theme;
 
 
-public class MainActivity extends AppCompatActivity implements MainFragment.OnViewPagerCreated {
+public class MainActivity extends AppCompatActivity
+        implements MainFragment.OnViewPagerCreated {
 
     private ViewGroup viewGroup;
     private ImageView imageView;
@@ -43,14 +44,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
 
         Theme.setStatusBarColor(this);
 
-        addFragment();
-        initViews();
+        //addFragment();
+        // initViews();
 
         startService(new Intent(this, CacheService.class));
 
     }
 
-    private void addFragment() {
+    /*private void addFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragment != null){
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
         fragmentTransaction.add(R.id.layout_fragment, fragment);
         fragmentTransaction.commit();
 
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,9 +76,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
         int id = item.getItemId();
 
         if (id == R.id.action_change_theme) {
-            changeTheme();
+            /*changeTheme();
             save();
-            Theme.setStatusBarColor(this);
+            Theme.setStatusBarColor(this);*/
 
         } else if (id == R.id.action_settings) {
             startActivity(new Intent(MainActivity.this,SettingsPreferenceActivity.class));
@@ -88,19 +89,19 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
         return true;
     }
 
-    private void initViews() {
+    /*private void initViews() {
         viewGroup = (ViewGroup) findViewById(R.id.layout_fragment);
-        imageView = (ImageView) findViewById(R.id.imageview);
-    }
+        imageView = (ImageView) findViewById(R.id.imageView);
+    }*/
 
     /**
      * 改变主题
      */
-    private void changeTheme(){
+    /*private void changeTheme(){
         setDrawableCahe();
         setTheme();
         getState();
-    }
+    }*/
 
     // 屏幕方向改变时调用的方法，拦截屏幕切换
     // manifest文件中给activity设置了相应的参数
@@ -154,9 +155,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnVi
     /**
      * 获取当前fragment状态
      */
-    public void getState() {
+   /* public void getState() {
         addFragment();
-    }
+    }*/
 
     /**
      * ImageView的动画
