@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">纸飞机</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <!--常用-->
     <string name="positive">确定</string>
     <string name="negative">取消</string>

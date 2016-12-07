@@ -2,13 +2,18 @@ package com.marktony.zhihudaily.homepage;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,9 +30,9 @@ public class MainFragment extends Fragment {
 
     private MainPagerAdapter adapter;
 
-    private TabLayout tabLayout;
+    // private TabLayout tabLayout;
 
-    private OnViewPagerCreated mOnViewPagerCreated;
+    // private OnViewPagerCreated mOnViewPagerCreated;
 
     public MainFragment() {
 
@@ -40,7 +45,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         this.context = context;
-        mOnViewPagerCreated = (OnViewPagerCreated) context;
+        /*mOnViewPagerCreated = (OnViewPagerCreated) context;*/
         super.onAttach(context);
     }
 
@@ -57,7 +62,7 @@ public class MainFragment extends Fragment {
         initViews(view);
 
         // 当tab layout位置为果壳精选时，隐藏fab
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        /*tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
@@ -79,9 +84,9 @@ public class MainFragment extends Fragment {
 
             }
 
-        });
+        });*/
 
-        mOnViewPagerCreated.viewPagerCreated();
+        // mOnViewPagerCreated.viewPagerCreated();
         return view;
     }
 
@@ -89,16 +94,16 @@ public class MainFragment extends Fragment {
     private void initViews(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((MainActivity)context).setSupportActionBar(toolbar);
-        tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
+       //  tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         viewPager.setOffscreenPageLimit(3);
         adapter = new MainPagerAdapter(getChildFragmentManager(), context);
         viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+        // tabLayout.setupWithViewPager(viewPager);
     }
 
-    public interface OnViewPagerCreated {
+    /*public interface OnViewPagerCreated {
         void viewPagerCreated();
-    }
+    }*/
 
 }

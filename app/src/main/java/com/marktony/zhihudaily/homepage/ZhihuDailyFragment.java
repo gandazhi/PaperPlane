@@ -38,7 +38,7 @@ public class ZhihuDailyFragment extends Fragment
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refresh;
     private FloatingActionButton fab;
-    private TabLayout tabLayout;
+    // private TabLayout tabLayout;
 
     private ZhihuDailyNewsAdapter adapter;
 
@@ -123,7 +123,7 @@ public class ZhihuDailyFragment extends Fragment
         // 尝试将监听放置到main pager adapter中，这样做会引起fragment中recycler view和fab的监听冲突
         // fab并不能获取到点击事件
         // 根据tab layout的位置选择显示不同的dialog
-        fab.setOnClickListener(new View.OnClickListener() {
+        /*fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tabLayout.getSelectedTabPosition() == 0) {
@@ -134,7 +134,7 @@ public class ZhihuDailyFragment extends Fragment
                     ad.getDoubanFragment().showPickDialog();
                 }
             }
-        });
+        });*/
 
         return view;
     }
@@ -171,7 +171,7 @@ public class ZhihuDailyFragment extends Fragment
         //设置下拉刷新按钮的大小
         refresh.setSize(SwipeRefreshLayout.DEFAULT);
 
-        tabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
+        // tabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
 
     }
 

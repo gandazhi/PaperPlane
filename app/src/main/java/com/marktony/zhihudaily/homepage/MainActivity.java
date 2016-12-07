@@ -9,9 +9,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,11 +33,15 @@ import com.marktony.zhihudaily.util.Theme;
 
 
 public class MainActivity extends AppCompatActivity
-        implements MainFragment.OnViewPagerCreated {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private ViewGroup viewGroup;
     private ImageView imageView;
     private MainFragment fragment;
+
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
+    private NavigationView navigationView;
 
     private final long ANIMATION_TIME = 1000;
 
@@ -42,16 +51,16 @@ public class MainActivity extends AppCompatActivity
         setTheme(App.getThemeResources());
         setContentView(R.layout.activity_main);
 
-        Theme.setStatusBarColor(this);
+        // Theme.setStatusBarColor(this);
 
-        //addFragment();
-        // initViews();
+        addFragment();
+        initViews();
 
         startService(new Intent(this, CacheService.class));
 
     }
 
-    /*private void addFragment() {
+    private void addFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (fragment != null){
@@ -61,7 +70,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.add(R.id.layout_fragment, fragment);
         fragmentTransaction.commit();
 
-    }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -89,10 +98,20 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    /*private void initViews() {
-        viewGroup = (ViewGroup) findViewById(R.id.layout_fragment);
-        imageView = (ImageView) findViewById(R.id.imageView);
-    }*/
+    private void initViews() {
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+    }
 
     /**
      * 改变主题
@@ -113,7 +132,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * 获取布局的DrawableCache给ImageView覆盖Fragment
      */
-    private void setDrawableCahe() {
+    /*private void setDrawableCahe() {
         //设置false清除缓存
         viewGroup.setDrawingCacheEnabled(false);
         //设置true之后可以获取Bitmap
@@ -121,12 +140,12 @@ public class MainActivity extends AppCompatActivity
         imageView.setImageBitmap(viewGroup.getDrawingCache());
         imageView.setAlpha(1f);
         imageView.setVisibility(View.VISIBLE);
-    }
+    }*/
 
     /**
      * 设置主题
      */
-    private void setTheme() {
+    /*private void setTheme() {
         TypedValue typedValue = new TypedValue();
         getTheme().resolveAttribute(R.attr.my_theme, typedValue, true);
         switch (typedValue.data){
@@ -140,17 +159,17 @@ public class MainActivity extends AppCompatActivity
                 setTheme(Theme.RESOURCES_DAY_THEME);
                 break;
         }
-    }
+    }*/
 
     /**
      * 主题选择的本地存储
      */
-    private void save() {
+    /*private void save() {
         SharedPreferences sharedPreferences = getSharedPreferences("user_settings",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("theme", App.getThemeValue());
         editor.commit();
-    }
+    }*/
 
     /**
      * 获取当前fragment状态
@@ -159,11 +178,8 @@ public class MainActivity extends AppCompatActivity
         addFragment();
     }*/
 
-    /**
-     * ImageView的动画
-     * @param view
-     */
-    private void startAnimation(final View view) {
+
+    /*private void startAnimation(final View view) {
         ValueAnimator animator = ValueAnimator.ofFloat(1f).setDuration(ANIMATION_TIME);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -180,12 +196,12 @@ public class MainActivity extends AppCompatActivity
             }
         });
         animator.start();
-    }
+    }*/
 
-    @Override
+   /* @Override
     public void viewPagerCreated() {
-        startAnimation(imageView);
-    }
+        // startAnimation(imageView);
+    }*/
 
     @Override
     protected void onDestroy() {
@@ -198,4 +214,8 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
 }

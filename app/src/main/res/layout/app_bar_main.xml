@@ -22,6 +22,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/fragment_main" />
+    <include layout="@layout/fragment_main"
+        android:id="@+id/layout_fragment"/>
 
 </android.support.design.widget.CoordinatorLayout>
