@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Paper Plane</string>
 
+    <string name="nav_home">Home</string>
+    <string name="nav_bookmarks">Bookmarks</string>
+
     <!--general-->
     <string name="positive">@android:string/ok</string>
     <string name="negative">@android:string/cancel</string>

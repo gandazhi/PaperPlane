@@ -37,7 +37,7 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<ZhihuDailyNewsAd
 
     @Override
     public LatestItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.zhihu_item_layout,parent,false);
+        View view = inflater.inflate(R.layout.zhihu_post_layout,parent,false);
         return new LatestItemViewHolder(view,mListener);
     }
 

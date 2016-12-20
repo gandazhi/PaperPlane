@@ -4,6 +4,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="nav_home">首页</string>
+    <string name="nav_bookmarks">收藏</string>
+
     <!--常用-->
     <string name="positive">确定</string>
     <string name="negative">取消</string>

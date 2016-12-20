@@ -8,10 +8,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <include
-        layout="@layout/app_bar_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/app_bar_main" />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
@@ -23,21 +20,3 @@
         app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
-<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".homepage.MainActivity">
-
-    <RelativeLayout
-        android:id="@+id/layout_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"/>
-
-</FrameLayout>-->

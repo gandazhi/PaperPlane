@@ -1,50 +1,36 @@
 package com.marktony.zhihudaily.homepage;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.about.AboutPreferenceActivity;
 import com.marktony.zhihudaily.app.App;
+import com.marktony.zhihudaily.bookmarks.BookmarksFragment;
 import com.marktony.zhihudaily.service.CacheService;
-import com.marktony.zhihudaily.settings.SettingsPreferenceActivity;
-import com.marktony.zhihudaily.util.Theme;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
-    private ViewGroup viewGroup;
-    private ImageView imageView;
-    private MainFragment fragment;
+    private MainFragment mainFragment;
+    private BookmarksFragment bookmarksFragment;
 
-    private DrawerLayout drawer;
-    private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
+    private DrawerLayout drawer;
+    private Toolbar toolbar;
 
-    private final long ANIMATION_TIME = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,63 +40,63 @@ public class MainActivity extends AppCompatActivity
 
         // Theme.setStatusBarColor(this);
 
-        addFragment();
         initViews();
+
+        navigationView.setCheckedItem(R.id.nav_home);
+
+        mainFragment = MainFragment.newInstance();
+        bookmarksFragment = BookmarksFragment.newInstance();
+
+        showMainFragment();
 
         startService(new Intent(this, CacheService.class));
 
     }
 
-    private void addFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (fragment != null){
-            fragmentTransaction.remove(fragment);
-        }
-        fragment = MainFragment.newInstance();
-        fragmentTransaction.add(R.id.layout_fragment, fragment);
-        fragmentTransaction.commit();
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.action_change_theme) {
-            /*changeTheme();
-            save();
-            Theme.setStatusBarColor(this);*/
-
-        } else if (id == R.id.action_settings) {
-            startActivity(new Intent(MainActivity.this,SettingsPreferenceActivity.class));
-        } else if (id == R.id.action_about) {
-            startActivity(new Intent(MainActivity.this,AboutPreferenceActivity.class));
-        }
-
-        return true;
-    }
-
     private void initViews() {
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,
+                drawer,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void showMainFragment() {
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        if (!mainFragment.isAdded()) {
+            fragmentTransaction.add(R.id.layout_fragment, mainFragment, "MainFragment");
+        }
+        fragmentTransaction.show(mainFragment);
+        fragmentTransaction.hide(bookmarksFragment);
+        fragmentTransaction.commit();
+
+        toolbar.setTitle(getResources().getString(R.string.app_name));
+
+    }
+
+    private void showBookmarksFragment() {
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        if (!bookmarksFragment.isAdded()) {
+            fragmentTransaction.add(R.id.layout_fragment, bookmarksFragment, "BookmarksFragment");
+        }
+        fragmentTransaction.show(bookmarksFragment);
+        fragmentTransaction.hide(mainFragment);
+        fragmentTransaction.commit();
+
+        toolbar.setTitle(getResources().getString(R.string.nav_bookmarks));
 
     }
 
@@ -176,7 +162,7 @@ public class MainActivity extends AppCompatActivity
      * 获取当前fragment状态
      */
    /* public void getState() {
-        addFragment();
+        showMainFragment();
     }*/
 
 
@@ -217,6 +203,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        int id = item.getItemId();
+        if (id == R.id.nav_home) {
+            showMainFragment();
+        } else if (id == R.id.nav_bookmarks) {
+            showBookmarksFragment();
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
+
 }
