@@ -9,7 +9,6 @@
     android:paddingRight="8dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    android:background="?attr/viewBackgroundCustomized"
     android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
@@ -36,7 +35,6 @@
             android:textSize="13sp"
             android:gravity="center_vertical"
             android:maxLines="2"
-            android:textColor="?attr/textColorCustomized"
             android:ellipsize="end" />
 
     </LinearLayout>

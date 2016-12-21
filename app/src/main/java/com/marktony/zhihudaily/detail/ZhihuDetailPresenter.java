@@ -67,7 +67,11 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
     }
 
     @Override
-    public void share() {
+    public void shareAsText() {
+        if (story == null) {
+            view.showShareError();
+            return;
+        }
         try {
             Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
             String shareText = story.getTitle() + " " +  story.getShare_url() + "\t\t\t" + activity.getString(R.string.share_extra);
@@ -158,12 +162,35 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
         ClipboardManager manager = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);
         ClipData clipData = null;
         if (Build.VERSION.SDK_INT >= 24) {
-            clipData = ClipData.newPlainText("text", Html.fromHtml(story.getBody(), Html.FROM_HTML_MODE_LEGACY).toString());
+            clipData = ClipData.newPlainText("text", Html.fromHtml(story.getTitle() + " " + story.getBody(), Html.FROM_HTML_MODE_LEGACY).toString());
         } else {
-            clipData = ClipData.newPlainText("text", Html.fromHtml(story.getBody()).toString());
+            clipData = ClipData.newPlainText("text", Html.fromHtml(story.getTitle() + " " + story.getBody()).toString());
         }
         manager.setPrimaryClip(clipData);
         view.showTextCopied();
+    }
+
+    @Override
+    public void copyLink() {
+        if (story == null) {
+            view.showCopyTextError();
+            return;
+        }
+        ClipboardManager manager = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);
+        ClipData clipData = null;
+        if (Build.VERSION.SDK_INT >= 24) {
+            clipData = ClipData.newPlainText("text", Html.fromHtml(story.getShare_url(), Html.FROM_HTML_MODE_LEGACY).toString());
+        } else {
+            clipData = ClipData.newPlainText("text", Html.fromHtml(story.getShare_url()).toString());
+        }
+        manager.setPrimaryClip(clipData);
+        view.showTextCopied();
+
+    }
+
+    @Override
+    public void addToOrDeleteFromBookmarks() {
+
     }
 
     @Override

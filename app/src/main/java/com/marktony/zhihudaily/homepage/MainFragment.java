@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,15 +28,9 @@ public class MainFragment extends Fragment {
 
     private Context context;
 
-    private MainPagerAdapter adapter;
-
     private TabLayout tabLayout;
 
-    // private OnViewPagerCreated mOnViewPagerCreated;
-
-    public MainFragment() {
-
-    }
+    public MainFragment() {}
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -47,7 +39,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         this.context = context;
-        /*mOnViewPagerCreated = (OnViewPagerCreated) context;*/
         super.onAttach(context);
     }
 
@@ -90,20 +81,17 @@ public class MainFragment extends Fragment {
 
         });
 
-        // mOnViewPagerCreated.viewPagerCreated();
         return view;
     }
 
 
     private void initViews(View view) {
 
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        ((MainActivity)context).setSupportActionBar(toolbar);
         tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         viewPager.setOffscreenPageLimit(3);
 
-        adapter = new MainPagerAdapter(getChildFragmentManager(), context);
+        MainPagerAdapter adapter = new MainPagerAdapter(getChildFragmentManager(), context);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -119,21 +107,10 @@ public class MainFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_change_theme) {
-            /*changeTheme();
-            save();
-            Theme.setStatusBarColor(this);*/
+        if (id == R.id.action_random) {
 
-        } else if (id == R.id.action_settings) {
-            startActivity(new Intent(getActivity(),SettingsPreferenceActivity.class));
-        } else if (id == R.id.action_about) {
-            startActivity(new Intent(getActivity(),AboutPreferenceActivity.class));
         }
         return true;
     }
-
-    /*public interface OnViewPagerCreated {
-        void viewPagerCreated();
-    }*/
 
 }

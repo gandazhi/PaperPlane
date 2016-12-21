@@ -4,8 +4,8 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -35,7 +35,6 @@ public class ZhihuDetailFragment extends Fragment
 
     private ImageView imageView;
     private WebView webView;
-    private FloatingActionButton fab;
     private TextView textView;
     private CollapsingToolbarLayout toolbarLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -64,13 +63,6 @@ public class ZhihuDetailFragment extends Fragment
 
         presenter.start();
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.share();
-            }
-        });
-
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -83,7 +75,7 @@ public class ZhihuDetailFragment extends Fragment
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_read, menu);
+        inflater.inflate(R.menu.menu_more, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -92,12 +84,69 @@ public class ZhihuDetailFragment extends Fragment
         int id = item.getItemId();
         if (id == android.R.id.home) {
             getActivity().onBackPressed();
-        } else if (id == R.id.action_open_in_browser) {
-            presenter.openInBrowser();
-        } else if (id == R.id.action_copy_text) {
-            presenter.copyText();
+        } else if (id == R.id.action_more) {
+
+            final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
+
+            View view = getActivity().getLayoutInflater().inflate(R.layout.reading_actions_sheet, null);
+
+            // add to bookmarks or delete from bookmarks
+            view.findViewById(R.id.layout_bookmark).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.addToOrDeleteFromBookmarks();
+                }
+            });
+
+            // copy the article's link to clipboard
+            view.findViewById(R.id.layout_copy_link).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.copyLink();
+                }
+            });
+
+            // open the link in browser
+            view.findViewById(R.id.layout_open_in_browser).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.openInBrowser();
+                }
+            });
+
+            // copy the text content to clipboard
+            view.findViewById(R.id.layout_copy_text).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.copyText();
+                }
+            });
+
+            // shareAsText the content as text
+            view.findViewById(R.id.layout_share_text).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.shareAsText();
+                }
+            });
+
+            // shareAsText with image and text. Use for wechat moment or other apps
+            view.findViewById(R.id.layout_share_image).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.setContentView(view);
+            dialog.show();
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override
@@ -122,7 +171,6 @@ public class ZhihuDetailFragment extends Fragment
 
         webView = (WebView) view.findViewById(R.id.web_view);
         webView.setScrollbarFadingEnabled(true);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
         AppCompatActivity activity = (ZhihuDetailActivity) getActivity();
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -149,6 +197,7 @@ public class ZhihuDetailFragment extends Fragment
             }
 
         });
+
     }
 
     @Override
@@ -163,7 +212,7 @@ public class ZhihuDetailFragment extends Fragment
 
     @Override
     public void showLoadError() {
-        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(imageView,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -175,7 +224,7 @@ public class ZhihuDetailFragment extends Fragment
 
     @Override
     public void showShareError() {
-        Snackbar.make(fab,R.string.share_error,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView,R.string.share_error,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -216,17 +265,17 @@ public class ZhihuDetailFragment extends Fragment
 
     @Override
     public void showBrowserNotFoundError() {
-        Snackbar.make(fab, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showTextCopied() {
-        Snackbar.make(fab, R.string.text_copied, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView, R.string.copied_to_clipboard, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showCopyTextError() {
-        Snackbar.make(fab, R.string.text_copied_error, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView, R.string.copied_to_clipboard_failed, Snackbar.LENGTH_SHORT).show();
     }
 
     // to change the title's font size of toolbar layout

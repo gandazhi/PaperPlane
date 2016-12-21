@@ -14,7 +14,6 @@ public class ZhihuDetailActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(App.getThemeResources());
         setContentView(R.layout.frame);
 
         ZhihuDetailFragment fragment = ZhihuDetailFragment.newInstance();

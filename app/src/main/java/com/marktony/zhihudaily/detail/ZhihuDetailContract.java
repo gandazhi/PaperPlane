@@ -45,7 +45,7 @@ public interface ZhihuDetailContract {
 
         void openInBrowser();
 
-        void share();
+        void shareAsText();
 
         void requestData();
 
@@ -56,6 +56,10 @@ public interface ZhihuDetailContract {
         void reload();
 
         void copyText();
+
+        void copyLink();
+
+        void addToOrDeleteFromBookmarks();
 
     }
 

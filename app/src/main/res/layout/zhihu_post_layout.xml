@@ -7,7 +7,6 @@
     android:orientation="horizontal"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
-    android:background="?attr/viewBackgroundCustomized"
     android:foreground="?android:attr/selectableItemBackground">
 
     <TextView
@@ -15,7 +14,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:id="@+id/zhihu_item_tv_title"
-        android:textColor="?attr/textColorCustomized"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:gravity="center_vertical"

@@ -7,7 +7,6 @@
     android:orientation="horizontal"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
-    android:background="?attr/viewBackgroundCustomized"
     android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
@@ -26,7 +25,6 @@
             android:id="@+id/tv_title"
             android:maxLines="2"
             android:ellipsize="end"
-            android:textColor="?attr/textColorCustomized"
             android:gravity="center_vertical"
             android:textSize="16sp" />
 
@@ -37,7 +35,6 @@
             android:textSize="13sp"
             android:gravity="center_vertical"
             android:maxLines="2"
-            android:textColor="?attr/textColorCustomized"
             android:ellipsize="end" />
 
     </LinearLayout>

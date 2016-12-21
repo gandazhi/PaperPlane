@@ -16,11 +16,8 @@ public class InnerBrowserActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setTheme(App.getThemeResources());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame);
-
-        Theme.setStatusBarColor(this);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, InnerBrowserFragment.getInstance()).commit();
 

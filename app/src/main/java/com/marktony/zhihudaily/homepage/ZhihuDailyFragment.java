@@ -48,9 +48,7 @@ public class ZhihuDailyFragment extends Fragment
 
     private ZhihuDailyContract.Presenter presenter;
 
-    public ZhihuDailyFragment() {
-
-    }
+    public ZhihuDailyFragment() {}
 
     public static ZhihuDailyFragment newInstance() {
         return new ZhihuDailyFragment();

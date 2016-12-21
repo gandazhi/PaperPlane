@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -35,7 +34,6 @@ public class GuokrDetailFragment extends Fragment
 
     private WebView webView;
     private ImageView imageView;
-    private FloatingActionButton fab;
     private CollapsingToolbarLayout toolbarLayout;
     private SwipeRefreshLayout refreshLayout;
 
@@ -68,13 +66,6 @@ public class GuokrDetailFragment extends Fragment
 
         presenter.start();
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.share();
-            }
-        });
-
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -87,7 +78,7 @@ public class GuokrDetailFragment extends Fragment
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_read, menu);
+        inflater.inflate(R.menu.menu_more, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -96,10 +87,8 @@ public class GuokrDetailFragment extends Fragment
         int id = item.getItemId();
         if (id == android.R.id.home){
             getActivity().onBackPressed();
-        } else if (id == R.id.action_open_in_browser) {
+        } else if (id == R.id.action_more) {
             presenter.openInBrowser();
-        } else if (id == R.id.action_copy_text) {
-            presenter.copyText();
         }
         return true;
     }
@@ -135,7 +124,6 @@ public class GuokrDetailFragment extends Fragment
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.toolbar_layout);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
         imageView = (ImageView) view.findViewById(R.id.image_view);
         webView = (WebView) view.findViewById(R.id.web_view);
 
@@ -175,7 +163,7 @@ public class GuokrDetailFragment extends Fragment
 
     @Override
     public void showLoadError() {
-        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(imageView,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -187,7 +175,7 @@ public class GuokrDetailFragment extends Fragment
 
     @Override
     public void showShareError() {
-        Snackbar.make(fab,R.string.share_error,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView,R.string.share_error,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -218,17 +206,17 @@ public class GuokrDetailFragment extends Fragment
 
     @Override
     public void showBrowserNotFoundError() {
-        Snackbar.make(fab, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showTextCopied() {
-        Snackbar.make(fab, R.string.text_copied, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView, R.string.copied_to_clipboard, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showCopyTextError() {
-        Snackbar.make(fab, R.string.text_copied_error, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView, R.string.copied_to_clipboard_failed, Snackbar.LENGTH_SHORT).show();
     }
 
     // to change the title's font size of toolbar layout

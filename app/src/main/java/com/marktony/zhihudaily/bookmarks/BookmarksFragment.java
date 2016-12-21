@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,20 +37,20 @@ public class BookmarksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bookmarks, container, false);
 
-        setHasOptionsMenu(true);
-
         initViews(view);
+
+        setHasOptionsMenu(true);
 
         return view;
     }
 
     private void initViews(View view) {
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_read, menu);
+        inflater.inflate(R.menu.menu_bookmarks, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

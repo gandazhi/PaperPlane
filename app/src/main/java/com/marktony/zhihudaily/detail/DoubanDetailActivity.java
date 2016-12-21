@@ -16,7 +16,6 @@ public class DoubanDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(App.getThemeResources());
         setContentView(R.layout.frame);
 
         DoubanDetailFragment fragment = DoubanDetailFragment.newInstance();

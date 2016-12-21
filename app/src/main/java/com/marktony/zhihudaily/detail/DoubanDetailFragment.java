@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -33,7 +32,6 @@ public class DoubanDetailFragment extends Fragment
         implements DoubanDetailContract.View {
 
     private WebView webView;
-    private FloatingActionButton fab;
     private ImageView imageView;
     private CollapsingToolbarLayout toolbarLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -62,13 +60,6 @@ public class DoubanDetailFragment extends Fragment
 
         presenter.start();
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.shareTo();
-            }
-        });
-
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -81,7 +72,7 @@ public class DoubanDetailFragment extends Fragment
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_read, menu);
+        inflater.inflate(R.menu.menu_more, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -90,10 +81,8 @@ public class DoubanDetailFragment extends Fragment
         int id = item.getItemId();
         if (id== android.R.id.home){
             getActivity().onBackPressed();
-        } else if (id == R.id.action_open_in_browser){
+        } else if (id == R.id.action_more){
             presenter.openInBrowser();
-        } else if (id == R.id.action_copy_text) {
-            presenter.copyText();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -127,7 +116,7 @@ public class DoubanDetailFragment extends Fragment
     @Override
     public void showLoadError() {
         stopLoading();
-        Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(imageView,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -140,7 +129,7 @@ public class DoubanDetailFragment extends Fragment
     @Override
     public void showShareError() {
         stopLoading();
-        Snackbar.make(fab,R.string.share_error,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView,R.string.share_error,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -161,17 +150,17 @@ public class DoubanDetailFragment extends Fragment
 
     @Override
     public void showBrowserNotFoundError() {
-        Snackbar.make(fab, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView, R.string.no_browser_found,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showTextCopied() {
-        Snackbar.make(fab, R.string.text_copied, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView, R.string.copied_to_clipboard, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showCopyTextError() {
-        Snackbar.make(fab, R.string.text_copied_error, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(imageView, R.string.copied_to_clipboard_failed, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -196,7 +185,6 @@ public class DoubanDetailFragment extends Fragment
 
         webView = (WebView) view.findViewById(R.id.web_view);
         webView.setScrollbarFadingEnabled(true);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
         AppCompatActivity activity = (DoubanDetailActivity)getActivity();
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);

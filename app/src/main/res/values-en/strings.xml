@@ -15,8 +15,17 @@
     <string name="retry">Retry</string>
     <string name="no_network_connected">No Network Connected…</string>
     <string name="go_to_set">SETTINGS</string>
-    <string name="text_copied">Text copied</string>
-    <string name="text_copied_error">Copy text failed</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="copied_to_clipboard_failed">Copy to clipboard failed</string>
+
+    <!--bottom sheet list-->
+    <string name="action_add_to_bookmarks">Add to bookmarks</string>
+    <string name="action_delete_from_bookmarks">Delete from bookmarks</string>
+    <string name="action_copy_link">Copy link</string>
+    <string name="action_open_in_browser">Open in browser</string>
+    <string name="action_copy_text">Copy text</string>
+    <string name="action_share_as_text">Share as Text</string>
+    <string name="action_share_as_image">Share as image</string>
 
     <!--navigation view menu-->
     <string name="change_theme">Change Theme</string>
@@ -73,10 +82,9 @@
     <string name="clear_image_cache_successfully">Cache successfully cleared</string>
     <!--setting-->
 
-    <string name="action_open_in_browser">Open in browser</string>
-    <string name="action_copy_text">Copy text</string>
-
     <string name="network_error">Internet is lost, tap to retry</string>
     <string name="refresh">Refresh</string>
+    <string name="random">Random</string>
+    <string name="search">Search</string>
 
 </resources>

@@ -15,7 +15,6 @@ public class GuokrDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(App.getThemeResources());
         setContentView(R.layout.frame);
 
         GuokrDetailFragment fragment = GuokrDetailFragment.newInstance();

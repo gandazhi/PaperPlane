@@ -8,18 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.app.App;
-import com.marktony.zhihudaily.util.Theme;
 
 public class SettingsPreferenceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(App.getThemeResources());
         setContentView(R.layout.activity_settings);
-
-        Theme.setStatusBarColor(this);
 
         initViews();
 
@@ -31,6 +26,7 @@ public class SettingsPreferenceActivity extends AppCompatActivity {
                 .commit();
 
         new SettingsPresenter(SettingsPreferenceActivity.this, (SettingsContract.View) fragment);
+
     }
 
     private void initViews() {
