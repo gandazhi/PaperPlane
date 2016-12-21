@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/action_search"
-        android:title="@string/search"
+        android:title="@string/search_bookmarks"
         android:icon="@drawable/ic_search_white_24dp"
         app:showAsAction="always"
         android:orderInCategory="99"/>
 
     <item android:id="@+id/action_random"
-        android:title="@string/random"
+        android:title="@string/random_article"
         android:icon="@drawable/ic_shuffle_white_24dp"
         app:showAsAction="ifRoom"
         android:orderInCategory="100"/>

@@ -18,6 +18,9 @@
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="copied_to_clipboard_failed">Copy to clipboard failed</string>
 
+    <string name="random_article">Random Article</string>
+    <string name="search_bookmarks">Search Bookmarks</string>
+
     <!--bottom sheet list-->
     <string name="action_add_to_bookmarks">Add to bookmarks</string>
     <string name="action_delete_from_bookmarks">Delete from bookmarks</string>
@@ -84,7 +87,5 @@
 
     <string name="network_error">Internet is lost, tap to retry</string>
     <string name="refresh">Refresh</string>
-    <string name="random">Random</string>
-    <string name="search">Search</string>
 
 </resources>

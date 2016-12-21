@@ -21,8 +21,8 @@
     <string name="copied_to_clipboard">复制成功</string>
     <string name="copied_to_clipboard_failed">复制失败</string>
 
-    <string name="random">随机看</string>
-    <string name="search">搜索</string>
+    <string name="random_article">随机看</string>
+    <string name="search_bookmarks">搜索收藏</string>
 
     <!--bottom sheet list-->
     <string name="action_add_to_bookmarks">添加到收藏</string>

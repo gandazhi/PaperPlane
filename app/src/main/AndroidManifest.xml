@@ -13,11 +13,6 @@
         android:name=".app.App"
         android:theme="@style/AppTheme">
 
-        <!--
-        configChanges参数的作用是不让activity重启
-        3.2之前的sdk只需要配置前面两个值:keyboardHidden|orientation
-        3.2之后的sdk必须配置三个值keyboardHidden|orientation|screensize
-        -->
         <activity
             android:name=".homepage.MainActivity"
             android:label="@string/app_name"
@@ -27,6 +22,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
         <activity
@@ -59,6 +57,13 @@
         <activity android:name=".innerbrowser.InnerBrowserActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".SearchActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
 
         <service android:name=".service.CacheService" />
 
