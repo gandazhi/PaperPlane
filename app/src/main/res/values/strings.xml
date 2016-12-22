@@ -14,6 +14,7 @@
 
     <string name="title_activity_read">阅读</string>
     <string name="title_activity_guokr_read">果壳精选</string>
+    <string name="loading_more">正在加载…</string>
     <string name="loaded_failed">加载失败!</string>
     <string name="retry">重试</string>
     <string name="no_network_connected">当前没有网络连接…</string>
@@ -21,7 +22,8 @@
     <string name="copied_to_clipboard">复制成功</string>
     <string name="copied_to_clipboard_failed">复制失败</string>
 
-    <string name="random_article">随机看</string>
+    <string name="feel_lucky">随便看看</string>
+    <string name="feel_lucky_short">随便看看</string>
     <string name="search_bookmarks">搜索收藏</string>
 
     <!--bottom sheet list-->

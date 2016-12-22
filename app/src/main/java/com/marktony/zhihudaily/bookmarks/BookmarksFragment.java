@@ -1,5 +1,6 @@
 package com.marktony.zhihudaily.bookmarks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.SearchActivity;
 
 /**
  * Created by lizhaotailang on 2016/12/20.
@@ -56,6 +58,10 @@ public class BookmarksFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_search) {
+            startActivity(new Intent(getActivity(), SearchActivity.class));
+        }
         return true;
     }
 }

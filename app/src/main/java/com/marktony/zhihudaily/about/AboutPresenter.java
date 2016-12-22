@@ -161,6 +161,7 @@ public class AboutPresenter implements AboutContract.Presenter {
         hits[hits.length - 1] = SystemClock.uptimeMillis();
         if (hits[0] >= (SystemClock.uptimeMillis() - 500)) {
             AlertDialog dialog = new AlertDialog.Builder(activity).create();
+            dialog.setCancelable(false);
             dialog.setTitle(R.string.easter_egg);
             dialog.setMessage(activity.getString(R.string.easter_egg_content));
             dialog.setButton(DialogInterface.BUTTON_POSITIVE, activity.getString(R.string.sure), new DialogInterface.OnClickListener() {

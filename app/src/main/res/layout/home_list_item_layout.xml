@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:id="@+id/zhihu_item_tv_title"
+        android:id="@+id/textViewTitle"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:gravity="center_vertical"
@@ -24,7 +24,7 @@
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:id="@+id/zhihu_item_iv"
+        android:id="@+id/imageViewCover"
         android:layout_gravity="center_vertical" />
 
 </LinearLayout>

@@ -12,14 +12,16 @@
     <string name="title_activity_read">Read</string>
     <string name="title_activity_guokr_read">Guokr Handpick</string>
     <string name="loaded_failed">Load failed!</string>
+    <string name="loading_more">Loading more…</string>
     <string name="retry">Retry</string>
     <string name="no_network_connected">No Network Connected…</string>
     <string name="go_to_set">SETTINGS</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="copied_to_clipboard_failed">Copy to clipboard failed</string>
 
-    <string name="random_article">Random Article</string>
-    <string name="search_bookmarks">Search Bookmarks</string>
+    <string name="feel_lucky">I\'m feeling lucky</string>
+    <string name="feel_lucky_short">Feel lucky</string>
+    <string name="search_bookmarks">Search bookmarks</string>
 
     <!--bottom sheet list-->
     <string name="action_add_to_bookmarks">Add to bookmarks</string>

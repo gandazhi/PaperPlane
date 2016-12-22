@@ -17,4 +17,20 @@
 
     </shortcut>
 
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_random"
+        android:shortcutId="feel_lucky"
+        android:shortcutShortLabel="@string/feel_lucky_short"
+        android:shortcutLongLabel="@string/feel_lucky">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.marktony.zhihudaily"
+            android:targetClass="com.marktony.zhihudaily.SearchActivity" />
+
+        <categories android:name="android.shortcut.conversation" />
+
+    </shortcut>
+
 </shortcuts>

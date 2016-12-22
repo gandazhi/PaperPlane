@@ -59,27 +59,6 @@ public class DoubanDetailPresenter
     }
 
     @Override
-    public void shareTo() {
-        if (post.getShort_url() != null){
-            try {
-                Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
-                String shareText = post.getTitle()
-                        + " "
-                        + post.getShort_url()
-                        + "\t\t\t"
-                        + activity.getString(R.string.share_extra);
-
-                shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
-                activity.startActivity(Intent.createChooser(shareIntent,activity.getString(R.string.share_to)));
-            } catch (android.content.ActivityNotFoundException ex){
-                view.showLoadError();
-            }
-        } else {
-            view.showShareError();
-        }
-    }
-
-    @Override
     public void openInBrowser() {
         if (post.getShort_url() != null){
             try {
@@ -146,6 +125,28 @@ public class DoubanDetailPresenter
     }
 
     @Override
+    public void copyLink() {
+        if (post == null) {
+            view.showCopyTextError();
+            return;
+        }
+        ClipboardManager manager = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);
+        ClipData clipData = null;
+        if (Build.VERSION.SDK_INT >= 24) {
+            clipData = ClipData.newPlainText("text", Html.fromHtml(post.getOriginal_url(), Html.FROM_HTML_MODE_LEGACY).toString());
+        } else {
+            clipData = ClipData.newPlainText("text", Html.fromHtml(post.getOriginal_url()).toString());
+        }
+        manager.setPrimaryClip(clipData);
+        view.showTextCopied();
+    }
+
+    @Override
+    public void addToOrDeleteFromBookmarks() {
+
+    }
+
+    @Override
     public void setId(int id) {
         this.id = id;
     }
@@ -171,6 +172,27 @@ public class DoubanDetailPresenter
             view.showMainImage(null);
             view.setTitle(post.getTitle());
             view.stopLoading();
+        }
+    }
+
+    @Override
+    public void shareAsText() {
+        if (post.getShort_url() != null){
+            try {
+                Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
+                String shareText = post.getTitle()
+                        + " "
+                        + post.getShort_url()
+                        + "\t\t\t"
+                        + activity.getString(R.string.share_extra);
+
+                shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
+                activity.startActivity(Intent.createChooser(shareIntent,activity.getString(R.string.share_to)));
+            } catch (android.content.ActivityNotFoundException ex){
+                view.showLoadError();
+            }
+        } else {
+            view.showShareError();
         }
     }
 

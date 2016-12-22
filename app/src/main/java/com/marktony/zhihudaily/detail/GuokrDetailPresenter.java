@@ -32,7 +32,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by Lizhaotailang on 2016/9/17.
  */
 
-public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnStringListener {
+public class GuokrDetailPresenter  implements GuokrDetailContract.Presenter, OnStringListener {
 
     private GuokrDetailContract.View view;
     private AppCompatActivity activity;
@@ -97,18 +97,6 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
     }
 
     @Override
-    public void share() {
-        try {
-            Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
-            String shareText = title + " " +  Api.GUOKR_ARTICLE_LINK_V1 + id + "\t\t\t" + activity.getString(R.string.share_extra);
-            shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
-            activity.startActivity(Intent.createChooser(shareIntent,activity.getString(R.string.share_to)));
-        } catch (android.content.ActivityNotFoundException ex){
-            view.showShareError();
-        }
-    }
-
-    @Override
     public void openInBrowser() {
         try {
             activity.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(Api.GUOKR_ARTICLE_LINK_V1 + id)));
@@ -168,6 +156,44 @@ public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnSt
         }
         manager.setPrimaryClip(clipData);
         view.showTextCopied();
+    }
+
+    @Override
+    public void addToOrDeleteFromBookmarks() {
+
+    }
+
+    @Override
+    public void copyLink() {
+        if (post == null) {
+            view.showCopyTextError();
+            return;
+        }
+        ClipboardManager manager = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);
+        ClipData clipData = null;
+        if (Build.VERSION.SDK_INT >= 24) {
+            clipData = ClipData.newPlainText("text", Html.fromHtml(Api.GUOKR_ARTICLE_LINK_V1 + id, Html.FROM_HTML_MODE_LEGACY).toString());
+        } else {
+            clipData = ClipData.newPlainText("text", Html.fromHtml(Api.GUOKR_ARTICLE_LINK_V1 + id).toString());
+        }
+        manager.setPrimaryClip(clipData);
+        view.showTextCopied();
+    }
+
+    @Override
+    public void shareAsText() {
+        if (post != null) {
+            view.showCopyTextError();
+            return;
+        }
+        try {
+            Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
+            String shareText = title + " " +  Api.GUOKR_ARTICLE_LINK_V1 + id + "\t\t\t" + activity.getString(R.string.share_extra);
+            shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
+            activity.startActivity(Intent.createChooser(shareIntent,activity.getString(R.string.share_to)));
+        } catch (android.content.ActivityNotFoundException ex){
+            view.showShareError();
+        }
     }
 
     @Override

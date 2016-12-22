@@ -37,7 +37,7 @@ public class GuokrNewsAdapter extends RecyclerView.Adapter<GuokrNewsAdapter.Guok
     @Override
     public GuokrPostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = inflater.inflate(R.layout.guokr_douban_post_layout,parent,false);
+        View view = inflater.inflate(R.layout.home_list_item_layout,parent,false);
 
         return new GuokrPostViewHolder(view,mListener);
     }
@@ -56,7 +56,6 @@ public class GuokrNewsAdapter extends RecyclerView.Adapter<GuokrNewsAdapter.Guok
                 .into(holder.ivHeadlineImg);
 
         holder.tvTitle.setText(item.getTitle());
-        holder.tvSummary.setText(item.getSummary());
 
     }
 
@@ -73,16 +72,14 @@ public class GuokrNewsAdapter extends RecyclerView.Adapter<GuokrNewsAdapter.Guok
 
         ImageView ivHeadlineImg;
         TextView tvTitle;
-        TextView tvSummary;
 
         OnRecyclerViewOnClickListener listener;
 
         public GuokrPostViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
             super(itemView);
 
-            ivHeadlineImg = (ImageView) itemView.findViewById(R.id.image_view);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
-            tvSummary = (TextView) itemView.findViewById(R.id.tv_summary);
+            ivHeadlineImg = (ImageView) itemView.findViewById(R.id.imageViewCover);
+            tvTitle = (TextView) itemView.findViewById(R.id.textViewTitle);
 
             this.listener = listener;
 

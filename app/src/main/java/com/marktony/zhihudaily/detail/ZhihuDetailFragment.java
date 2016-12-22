@@ -8,6 +8,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +22,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
@@ -35,7 +35,7 @@ public class ZhihuDetailFragment extends Fragment
 
     private ImageView imageView;
     private WebView webView;
-    private TextView textView;
+    private NestedScrollView scrollView;
     private CollapsingToolbarLayout toolbarLayout;
     private SwipeRefreshLayout refreshLayout;
 
@@ -56,12 +56,20 @@ public class ZhihuDetailFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.universal_read_layout, container, false);
+        final View view = inflater.inflate(R.layout.universal_read_layout, container, false);
 
         initViews(view);
         setHasOptionsMenu(true);
 
         presenter.start();
+
+        // when click the toolbar, make the scroll view scroll to top
+        view.findViewById(R.id.toolbar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scrollView.smoothScrollTo(0, 0);
+            }
+        });
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -171,11 +179,13 @@ public class ZhihuDetailFragment extends Fragment
 
         webView = (WebView) view.findViewById(R.id.web_view);
         webView.setScrollbarFadingEnabled(true);
+
         AppCompatActivity activity = (ZhihuDetailActivity) getActivity();
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         imageView = (ImageView) view.findViewById(R.id.image_view);
-        textView = (TextView) view.findViewById(R.id.text_view);
+        scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
         toolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.toolbar_layout);
 
         //能够和js交互

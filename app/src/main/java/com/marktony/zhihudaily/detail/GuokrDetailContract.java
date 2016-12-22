@@ -47,8 +47,6 @@ public interface GuokrDetailContract {
 
         void setImageUrl(String url);
 
-        void share();
-
         void openInBrowser();
 
         void openUrl(WebView webView, String url);
@@ -56,6 +54,12 @@ public interface GuokrDetailContract {
         void reload();
 
         void copyText();
+
+        void addToOrDeleteFromBookmarks();
+
+        void copyLink();
+
+        void shareAsText();
 
     }
 

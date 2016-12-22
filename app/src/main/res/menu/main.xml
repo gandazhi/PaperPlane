@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/action_random"
-        android:title="@string/random_article"
+        android:title="@string/feel_lucky"
         android:icon="@drawable/ic_shuffle_white_24dp"
         android:orderInCategory="99"
         app:showAsAction="always"/>

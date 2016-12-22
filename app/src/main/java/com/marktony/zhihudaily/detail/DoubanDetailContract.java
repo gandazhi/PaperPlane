@@ -43,7 +43,7 @@ public interface DoubanDetailContract {
 
         void loadResult(int id);
 
-        void shareTo();
+        void shareAsText();
 
         void openInBrowser();
 
@@ -52,6 +52,10 @@ public interface DoubanDetailContract {
         void reload();
 
         void copyText();
+
+        void copyLink();
+
+        void addToOrDeleteFromBookmarks();
 
     }
 

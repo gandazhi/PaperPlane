@@ -5,9 +5,11 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -34,6 +36,7 @@ public class GuokrDetailFragment extends Fragment
 
     private WebView webView;
     private ImageView imageView;
+    private NestedScrollView scrollView;
     private CollapsingToolbarLayout toolbarLayout;
     private SwipeRefreshLayout refreshLayout;
 
@@ -66,6 +69,13 @@ public class GuokrDetailFragment extends Fragment
 
         presenter.start();
 
+        view.findViewById(R.id.toolbar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scrollView.smoothScrollTo(0, 0);
+            }
+        });
+
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -88,7 +98,66 @@ public class GuokrDetailFragment extends Fragment
         if (id == android.R.id.home){
             getActivity().onBackPressed();
         } else if (id == R.id.action_more) {
-            presenter.openInBrowser();
+
+            final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
+
+            View view = getActivity().getLayoutInflater().inflate(R.layout.reading_actions_sheet, null);
+
+            // add to bookmarks or delete from bookmarks
+            view.findViewById(R.id.layout_bookmark).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.addToOrDeleteFromBookmarks();
+                }
+            });
+
+            // copy the article's link to clipboard
+            view.findViewById(R.id.layout_copy_link).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.copyLink();
+                }
+            });
+
+            // open the link in browser
+            view.findViewById(R.id.layout_open_in_browser).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.openInBrowser();
+                }
+            });
+
+            // copy the text content to clipboard
+            view.findViewById(R.id.layout_copy_text).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.copyText();
+                }
+            });
+
+            // shareAsText the content as text
+            view.findViewById(R.id.layout_share_text).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    presenter.shareAsText();
+                }
+            });
+
+            // shareAsText with image and text. Use for wechat moment or other apps
+            view.findViewById(R.id.layout_share_image).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.setContentView(view);
+            dialog.show();
         }
         return true;
     }
@@ -125,6 +194,7 @@ public class GuokrDetailFragment extends Fragment
 
         toolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.toolbar_layout);
         imageView = (ImageView) view.findViewById(R.id.image_view);
+        scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
         webView = (WebView) view.findViewById(R.id.web_view);
 
         WebSettings settings = webView.getSettings();
