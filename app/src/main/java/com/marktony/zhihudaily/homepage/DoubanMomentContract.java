@@ -18,7 +18,7 @@ public interface DoubanMomentContract {
 
         void stopLoading();
 
-        void showLoadError();
+        void showLoadingError();
 
         void showResults(ArrayList<DoubanMomentNews.posts> list);
 

@@ -20,7 +20,6 @@ import com.marktony.zhihudaily.adapter.MainPagerAdapter;
 import com.marktony.zhihudaily.adapter.ZhihuDailyNewsAdapter;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.DividerItemDecoration;
 import com.marktony.zhihudaily.interfaze.OnRecyclerViewOnClickListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -150,7 +149,7 @@ public class ZhihuDailyFragment extends Fragment
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_main);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
+
         refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
 
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);

@@ -18,6 +18,8 @@
     <string name="go_to_set">SETTINGS</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="copied_to_clipboard_failed">Copy to clipboard failed</string>
+    <string name="added_to_bookmarks">Added to bookmarks</string>
+    <string name="deleted_from_bookmarks">Deleted from bookmarks</string>
 
     <string name="feel_lucky">I\'m feeling lucky</string>
     <string name="feel_lucky_short">Feel lucky</string>

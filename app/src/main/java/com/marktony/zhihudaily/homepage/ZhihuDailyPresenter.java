@@ -10,6 +10,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import com.marktony.zhihudaily.db.DatabaseHelper;
@@ -49,7 +50,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
         this.view = view;
         this.view.setPresenter(this);
         model = new StringModelImpl(context);
-        dbHelper = new DatabaseHelper(context, "History.db", null, 4);
+        dbHelper = new DatabaseHelper(context, "History.db", null, 5);
         db = dbHelper.getWritableDatabase();
     }
 
@@ -66,42 +67,46 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                 @Override
                 public void onSuccess(String result) {
 
-                    ZhihuDailyNews post = gson.fromJson(result, ZhihuDailyNews.class);
-                    ContentValues values = new ContentValues();
+                    try {
+                        ZhihuDailyNews post = gson.fromJson(result, ZhihuDailyNews.class);
+                        ContentValues values = new ContentValues();
 
-                    if (clearing) {
-                        list.clear();
-                    }
+                        if (clearing) {
+                            list.clear();
+                        }
 
-                    for (ZhihuDailyNews.Question item : post.getStories()) {
-                        list.add(item);
-                        if ( !queryIfIDExists(item.getId())) {
-                            db.beginTransaction();
-                            try {
-                                DateFormat format = new SimpleDateFormat("yyyyMMdd");
-                                Date date = format.parse(post.getDate());
-                                values.put("zhihu_id", item.getId());
-                                values.put("zhihu_news", gson.toJson(item));
-                                values.put("zhihu_content", "");
-                                values.put("zhihu_time", date.getTime() / 1000);
-                                db.insert("Zhihu", null, values);
-                                values.clear();
-                                db.setTransactionSuccessful();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            } finally {
-                                db.endTransaction();
+                        for (ZhihuDailyNews.Question item : post.getStories()) {
+                            list.add(item);
+                            if ( !queryIfIDExists(item.getId())) {
+                                db.beginTransaction();
+                                try {
+                                    DateFormat format = new SimpleDateFormat("yyyyMMdd");
+                                    Date date = format.parse(post.getDate());
+                                    values.put("zhihu_id", item.getId());
+                                    values.put("zhihu_news", gson.toJson(item));
+                                    values.put("zhihu_content", "");
+                                    values.put("zhihu_time", date.getTime() / 1000);
+                                    db.insert("Zhihu", null, values);
+                                    values.clear();
+                                    db.setTransactionSuccessful();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                } finally {
+                                    db.endTransaction();
+                                }
+
                             }
+                            Intent intent = new Intent("com.marktony.zhihudaily.LOCAL_BROADCAST");
+                            intent.putExtra("type", CacheService.TYPE_ZHIHU);
+                            intent.putExtra("id", item.getId());
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
                         }
-                        Intent intent = new Intent("com.marktony.zhihudaily.LOCAL_BROADCAST");
-                        intent.putExtra("type", CacheService.TYPE_ZHIHU);
-                        intent.putExtra("id", item.getId());
-                        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-
+                        view.showResults(list);
+                    } catch (JsonSyntaxException e) {
+                        view.showError();
                     }
 
-                    view.showResults(list);
                     view.stopLoading();
                 }
 
@@ -169,6 +174,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
     }
 
     private boolean queryIfIDExists(int id){
+
         Cursor cursor = db.query("Zhihu",null,null,null,null,null,null);
         if (cursor.moveToFirst()){
             do {

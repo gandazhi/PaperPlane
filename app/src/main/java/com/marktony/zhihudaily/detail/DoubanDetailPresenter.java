@@ -15,6 +15,7 @@ import android.webkit.WebView;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.bean.DoubanMomentStory;
@@ -47,6 +48,7 @@ public class DoubanDetailPresenter
     private int id;
 
     private SharedPreferences sp;
+    private DatabaseHelper dbHelper;
 
     private DoubanMomentStory post;
 
@@ -56,18 +58,21 @@ public class DoubanDetailPresenter
         this.view.setPresenter(this);
         sp = activity.getSharedPreferences("user_settings",MODE_PRIVATE);
         model = new StringModelImpl(activity);
+        dbHelper = new DatabaseHelper(activity, "History.db", null, 5);
     }
 
     @Override
     public void openInBrowser() {
-        if (post.getShort_url() != null){
-            try {
-                activity.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(post.getShort_url())));
-            } catch (android.content.ActivityNotFoundException ex){
-                view.showLoadError();
-            }
-        } else {
-            view.showLoadError();
+
+        if (post == null) {
+            view.showLoadingError();
+            return;
+        }
+
+        try {
+            activity.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(post.getShort_url())));
+        } catch (android.content.ActivityNotFoundException ex){
+            view.showBrowserNotFoundError();
         }
     }
 
@@ -143,7 +148,37 @@ public class DoubanDetailPresenter
 
     @Override
     public void addToOrDeleteFromBookmarks() {
+        if (queryIfIsBookmarked()) {
+            dbHelper.getWritableDatabase().execSQL(
+                    "update Douban set bookmark = ? where douban_id = ?",
+                    new Object[]{Integer.valueOf(0), String.valueOf(id)}
+            );
+            view.showDeletedFromBookmarks();
+        } else {
+            dbHelper.getWritableDatabase().execSQL(
+                    "update Douban set bookmark = ? where douban_id = ?",
+                    new Object[]{Integer.valueOf(1), String.valueOf(id)}
+            );
+            view.showAddedToBookmarks();
+        }
+    }
 
+    @Override
+    public boolean queryIfIsBookmarked() {
+        Cursor cursor = dbHelper.getReadableDatabase()
+                .rawQuery("select * from Douban where douban_id = ?", new String[]{String.valueOf(id)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int isBookmarked = cursor.getInt(cursor.getColumnIndex("bookmark"));
+                if (isBookmarked == 1) {
+                    return true;
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return false;
     }
 
     @Override
@@ -157,7 +192,7 @@ public class DoubanDetailPresenter
         if (NetworkState.networkConnected(activity)) {
             model.load(Api.DOUBAN_ARTICLE_DETAIL + id, this);
         } else {
-            Cursor cursor = new DatabaseHelper(activity, "History.db", null, 4).getReadableDatabase()
+            Cursor cursor = dbHelper.getReadableDatabase()
                     .query("Douban", null, null, null, null, null, null);
             if (cursor.moveToFirst()) {
                 do {
@@ -177,6 +212,11 @@ public class DoubanDetailPresenter
 
     @Override
     public void shareAsText() {
+
+        if (post == null) {
+            view.showCopyTextError();
+            return;
+        }
         if (post.getShort_url() != null){
             try {
                 Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
@@ -189,10 +229,10 @@ public class DoubanDetailPresenter
                 shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
                 activity.startActivity(Intent.createChooser(shareIntent,activity.getString(R.string.share_to)));
             } catch (android.content.ActivityNotFoundException ex){
-                view.showLoadError();
+                view.showLoadingError();
             }
         } else {
-            view.showShareError();
+            view.showSharingError();
         }
     }
 
@@ -204,23 +244,26 @@ public class DoubanDetailPresenter
     @Override
     public void onSuccess(String result) {
         Gson gson = new Gson();
-        post = gson.fromJson(result, DoubanMomentStory.class);
-        view.showResult(convertContent());
-        if (post.getPhotos().size() != 0) {
-            view.showMainImage(post.getPhotos().get(0).getMedium().getUrl());
-        } else {
-            view.showMainImage(null);
+        try {
+            post = gson.fromJson(result, DoubanMomentStory.class);
+            view.showResult(convertContent());
+            if (post.getPhotos().size() != 0) {
+                view.showMainImage(post.getPhotos().get(0).getMedium().getUrl());
+            } else {
+                view.showMainImage(null);
+            }
+            view.setTitle(post.getTitle());
+            view.setWebViewImageMode(sp.getBoolean("no_picture_mode",false));
+        } catch (JsonSyntaxException e) {
+            view.showLoadingError();
         }
-        view.setTitle(post.getTitle());
-        view.setWebViewImageMode(sp.getBoolean("no_picture_mode",false));
-
         view.stopLoading();
     }
 
     @Override
     public void onError(VolleyError error) {
         view.stopLoading();
-        view.showLoadError();
+        view.showLoadingError();
     }
 
     private String convertContent() {

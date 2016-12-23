@@ -10,6 +10,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.db.DatabaseHelper;
@@ -47,7 +48,7 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
         this.view = view;
         this.view.setPresenter(this);
         model = new StringModelImpl(context);
-        dbHelper = new DatabaseHelper(context, "History.db", null, 4);
+        dbHelper = new DatabaseHelper(context, "History.db", null, 5);
         db = dbHelper.getWritableDatabase();
     }
 
@@ -78,41 +79,46 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
                 @Override
                 public void onSuccess(String result) {
 
-                    DoubanMomentNews post = gson.fromJson(result, DoubanMomentNews.class);
-                    ContentValues values = new ContentValues();
+                    try {
+                        DoubanMomentNews post = gson.fromJson(result, DoubanMomentNews.class);
+                        ContentValues values = new ContentValues();
 
-                    if (clearing) {
-                        list.clear();
-                    }
-
-                    for (DoubanMomentNews.posts item : post.getPosts()) {
-
-                        list.add(item);
-
-                        if ( !queryIfIDExists(item.getId())) {
-                            db.beginTransaction();
-                            try {
-                                values.put("douban_id", item.getId());
-                                values.put("douban_news", gson.toJson(item));
-                                DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                                Date date = format.parse(item.getPublished_time());
-                                values.put("douban_time", date.getTime() / 1000);
-                                values.put("douban_content", "");
-                                db.insert("Douban", null, values);
-                                values.clear();
-                                db.setTransactionSuccessful();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            } finally {
-                                db.endTransaction();
-                            }
+                        if (clearing) {
+                            list.clear();
                         }
-                        Intent intent = new Intent("com.marktony.zhihudaily.LOCAL_BROADCAST");
-                        intent.putExtra("type", CacheService.TYPE_DOUBAN);
-                        intent.putExtra("id", item.getId());
-                        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
+                        for (DoubanMomentNews.posts item : post.getPosts()) {
+
+                            list.add(item);
+
+                            if ( !queryIfIDExists(item.getId())) {
+                                db.beginTransaction();
+                                try {
+                                    values.put("douban_id", item.getId());
+                                    values.put("douban_news", gson.toJson(item));
+                                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                    Date date = format.parse(item.getPublished_time());
+                                    values.put("douban_time", date.getTime() / 1000);
+                                    values.put("douban_content", "");
+                                    db.insert("Douban", null, values);
+                                    values.clear();
+                                    db.setTransactionSuccessful();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                } finally {
+                                    db.endTransaction();
+                                }
+                            }
+                            Intent intent = new Intent("com.marktony.zhihudaily.LOCAL_BROADCAST");
+                            intent.putExtra("type", CacheService.TYPE_DOUBAN);
+                            intent.putExtra("id", item.getId());
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                        }
+                        view.showResults(list);
+                    } catch (JsonSyntaxException e) {
+                        view.showLoadingError();
                     }
-                    view.showResults(list);
+
                     view.stopLoading();
 
                 }
@@ -120,7 +126,7 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
                 @Override
                 public void onError(VolleyError error) {
                     view.stopLoading();
-                    view.showLoadError();
+                    view.showLoadingError();
                 }
             });
         } else {
@@ -142,7 +148,7 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
                 //当第一次安装应用，并且没有打开网络时
                 //此时既无法网络加载，也无法本地加载
                 if (list.isEmpty()) {
-                    view.showLoadError();
+                    view.showLoadingError();
                 }
             } else {
                 view.showNetworkError();

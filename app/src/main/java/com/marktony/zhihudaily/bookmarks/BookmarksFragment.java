@@ -19,7 +19,8 @@ import com.marktony.zhihudaily.SearchActivity;
  * Created by lizhaotailang on 2016/12/20.
  */
 
-public class BookmarksFragment extends Fragment {
+public class BookmarksFragment extends Fragment
+        implements BookmarksContract.View{
 
     private RecyclerView recyclerView;
 
@@ -46,7 +47,13 @@ public class BookmarksFragment extends Fragment {
         return view;
     }
 
-    private void initViews(View view) {
+    @Override
+    public void setPresenter(BookmarksContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void initViews(View view) {
 
     }
 

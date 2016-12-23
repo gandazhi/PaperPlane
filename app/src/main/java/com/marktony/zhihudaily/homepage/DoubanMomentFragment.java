@@ -17,7 +17,6 @@ import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.adapter.DoubanMomentAdapter;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.interfaze.OnRecyclerViewOnClickListener;
-import com.marktony.zhihudaily.DividerItemDecoration;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
@@ -124,7 +123,6 @@ public class DoubanMomentFragment extends Fragment
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_main);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -165,7 +163,7 @@ public class DoubanMomentFragment extends Fragment
     }
 
     @Override
-    public void showLoadError() {
+    public void showLoadingError() {
          Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
     }
 

@@ -22,6 +22,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
@@ -97,6 +99,12 @@ public class ZhihuDetailFragment extends Fragment
             final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
 
             View view = getActivity().getLayoutInflater().inflate(R.layout.reading_actions_sheet, null);
+
+            if (presenter.queryIfIsBookmarked()) {
+                ((TextView) view.findViewById(R.id.textView)).setText(R.string.action_delete_from_bookmarks);
+                ((ImageView) view.findViewById(R.id.imageView))
+                        .setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
+            }
 
             // add to bookmarks or delete from bookmarks
             view.findViewById(R.id.layout_bookmark).setOnClickListener(new View.OnClickListener() {
@@ -221,7 +229,7 @@ public class ZhihuDetailFragment extends Fragment
     }
 
     @Override
-    public void showLoadError() {
+    public void showLoadingError() {
         Snackbar.make(imageView,R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
@@ -233,7 +241,7 @@ public class ZhihuDetailFragment extends Fragment
     }
 
     @Override
-    public void showShareError() {
+    public void showSharingError() {
         Snackbar.make(imageView,R.string.share_error,Snackbar.LENGTH_SHORT).show();
     }
 
@@ -286,6 +294,16 @@ public class ZhihuDetailFragment extends Fragment
     @Override
     public void showCopyTextError() {
         Snackbar.make(imageView, R.string.copied_to_clipboard_failed, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showAddedToBookmarks() {
+        Snackbar.make(imageView, R.string.added_to_bookmarks, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showDeletedFromBookmarks() {
+        Snackbar.make(imageView, R.string.deleted_from_bookmarks, Snackbar.LENGTH_SHORT).show();
     }
 
     // to change the title's font size of toolbar layout

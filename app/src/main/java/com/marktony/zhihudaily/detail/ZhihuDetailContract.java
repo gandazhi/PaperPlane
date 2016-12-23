@@ -17,9 +17,9 @@ public interface ZhihuDetailContract {
 
         void stopLoading();
 
-        void showLoadError();
+        void showLoadingError();
 
-        void showShareError();
+        void showSharingError();
 
         void showResult(String result);
 
@@ -38,6 +38,10 @@ public interface ZhihuDetailContract {
         void showTextCopied();
 
         void showCopyTextError();
+
+        void showAddedToBookmarks();
+
+        void showDeletedFromBookmarks();
 
     }
 
@@ -60,6 +64,8 @@ public interface ZhihuDetailContract {
         void copyLink();
 
         void addToOrDeleteFromBookmarks();
+
+        boolean queryIfIsBookmarked();
 
     }
 

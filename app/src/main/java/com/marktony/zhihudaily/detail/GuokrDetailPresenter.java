@@ -32,7 +32,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by Lizhaotailang on 2016/9/17.
  */
 
-public class GuokrDetailPresenter  implements GuokrDetailContract.Presenter, OnStringListener {
+public class GuokrDetailPresenter implements GuokrDetailContract.Presenter, OnStringListener {
 
     private GuokrDetailContract.View view;
     private AppCompatActivity activity;
@@ -43,6 +43,7 @@ public class GuokrDetailPresenter  implements GuokrDetailContract.Presenter, OnS
     private String imageUrl;
 
     private SharedPreferences sp;
+    private DatabaseHelper dbHelper;
 
     private String post;
 
@@ -52,6 +53,7 @@ public class GuokrDetailPresenter  implements GuokrDetailContract.Presenter, OnS
         this.view.setPresenter(this);
         model = new StringModelImpl(activity);
         sp = activity.getSharedPreferences("user_settings",MODE_PRIVATE);
+        dbHelper = new DatabaseHelper(activity, "History.db", null, 5);
     }
 
     @Override
@@ -65,7 +67,7 @@ public class GuokrDetailPresenter  implements GuokrDetailContract.Presenter, OnS
         if (NetworkState.networkConnected(activity)) {
             model.load(Api.GUOKR_ARTICLE_LINK_V1 + id, this);
         } else {
-            Cursor cursor = new DatabaseHelper(activity, "History.db", null, 4).getReadableDatabase()
+            Cursor cursor = dbHelper.getReadableDatabase()
                     .query("Guokr", null, null, null, null, null, null);
             if (cursor.moveToFirst()) {
                 do {
@@ -159,8 +161,44 @@ public class GuokrDetailPresenter  implements GuokrDetailContract.Presenter, OnS
     }
 
     @Override
-    public void addToOrDeleteFromBookmarks() {
+    public boolean queryIfIsBookmarked() {
+        Cursor cursor = dbHelper.getReadableDatabase()
+                .rawQuery("select * from Guokr where guokr_id = ?", new String[]{String.valueOf(id)});
 
+        if (cursor.moveToFirst()) {
+            do {
+                int isBookmarked = cursor.getInt(cursor.getColumnIndex("bookmark"));
+                if (isBookmarked == 1) {
+                    return true;
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return false;
+    }
+
+    @Override
+    public void addToOrDeleteFromBookmarks() {
+        if (queryIfIsBookmarked()) {
+
+            dbHelper.getWritableDatabase().execSQL(
+                    "update Guokr set bookmark = ? where guokr_id = ?",
+                    new Object[]{Integer.valueOf(0), String.valueOf(id)}
+            );
+
+            view.showDeletedFromBookmarks();
+
+        } else {
+
+            dbHelper.getWritableDatabase().execSQL(
+                    "update Guokr set bookmark = ? where guokr_id = ?",
+                    new Object[]{Integer.valueOf(1), String.valueOf(id)}
+            );
+
+            view.showAddedToBookmarks();
+
+        }
     }
 
     @Override

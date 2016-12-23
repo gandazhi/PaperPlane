@@ -9,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.db.DatabaseHelper;
@@ -41,7 +42,7 @@ public class GuokrPresenter implements GuokrContract.Presenter {
         this.view = view;
         view.setPresenter(this);
         model = new StringModelImpl(context);
-        dbHelper = new DatabaseHelper(context, "History.db", null, 4);
+        dbHelper = new DatabaseHelper(context, "History.db", null, 5);
         db = dbHelper.getWritableDatabase();
     }
 
@@ -74,40 +75,46 @@ public class GuokrPresenter implements GuokrContract.Presenter {
                     // 所以不存在加载指定日期内容的操作，当要请求数据时一定是在进行刷新
                     list.clear();
 
-                    GuokrHandpickNews question = gson.fromJson(result, GuokrHandpickNews.class);
+                    try {
 
-                    for (GuokrHandpickNews.result re : question.getResult()){
+                        GuokrHandpickNews question = gson.fromJson(result, GuokrHandpickNews.class);
 
-                        list.add(re);
+                        for (GuokrHandpickNews.result re : question.getResult()){
 
-                        if(!queryIfIDExists(re.getId())) {
-                            try {
-                                db.beginTransaction();
-                                ContentValues values = new ContentValues();
-                                values.put("guokr_id", re.getId());
-                                values.put("guokr_news", gson.toJson(re));
-                                values.put("guokr_content", "");
-                                values.put("guokr_time", (long)re.getDate_picked());
-                                db.insert("Guokr", null, values);
-                                values.clear();
-                                db.setTransactionSuccessful();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            } finally {
-                                db.endTransaction();
+                            list.add(re);
+
+                            if(!queryIfIDExists(re.getId())) {
+                                try {
+                                    db.beginTransaction();
+                                    ContentValues values = new ContentValues();
+                                    values.put("guokr_id", re.getId());
+                                    values.put("guokr_news", gson.toJson(re));
+                                    values.put("guokr_content", "");
+                                    values.put("guokr_time", (long)re.getDate_picked());
+                                    db.insert("Guokr", null, values);
+                                    values.clear();
+                                    db.setTransactionSuccessful();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                } finally {
+                                    db.endTransaction();
+                                }
+
                             }
 
+                            Intent intent = new Intent("com.marktony.zhihudaily.LOCAL_BROADCAST");
+                            intent.putExtra("type", CacheService.TYPE_GUOKR);
+                            intent.putExtra("id", re.getId());
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
                         }
+                        view.showResults(list);
 
-                        Intent intent = new Intent("com.marktony.zhihudaily.LOCAL_BROADCAST");
-                        intent.putExtra("type", CacheService.TYPE_GUOKR);
-                        intent.putExtra("id", re.getId());
-                        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-
+                    } catch (JsonSyntaxException e) {
+                        view.showError();
                     }
 
                     view.stopLoading();
-                    view.showResults(list);
 
                 }
 

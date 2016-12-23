@@ -15,6 +15,7 @@ import android.webkit.WebView;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.app.App;
 import com.marktony.zhihudaily.bean.StringModelImpl;
@@ -43,6 +44,7 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
     private int id;
 
     private SharedPreferences sp;
+    private DatabaseHelper dbHelper;
 
     public ZhihuDetailPresenter(AppCompatActivity activity, ZhihuDetailContract.View view) {
         this.activity = activity;
@@ -50,6 +52,7 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
         this.view.setPresenter(this);
         this.model = new StringModelImpl(activity);
         sp = activity.getSharedPreferences("user_settings",MODE_PRIVATE);
+        dbHelper = new DatabaseHelper(activity, "History.db", null, 5);
     }
 
     @Override
@@ -59,17 +62,23 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
 
     @Override
     public void openInBrowser() {
+
+        if (story == null) {
+            view.showLoadingError();
+            return;
+        }
+
         try {
             activity.startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(story.getShare_url())));
         } catch (android.content.ActivityNotFoundException ex){
-            view.showLoadError();
+            view.showBrowserNotFoundError();
         }
     }
 
     @Override
     public void shareAsText() {
         if (story == null) {
-            view.showShareError();
+            view.showSharingError();
             return;
         }
         try {
@@ -78,7 +87,7 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
             shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
             activity.startActivity(Intent.createChooser(shareIntent, activity.getString(R.string.share_to)));
         } catch (android.content.ActivityNotFoundException ex){
-            view.showShareError();
+            view.showSharingError();
         }
     }
 
@@ -89,22 +98,21 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
             model.load(Api.ZHIHU_NEWS + id, this);
         } else {
             Gson gson = new Gson();
-            Cursor cursor = new DatabaseHelper(activity, "History.db", null, 4).getReadableDatabase()
+            Cursor cursor = dbHelper.getReadableDatabase()
                     .query("Zhihu", null, null, null, null, null, null);
             if (cursor.moveToFirst()) {
                 do {
                     if (cursor.getInt(cursor.getColumnIndex("zhihu_id")) == id) {
                         String content = cursor.getString(cursor.getColumnIndex("zhihu_content"));
-                        story = gson.fromJson(content, ZhihuDailyStory.class);
-                        if (story == null) {
+                        try {
+                            story = gson.fromJson(content, ZhihuDailyStory.class);
+                        } catch (JsonSyntaxException e) {
                             view.showResult(content);
-                        } else {
-                            view.showResult(convertResult(story.getBody()));
-                            view.setUsingLocalImage();
-                            view.setImageMode(sp.getBoolean("no_picture_mode",false));
-                            view.setTitle(story.getTitle());
-
                         }
+                        view.showResult(convertResult(story.getBody()));
+                        view.setUsingLocalImage();
+                        view.setImageMode(sp.getBoolean("no_picture_mode",false));
+                        view.setTitle(story.getTitle());
                     }
                 } while (cursor.moveToNext());
             }
@@ -191,20 +199,71 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
     @Override
     public void addToOrDeleteFromBookmarks() {
 
+        if (story == null) {
+            view.showLoadingError();
+            return;
+        }
+
+        // if this is bookmarked, delete it
+        // or add to bookmarks
+        if (queryIfIsBookmarked()) {
+
+            // delete
+            dbHelper.getWritableDatabase().execSQL(
+                    "update Zhihu set bookmark = ? where zhihu_id = ?",
+                    new Object[]{Integer.valueOf(0), String.valueOf(id)}
+            );
+
+            view.showDeletedFromBookmarks();
+
+        } else {
+
+            // add
+            dbHelper.getWritableDatabase().execSQL(
+                    "update Zhihu set bookmark = ? where zhihu_id = ?",
+                    new Object[]{Integer.valueOf(1), String.valueOf(id)}
+            );
+
+            view.showAddedToBookmarks();
+
+        }
+    }
+
+    @Override
+    public boolean queryIfIsBookmarked() {
+
+        Cursor cursor = dbHelper.getReadableDatabase()
+                .rawQuery("select * from Zhihu where zhihu_id = ?", new String[]{String.valueOf(id)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int isBookmarked = cursor.getInt(cursor.getColumnIndex("bookmark"));
+                if (isBookmarked == 1) {
+                    return true;
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return false;
     }
 
     @Override
     public void onSuccess(String result) {
         Gson gson = new Gson();
-        story = gson.fromJson(result, ZhihuDailyStory.class);
-        if (story.getBody() == null) {
-            view.showResultWithoutBody(story.getShare_url());
-            view.setUsingLocalImage();
-        } else {
-            view.showResult(convertResult(story.getBody()));
-            view.showMainImage(story.getImage());
-            view.setImageMode(sp.getBoolean("no_picture_mode",false));
-            view.setTitle(story.getTitle());
+        try {
+            story = gson.fromJson(result, ZhihuDailyStory.class);
+            if (story.getBody() == null) {
+                view.showResultWithoutBody(story.getShare_url());
+                view.setUsingLocalImage();
+            } else {
+                view.showResult(convertResult(story.getBody()));
+                view.showMainImage(story.getImage());
+                view.setImageMode(sp.getBoolean("no_picture_mode",false));
+                view.setTitle(story.getTitle());
+            }
+        } catch (JsonSyntaxException e) {
+            view.showLoadingError();
         }
         view.stopLoading();
     }
@@ -212,7 +271,7 @@ public class ZhihuDetailPresenter implements ZhihuDetailContract.Presenter, OnSt
     @Override
     public void onError(VolleyError error) {
         view.stopLoading();
-        view.showLoadError();
+        view.showLoadingError();
     }
 
     private String convertResult(String preReuslt) {

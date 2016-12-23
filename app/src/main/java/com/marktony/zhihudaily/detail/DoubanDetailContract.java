@@ -21,9 +21,9 @@ public interface DoubanDetailContract {
 
         void showResult(String result);
 
-        void showLoadError();
+        void showLoadingError();
 
-        void showShareError();
+        void showSharingError();
 
         void showMainImage(String imageUrl);
 
@@ -34,6 +34,10 @@ public interface DoubanDetailContract {
         void showTextCopied();
 
         void showCopyTextError();
+
+        void showAddedToBookmarks();
+
+        void showDeletedFromBookmarks();
 
     }
 
@@ -56,6 +60,8 @@ public interface DoubanDetailContract {
         void copyLink();
 
         void addToOrDeleteFromBookmarks();
+
+        boolean queryIfIsBookmarked();
 
     }
 

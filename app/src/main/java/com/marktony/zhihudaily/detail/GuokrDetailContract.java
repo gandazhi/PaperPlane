@@ -35,6 +35,10 @@ public interface GuokrDetailContract {
 
         void showCopyTextError();
 
+        void showAddedToBookmarks();
+
+        void showDeletedFromBookmarks();
+
     }
 
     interface Presenter extends BasePresenter {
@@ -54,6 +58,8 @@ public interface GuokrDetailContract {
         void reload();
 
         void copyText();
+
+        boolean queryIfIsBookmarked();
 
         void addToOrDeleteFromBookmarks();
 

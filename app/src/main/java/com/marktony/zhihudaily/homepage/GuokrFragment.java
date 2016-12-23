@@ -16,7 +16,6 @@ import com.marktony.zhihudaily.adapter.GuokrNewsAdapter;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.interfaze.OnRecyclerViewOnClickListener;
-import com.marktony.zhihudaily.DividerItemDecoration;
 
 import java.util.ArrayList;
 
@@ -78,7 +77,7 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_guokr_handpick);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
+
         refreshGuokr = (SwipeRefreshLayout) view.findViewById(R.id.refresh_guokr);
         //设置下拉刷新的按钮的颜色
         refreshGuokr.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);

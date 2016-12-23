@@ -21,6 +21,8 @@
     <string name="go_to_set">设置</string>
     <string name="copied_to_clipboard">复制成功</string>
     <string name="copied_to_clipboard_failed">复制失败</string>
+    <string name="added_to_bookmarks">已添加到收藏</string>
+    <string name="deleted_from_bookmarks">已从收藏中删除</string>
 
     <string name="feel_lucky">随便看看</string>
     <string name="feel_lucky_short">随便看看</string>

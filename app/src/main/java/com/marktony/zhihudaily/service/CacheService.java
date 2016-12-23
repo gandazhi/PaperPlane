@@ -48,7 +48,7 @@ public class CacheService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        dbHelper = new DatabaseHelper(this,"History.db",null,4);
+        dbHelper = new DatabaseHelper(this, "History.db", null, 5);
         db = dbHelper.getWritableDatabase();
 
         IntentFilter filter = new IntentFilter();

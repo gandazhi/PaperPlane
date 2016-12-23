@@ -1,13 +1,9 @@
 package com.marktony.zhihudaily.detail;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.app.App;
-import com.marktony.zhihudaily.db.DatabaseHelper;
 
 public class ZhihuDetailActivity extends AppCompatActivity {
 

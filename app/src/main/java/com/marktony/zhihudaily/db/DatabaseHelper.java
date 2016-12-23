@@ -38,6 +38,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "douban_time real,"
                 + "douban_content text)");
 
+        db.execSQL("alter table Zhihu add column bookmark integer default 0");
+        db.execSQL("alter table Guokr add column bookmark integer default 0");
+        db.execSQL("alter table Douban add column bookmark integer default 0");
+
     }
 
     @Override
@@ -87,6 +91,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + "douban_news text,"
                         + "douban_time integer,"
                         + "douban_content text)");
+            case 4:
+                /**
+                 * bookmark means if this obj is bookmarked
+                 * it has 2 value, 0 and 1
+                 * because SQLite doesn't has a boolean value
+                 * so use the 0 and 1 value replaced
+                 * 0 --> NOT MARKED, 1 ---> MARKED
+                 * and when exit the app, the obj's whose bookmark value is 1
+                 * should NOT be deleted.
+                 */
+                db.execSQL("alter table Zhihu add column bookmark integer default 0");
+                db.execSQL("alter table Guokr add column bookmark integer default 0");
+                db.execSQL("alter table Douban add column bookmark integer default 0");
 
         }
     }
