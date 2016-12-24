@@ -46,7 +46,8 @@ public class BookmarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public BookmarksAdapter(@NonNull Context context,
                             ArrayList<ZhihuDailyNews.Question> zhihuList,
                             ArrayList<GuokrHandpickNews.result> guokrList,
-                            ArrayList<DoubanMomentNews.posts> doubanList) {
+                            ArrayList<DoubanMomentNews.posts> doubanList,
+                            ArrayList<Integer> types) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
 
@@ -55,24 +56,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.doubanList = doubanList;
 
         // types.size = zhihuList.size + guokrList.size + doubanList.size
-        types = new ArrayList<>();
-
-        // every first one of the 3 lists is with header
-        // add them in advance
-        types.add(TYPE_ZHIHU_WITH_HEADER);
-        for (int i = 0; i < zhihuList.size(); i++) {
-            types.add(TYPE_ZHIHU_NORMAL);
-        }
-
-        types.add(TYPE_GUOKR_WITH_HEADER);
-        for (int i = 0; i < guokrList.size(); i++) {
-            types.add(TYPE_GUOKR_NORMAL);
-        }
-
-        types.add(TYPE_DOUBAN_WITH_HEADER);
-        for (int i = 0; i < doubanList.size(); i++) {
-            types.add(TYPE_DOUBAN_NORMAL);
-        }
+        this.types = types;
 
     }
 
@@ -178,7 +162,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return zhihuList.size() + guokrList.size() + doubanList.size() + 3;
+        return types.size();
     }
 
     public void setItemListener(OnRecyclerViewOnClickListener listener) {

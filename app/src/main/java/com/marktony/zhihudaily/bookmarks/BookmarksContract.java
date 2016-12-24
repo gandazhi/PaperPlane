@@ -17,8 +17,9 @@ public interface BookmarksContract {
     interface View extends BaseView<Presenter> {
 
         void showResults(ArrayList<ZhihuDailyNews.Question> zhihuList,
-                        ArrayList<GuokrHandpickNews.result> guokrList,
-                        ArrayList<DoubanMomentNews.posts> doubanList);
+                         ArrayList<GuokrHandpickNews.result> guokrList,
+                         ArrayList<DoubanMomentNews.posts> doubanList,
+                         ArrayList<Integer> types);
 
         void notifyDataChanged();
 
@@ -38,7 +39,7 @@ public interface BookmarksContract {
 
         void startDoubanReading(int position);
 
-        void refresh();
+        void checkForFreshData();
 
     }
 

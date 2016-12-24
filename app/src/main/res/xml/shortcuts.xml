@@ -11,7 +11,7 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.marktony.zhihudaily"
-            android:targetClass="com.marktony.zhihudaily.SearchActivity" />
+            android:targetClass="com.marktony.zhihudaily.search.SearchActivity" />
 
         <categories android:name="android.shortcut.conversation" />
 
@@ -27,7 +27,33 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.marktony.zhihudaily"
-            android:targetClass="com.marktony.zhihudaily.SearchActivity" />
+            android:targetClass="com.marktony.zhihudaily.detail.ZhihuDetailActivity" />
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.marktony.zhihudaily"
+            android:targetClass="com.marktony.zhihudaily.detail.GuokrDetailActivity" />
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.marktony.zhihudaily"
+            android:targetClass="com.marktony.zhihudaily.detail.DoubanDetailActivity" />
+
+        <categories android:name="android.shortcut.conversation" />
+
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_star_circle"
+        android:shortcutId="bookmark"
+        android:shortcutShortLabel="@string/check_bookmarks"
+        android:shortcutLongLabel="@string/check_bookmarks">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.marktony.zhihudaily"
+            android:targetClass="com.marktony.zhihudaily.homepage.MainActivity" />
 
         <categories android:name="android.shortcut.conversation" />
 

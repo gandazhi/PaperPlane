@@ -14,8 +14,17 @@ import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.detail.DoubanDetailActivity;
 import com.marktony.zhihudaily.detail.GuokrDetailActivity;
 import com.marktony.zhihudaily.detail.ZhihuDetailActivity;
+import com.marktony.zhihudaily.homepage.MainActivity;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.marktony.zhihudaily.adapter.BookmarksAdapter.TYPE_DOUBAN_NORMAL;
+import static com.marktony.zhihudaily.adapter.BookmarksAdapter.TYPE_DOUBAN_WITH_HEADER;
+import static com.marktony.zhihudaily.adapter.BookmarksAdapter.TYPE_GUOKR_NORMAL;
+import static com.marktony.zhihudaily.adapter.BookmarksAdapter.TYPE_GUOKR_WITH_HEADER;
+import static com.marktony.zhihudaily.adapter.BookmarksAdapter.TYPE_ZHIHU_NORMAL;
+import static com.marktony.zhihudaily.adapter.BookmarksAdapter.TYPE_ZHIHU_WITH_HEADER;
 
 /**
  * Created by lizhaotailang on 2016/12/23.
@@ -31,6 +40,8 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
     private ArrayList<GuokrHandpickNews.result> guokrList;
     private ArrayList<ZhihuDailyNews.Question> zhihuList;
 
+    private ArrayList<Integer> types;
+
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
 
@@ -45,6 +56,8 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
         zhihuList = new ArrayList<>();
         guokrList = new ArrayList<>();
         doubanList = new ArrayList<>();
+
+        types = new ArrayList<>();
 
     }
 
@@ -62,35 +75,12 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
             zhihuList.clear();
             guokrList.clear();
             doubanList.clear();
+            types.clear();
         }
 
-        Cursor cursor = db.rawQuery("select * from Zhihu where bookmark = ?", new String[]{"1"});
-        if (cursor.moveToFirst()) {
-            do {
-                ZhihuDailyNews.Question question = gson.fromJson(cursor.getString(cursor.getColumnIndex("zhihu_news")), ZhihuDailyNews.Question.class);
-                zhihuList.add(question);
-            } while (cursor.moveToNext());
-        }
+        checkForFreshData();
 
-        cursor = db.rawQuery("select * from Guokr where bookmark = ?", new String[]{"1"});
-        if (cursor.moveToFirst()) {
-            do {
-                GuokrHandpickNews.result result = gson.fromJson(cursor.getString(cursor.getColumnIndex("guokr_news")), GuokrHandpickNews.result.class);
-                guokrList.add(result);
-            } while (cursor.moveToNext());
-        }
-
-        cursor = db.rawQuery("select * from Douban where bookmark = ?", new String[]{"1"});
-        if (cursor.moveToFirst()) {
-            do {
-                DoubanMomentNews.posts post = gson.fromJson(cursor.getString(cursor.getColumnIndex("douban_news")), DoubanMomentNews.posts.class);
-                doubanList.add(post);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-
-        view.showResults(zhihuList, guokrList, doubanList);
+        view.showResults(zhihuList, guokrList, doubanList, types);
 
         view.stopLoading();
 
@@ -125,12 +115,49 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
         } else {
             intent.putExtra("image", item.getThumbs().get(0).getMedium().getUrl());
         }
+
         context.startActivity(intent);
+
     }
 
     @Override
-    public void refresh() {
-        loadResults(true);
+    public void checkForFreshData() {
+
+        // every first one of the 3 lists is with header
+        // add them in advance
+
+        types.add(TYPE_ZHIHU_WITH_HEADER);
+        Cursor cursor = db.rawQuery("select * from Zhihu where bookmark = ?", new String[]{"1"});
+        if (cursor.moveToFirst()) {
+            do {
+                ZhihuDailyNews.Question question = gson.fromJson(cursor.getString(cursor.getColumnIndex("zhihu_news")), ZhihuDailyNews.Question.class);
+                zhihuList.add(question);
+                types.add(TYPE_ZHIHU_NORMAL);
+            } while (cursor.moveToNext());
+        }
+
+        types.add(TYPE_GUOKR_WITH_HEADER);
+        cursor = db.rawQuery("select * from Guokr where bookmark = ?", new String[]{"1"});
+        if (cursor.moveToFirst()) {
+            do {
+                GuokrHandpickNews.result result = gson.fromJson(cursor.getString(cursor.getColumnIndex("guokr_news")), GuokrHandpickNews.result.class);
+                guokrList.add(result);
+                types.add(TYPE_GUOKR_NORMAL);
+            } while (cursor.moveToNext());
+        }
+
+        types.add(TYPE_DOUBAN_WITH_HEADER);
+        cursor = db.rawQuery("select * from Douban where bookmark = ?", new String[]{"1"});
+        if (cursor.moveToFirst()) {
+            do {
+                DoubanMomentNews.posts post = gson.fromJson(cursor.getString(cursor.getColumnIndex("douban_news")), DoubanMomentNews.posts.class);
+                doubanList.add(post);
+                types.add(TYPE_DOUBAN_NORMAL);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
     }
 
 }

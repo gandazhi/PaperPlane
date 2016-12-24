@@ -31,6 +31,7 @@
     <string name="feel_lucky">随便看看</string>
     <string name="feel_lucky_short">随便看看</string>
     <string name="search_bookmarks">搜索收藏</string>
+    <string name="check_bookmarks">查看收藏</string>
 
     <!--bottom sheet list-->
     <string name="action_add_to_bookmarks">添加到收藏</string>

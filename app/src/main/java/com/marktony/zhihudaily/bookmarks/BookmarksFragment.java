@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.SearchActivity;
+import com.marktony.zhihudaily.search.SearchActivity;
 import com.marktony.zhihudaily.adapter.BookmarksAdapter;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
@@ -107,10 +107,12 @@ public class BookmarksFragment extends Fragment
     @Override
     public void showResults(ArrayList<ZhihuDailyNews.Question> zhihuList,
                             ArrayList<GuokrHandpickNews.result> guokrList,
-                            ArrayList<DoubanMomentNews.posts> doubanList) {
+                            ArrayList<DoubanMomentNews.posts> doubanList,
+                            ArrayList<Integer> types) {
 
         if (adapter == null) {
-            adapter = new BookmarksAdapter(getActivity(), zhihuList, guokrList, doubanList);
+
+            adapter = new BookmarksAdapter(getActivity(), zhihuList, guokrList, doubanList, types);
             adapter.setItemListener(new OnRecyclerViewOnClickListener() {
                 @Override
                 public void OnItemClick(View v, int position) {
@@ -131,7 +133,8 @@ public class BookmarksFragment extends Fragment
 
     @Override
     public void notifyDataChanged() {
-        presenter.refresh();
+        presenter.loadResults(true);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

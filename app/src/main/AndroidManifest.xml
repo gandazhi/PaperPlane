@@ -67,7 +67,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"/>
 
-        <activity android:name=".SearchActivity"
+        <activity android:name=".search.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/search_bookmarks"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout">

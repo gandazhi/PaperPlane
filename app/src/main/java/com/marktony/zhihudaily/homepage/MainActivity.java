@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private Toolbar toolbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +99,9 @@ public class MainActivity extends AppCompatActivity
 
         toolbar.setTitle(getResources().getString(R.string.nav_bookmarks));
 
-        /*bookmarksFragment.notifyDataChanged();*/
+        if (bookmarksFragment.isAdded()) {
+            bookmarksFragment.notifyDataChanged();
+        }
 
     }
 
