@@ -7,6 +7,10 @@
     <string name="nav_home">首页</string>
     <string name="nav_bookmarks">收藏</string>
 
+    <string name="zhihu_daily">知乎日报</string>
+    <string name="guokr_handpick">果壳精选</string>
+    <string name="douban_moment">豆瓣一刻</string>
+
     <!--常用-->
     <string name="positive">确定</string>
     <string name="negative">取消</string>

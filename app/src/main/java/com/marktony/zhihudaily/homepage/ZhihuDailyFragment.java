@@ -1,7 +1,6 @@
 package com.marktony.zhihudaily.homepage;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -60,7 +59,7 @@ public class ZhihuDailyFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_douban_zhihu_daily,container,false);
+        View view = inflater.inflate(R.layout.fragment_list,container,false);
 
         initViews(view);
 
@@ -146,27 +145,16 @@ public class ZhihuDailyFragment extends Fragment
     @Override
     public void initViews(View view) {
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_main);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        //设置下拉刷新的按钮的颜色
+        refresh.setColorSchemeResources(R.color.colorPrimary);
 
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
-
-        //设置下拉刷新的按钮的颜色
-        refresh.setColorSchemeResources(
-                android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        //设置手指在屏幕上下拉多少距离开始刷新
-        refresh.setDistanceToTriggerSync(300);
-        //设置下拉刷新按钮的背景颜色
-        refresh.setProgressBackgroundColorSchemeColor(Color.WHITE);
-        //设置下拉刷新按钮的大小
-        refresh.setSize(SwipeRefreshLayout.DEFAULT);
 
         tabLayout = (TabLayout) getActivity().findViewById(R.id.tab_layout);
 
@@ -174,7 +162,14 @@ public class ZhihuDailyFragment extends Fragment
 
     @Override
     public void showError() {
-        Snackbar.make(fab, R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(fab, R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.refresh();
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -211,17 +206,6 @@ public class ZhihuDailyFragment extends Fragment
         } else {
             adapter.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void showNetworkError() {
-        Snackbar.make(fab,R.string.no_network_connected,Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.go_to_set, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        presenter.goToSettings();
-                    }
-                }).show();
     }
 
     @Override

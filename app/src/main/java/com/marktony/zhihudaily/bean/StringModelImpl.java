@@ -2,6 +2,7 @@ package com.marktony.zhihudaily.bean;
 
 import android.content.Context;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -32,6 +33,11 @@ public class StringModelImpl {
                 listener.onError(volleyError);
             }
         });
+
+        request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         VolleySingleton.getVolleySingleton(context).addToRequestQueue(request);
     }
 

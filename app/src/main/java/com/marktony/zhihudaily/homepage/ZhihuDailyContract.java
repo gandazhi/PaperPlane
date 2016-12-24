@@ -22,8 +22,6 @@ public interface ZhihuDailyContract {
 
         void showResults(ArrayList<ZhihuDailyNews.Question> list);
 
-        void showNetworkError();
-
         void showPickDialog();
 
     }
@@ -37,8 +35,6 @@ public interface ZhihuDailyContract {
         void loadMore(long date);
 
         void startReading(int position);
-
-        void goToSettings();
 
     }
 

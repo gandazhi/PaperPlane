@@ -1,6 +1,5 @@
 package com.marktony.zhihudaily.homepage;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -55,7 +54,7 @@ public class DoubanMomentFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_douban_zhihu_daily, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         initViews(view);
 
@@ -120,46 +119,27 @@ public class DoubanMomentFragment extends Fragment
     @Override
     public void initViews(View view) {
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_main);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
 
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
         //设置下拉刷新的按钮的颜色
-        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        //设置手指在屏幕上下拉多少距离开始刷新
-        refreshLayout.setDistanceToTriggerSync(300);
-        //设置下拉刷新按钮的背景颜色
-        refreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
-        //设置下拉刷新按钮的大小
-        refreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
     }
 
     @Override
     public void startLoading() {
-        refreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-            }
-        });
+        refreshLayout.setRefreshing(true);
     }
 
     @Override
     public void stopLoading() {
-        refreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(false);
-            }
-        });
+        refreshLayout.setRefreshing(false);
     }
 
     @Override

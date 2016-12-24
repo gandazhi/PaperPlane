@@ -1,6 +1,5 @@
 package com.marktony.zhihudaily.homepage;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -27,7 +26,7 @@ import java.util.ArrayList;
 public class GuokrFragment extends Fragment implements GuokrContract.View{
 
     private RecyclerView recyclerView;
-    private SwipeRefreshLayout refreshGuokr;
+    private SwipeRefreshLayout refreshLayout;
     private GuokrNewsAdapter adapter;
     private GuokrContract.Presenter presenter;
 
@@ -49,13 +48,13 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_guokr,container,false);
+        View view = inflater.inflate(R.layout.fragment_list,container,false);
 
         initViews(view);
 
         presenter.start();
 
-        refreshGuokr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 presenter.refresh();
@@ -74,19 +73,15 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
     @Override
     public void initViews(View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_guokr_handpick);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        refreshGuokr = (SwipeRefreshLayout) view.findViewById(R.id.refresh_guokr);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
         //设置下拉刷新的按钮的颜色
-        refreshGuokr.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
-        //设置手指在屏幕上下拉多少距离开始刷新
-        refreshGuokr.setDistanceToTriggerSync(300);
-        //设置下拉刷新按钮的背景颜色
-        refreshGuokr.setProgressBackgroundColorSchemeColor(Color.WHITE);
-        //设置下拉刷新按钮的大小
-        refreshGuokr.setSize(SwipeRefreshLayout.DEFAULT);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
+
     }
 
     @Override
@@ -113,22 +108,12 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
     @Override
     public void showLoading() {
-        refreshGuokr.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshGuokr.setRefreshing(true);
-            }
-        });
+        refreshLayout.setRefreshing(true);
     }
 
     @Override
     public void stopLoading() {
-        refreshGuokr.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshGuokr.setRefreshing(false);
-            }
-        });
+        refreshLayout.setRefreshing(false);
     }
 
 }

@@ -2,7 +2,6 @@ package com.marktony.zhihudaily.detail;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
@@ -185,15 +184,9 @@ public class GuokrDetailFragment extends Fragment
     @Override
     public void initViews(View view) {
 
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
         //设置下拉刷新的按钮的颜色
-        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
-        //设置手指在屏幕上下拉多少距离开始刷新
-        refreshLayout.setDistanceToTriggerSync(300);
-        //设置下拉刷新按钮的背景颜色
-        refreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
-        //设置下拉刷新按钮的大小
-        refreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         AppCompatActivity activity = (GuokrDetailActivity) getActivity();
         activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));

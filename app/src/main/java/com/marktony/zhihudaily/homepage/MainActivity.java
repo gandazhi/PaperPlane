@@ -13,12 +13,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.about.AboutPreferenceActivity;
 import com.marktony.zhihudaily.bookmarks.BookmarksFragment;
+import com.marktony.zhihudaily.bookmarks.BookmarksPresenter;
 import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.settings.SettingsPreferenceActivity;
 
@@ -89,14 +89,18 @@ public class MainActivity extends AppCompatActivity
     private void showBookmarksFragment() {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
         if (!bookmarksFragment.isAdded()) {
             fragmentTransaction.add(R.id.layout_fragment, bookmarksFragment, "BookmarksFragment");
+            new BookmarksPresenter(this, bookmarksFragment);
         }
         fragmentTransaction.show(bookmarksFragment);
         fragmentTransaction.hide(mainFragment);
         fragmentTransaction.commit();
 
         toolbar.setTitle(getResources().getString(R.string.nav_bookmarks));
+
+        /*bookmarksFragment.notifyDataChanged();*/
 
     }
 
@@ -131,6 +135,5 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Log.d("!!!!!", "changed");
     }
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
@@ -133,14 +132,8 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
                 view.stopLoading();
                 view.showResults(list);
 
-                //当第一次安装应用，并且没有打开网络时
-                //此时既无法网络加载，也无法本地加载
-                if (list.isEmpty()) {
-                    view.showNetworkError();
-                }
-
             } else {
-                view.showNetworkError();
+                view.showError();
             }
 
         }
@@ -161,11 +154,6 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
         context.startActivity(new Intent(context, ZhihuDetailActivity.class)
                 .putExtra("id",list.get(position).getId())
         );
-    }
-
-    @Override
-    public void goToSettings() {
-        context.startActivity(new Intent(Settings.ACTION_SETTINGS));
     }
 
     @Override

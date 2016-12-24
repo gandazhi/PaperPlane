@@ -40,7 +40,11 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public MainPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
-        titles = context.getResources().getStringArray(R.array.page_titles);
+        titles = new String[] {
+                context.getResources().getString(R.string.zhihu_daily),
+                context.getResources().getString(R.string.guokr_handpick),
+                context.getResources().getString(R.string.douban_moment)
+        };
     }
 
     @Override

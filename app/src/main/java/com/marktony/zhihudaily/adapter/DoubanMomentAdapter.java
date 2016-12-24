@@ -63,6 +63,7 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 Glide.with(context)
                         .load(item.getThumbs().get(0).getMedium().getUrl())
                         .asBitmap()
+                        .placeholder(R.drawable.placeholder)
                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                         .error(R.drawable.placeholder)
                         .centerCrop()

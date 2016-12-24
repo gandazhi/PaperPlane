@@ -3,7 +3,7 @@
 
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_search_bookmarks"
+        android:icon="@drawable/ic_search_circle"
         android:shortcutId="search_bookmarks"
         android:shortcutShortLabel="@string/search_bookmarks"
         android:shortcutLongLabel="@string/search_bookmarks">
@@ -19,7 +19,7 @@
 
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_random"
+        android:icon="@drawable/ic_shuffle_circle"
         android:shortcutId="feel_lucky"
         android:shortcutShortLabel="@string/feel_lucky_short"
         android:shortcutLongLabel="@string/feel_lucky">

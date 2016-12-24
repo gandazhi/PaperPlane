@@ -4,6 +4,10 @@
     <string name="nav_home">Home</string>
     <string name="nav_bookmarks">Bookmarks</string>
 
+    <string name="zhihu_daily">Zhihu Daily</string>
+    <string name="guokr_handpick">Guokr Handpick</string>
+    <string name="douban_moment">Douban Moment</string>
+
     <!--general-->
     <string name="positive">@android:string/ok</string>
     <string name="negative">@android:string/cancel</string>
