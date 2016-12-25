@@ -1,7 +1,6 @@
 package com.marktony.zhihudaily.homepage;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,9 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.about.AboutPreferenceActivity;
 import com.marktony.zhihudaily.adapter.MainPagerAdapter;
-import com.marktony.zhihudaily.settings.SettingsPreferenceActivity;
+
+import java.util.Random;
 
 /**
  * Created by Lizhaotailang on 2016/8/23.
@@ -27,6 +26,7 @@ import com.marktony.zhihudaily.settings.SettingsPreferenceActivity;
 public class MainFragment extends Fragment {
 
     private Context context;
+    private MainPagerAdapter adapter;
 
     private TabLayout tabLayout;
 
@@ -91,7 +91,7 @@ public class MainFragment extends Fragment {
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         viewPager.setOffscreenPageLimit(3);
 
-        MainPagerAdapter adapter = new MainPagerAdapter(getChildFragmentManager(), context);
+        adapter = new MainPagerAdapter(getChildFragmentManager(), context);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -107,10 +107,29 @@ public class MainFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_random) {
-
+        if (id == R.id.action_feel_lucky) {
+            feelLucky();
         }
         return true;
     }
 
+    public void feelLucky() {
+        Random random = new Random();
+        int type = random.nextInt(3);
+        switch (type) {
+            case 0:
+                adapter.getZhihuPresenter().feelLucky();
+                break;
+            case 1:
+                adapter.getGuokrPresenter().feelLucky();
+                break;
+            default:
+                adapter.getDoubanPresenter().feelLucky();
+                break;
+        }
+    }
+
+    public MainPagerAdapter getAdapter() {
+        return adapter;
+    }
 }

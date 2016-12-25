@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Created by Lizhaotailang on 2016/9/16.
@@ -154,6 +155,15 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
         context.startActivity(new Intent(context, ZhihuDetailActivity.class)
                 .putExtra("id",list.get(position).getId())
         );
+    }
+
+    @Override
+    public void feelLucky() {
+        if (list.isEmpty()) {
+            view.showError();
+            return;
+        }
+        startReading(new Random().nextInt(list.size()));
     }
 
     @Override

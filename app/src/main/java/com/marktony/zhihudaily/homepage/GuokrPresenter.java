@@ -20,6 +20,7 @@ import com.marktony.zhihudaily.util.Api;
 import com.marktony.zhihudaily.util.NetworkState;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Lizhaotailang on 2016/9/15.
@@ -54,6 +55,15 @@ public class GuokrPresenter implements GuokrContract.Presenter {
                 .putExtra("headlineImageUrl", item.getHeadline_img())
                 .putExtra("title", item.getTitle())
         );
+    }
+
+    @Override
+    public void feelLucky() {
+        if (list.isEmpty()) {
+            view.showError();
+            return;
+        }
+        startReading(new Random().nextInt(list.size()));
     }
 
     @Override

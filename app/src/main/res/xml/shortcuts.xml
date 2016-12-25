@@ -24,20 +24,12 @@
         android:shortcutShortLabel="@string/feel_lucky_short"
         android:shortcutLongLabel="@string/feel_lucky">
 
+        <!--set a custom intent action string as a unique id
+       which activity can point out which fragment to launch-->
         <intent
-            android:action="android.intent.action.VIEW"
+            android:action="com.marktony.zhihudaily.homepage"
             android:targetPackage="com.marktony.zhihudaily"
-            android:targetClass="com.marktony.zhihudaily.detail.ZhihuDetailActivity" />
-
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetPackage="com.marktony.zhihudaily"
-            android:targetClass="com.marktony.zhihudaily.detail.GuokrDetailActivity" />
-
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetPackage="com.marktony.zhihudaily"
-            android:targetClass="com.marktony.zhihudaily.detail.DoubanDetailActivity" />
+            android:targetClass="com.marktony.zhihudaily.homepage.MainActivity" />
 
         <categories android:name="android.shortcut.conversation" />
 
@@ -51,7 +43,7 @@
         android:shortcutLongLabel="@string/check_bookmarks">
 
         <intent
-            android:action="android.intent.action.VIEW"
+            android:action="com.marktony.zhihudaily.bookmarks"
             android:targetPackage="com.marktony.zhihudaily"
             android:targetClass="com.marktony.zhihudaily.homepage.MainActivity" />
 

@@ -36,6 +36,8 @@ public interface ZhihuDailyContract {
 
         void startReading(int position);
 
+        void feelLucky();
+
     }
 
 }

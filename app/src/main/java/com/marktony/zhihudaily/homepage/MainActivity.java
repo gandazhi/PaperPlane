@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private Toolbar toolbar;
 
+    public static final String ACTION_BOOKMARKS = "com.marktony.zhihudaily.bookmarks";
+    public static final String ACTION_FEEL_LUCKY = "com.marktony.zhihudaily.homepage";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +43,21 @@ public class MainActivity extends AppCompatActivity
 
         initViews();
 
-        navigationView.setCheckedItem(R.id.nav_home);
-
         mainFragment = MainFragment.newInstance();
         bookmarksFragment = BookmarksFragment.newInstance();
 
-        showMainFragment();
+        String action = getIntent().getAction();
+
+        if (action.equals(ACTION_BOOKMARKS)) {
+            showBookmarksFragment();
+            navigationView.setCheckedItem(R.id.nav_bookmarks);
+        } else if (action.equals(ACTION_FEEL_LUCKY)) {
+            showMainFragment();
+            navigationView.setCheckedItem(R.id.nav_home);
+        } else {
+            showMainFragment();
+            navigationView.setCheckedItem(R.id.nav_home);
+        }
 
         startService(new Intent(this, CacheService.class));
 

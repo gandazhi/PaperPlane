@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.bookmarks;
+package com.marktony.zhihudaily.search;
 
 import com.marktony.zhihudaily.BasePresenter;
 import com.marktony.zhihudaily.BaseView;
@@ -9,10 +9,10 @@ import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import java.util.ArrayList;
 
 /**
- * Created by lizhaotailang on 2016/12/20.
+ * Created by lizhaotailang on 2016/12/25.
  */
 
-public interface BookmarksContract {
+public interface SearchContract {
 
     interface View extends BaseView<Presenter> {
 
@@ -20,8 +20,6 @@ public interface BookmarksContract {
                          ArrayList<GuokrHandpickNews.result> guokrList,
                          ArrayList<DoubanMomentNews.posts> doubanList,
                          ArrayList<Integer> types);
-
-        void notifyDataChanged();
 
         void showLoading();
 
@@ -31,17 +29,13 @@ public interface BookmarksContract {
 
     interface Presenter extends BasePresenter {
 
-        void loadResults(boolean refresh);
+        void loadResults(String queryWords);
 
         void startZhihuReading(int position);
 
         void startGuokrReading(int position);
 
         void startDoubanReading(int position);
-
-        void checkForFreshData();
-
-        void feelLucky();
 
     }
 

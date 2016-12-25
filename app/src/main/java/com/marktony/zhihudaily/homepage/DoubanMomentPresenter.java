@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Created by Lizhaotailang on 2016/9/10.
@@ -169,6 +170,15 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
     @Override
     public void goToSettings() {
         context.startActivity(new Intent(Settings.ACTION_SETTINGS));
+    }
+
+    @Override
+    public void feelLucky() {
+        if (list.isEmpty()) {
+            view.showLoadingError();
+            return;
+        }
+        startReading(new Random().nextInt(list.size()));
     }
 
     @Override

@@ -40,6 +40,8 @@ public interface DoubanMomentContract {
 
         void goToSettings();
 
+        void feelLucky();
+
     }
 
 }

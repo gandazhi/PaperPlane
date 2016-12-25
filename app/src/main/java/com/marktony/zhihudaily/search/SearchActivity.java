@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.marktony.zhihudaily.R;
 
@@ -17,15 +18,15 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_search_bookmarks);
+        setContentView(R.layout.frame);
 
+        SearchFragment fragment = SearchFragment.newInstance();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, fragment)
+                .commit();
 
-        SearchView searchView = (SearchView) findViewById(R.id.searchView);
-        searchView.setIconified(false);
+        new SearchPresenter(this, fragment);
 
     }
 }

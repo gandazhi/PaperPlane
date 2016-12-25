@@ -32,6 +32,8 @@ public interface GuokrContract {
 
         void startReading(int position);
 
+        void feelLucky();
+
     }
 
 }
