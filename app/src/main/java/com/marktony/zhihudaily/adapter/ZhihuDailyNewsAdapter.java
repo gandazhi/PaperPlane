@@ -61,6 +61,8 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } else {
                 Glide.with(context)
                         .load(item.getImages().get(0))
+                        .asBitmap()
+                        .placeholder(R.drawable.placeholder)
                         .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                         .error(R.drawable.placeholder)
                         .centerCrop()
@@ -115,6 +117,7 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public FooterViewHolder(View itemView) {
             super(itemView);
         }
+
     }
 
 }

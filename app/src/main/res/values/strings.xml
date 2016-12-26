@@ -40,7 +40,6 @@
     <string name="action_open_in_browser">在浏览器中打开</string>
     <string name="action_copy_text">复制内容文本</string>
     <string name="action_share_as_text">作为文本分享</string>
-    <string name="action_share_as_image">作为图片分享</string>
 
     <!--main menu-->
     <string name="change_theme">切换主题</string>

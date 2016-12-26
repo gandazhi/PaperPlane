@@ -50,6 +50,7 @@ public class GuokrNewsAdapter extends RecyclerView.Adapter<GuokrNewsAdapter.Guok
         Glide.with(context)
                 .load(item.getHeadline_img_tb())
                 .asBitmap()
+                .placeholder(R.drawable.placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .error(R.drawable.placeholder)
                 .centerCrop()

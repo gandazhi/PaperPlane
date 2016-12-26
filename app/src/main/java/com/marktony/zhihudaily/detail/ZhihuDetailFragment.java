@@ -149,14 +149,6 @@ public class ZhihuDetailFragment extends Fragment
                 }
             });
 
-            // shareAsText with image and text. Use for wechat moment or other apps
-            view.findViewById(R.id.layout_share_image).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-
             dialog.setContentView(view);
             dialog.show();
         }

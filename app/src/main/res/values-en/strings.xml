@@ -37,7 +37,6 @@
     <string name="action_open_in_browser">Open in browser</string>
     <string name="action_copy_text">Copy text</string>
     <string name="action_share_as_text">Share as Text</string>
-    <string name="action_share_as_image">Share as image</string>
 
     <!--navigation view menu-->
     <string name="change_theme">Change Theme</string>

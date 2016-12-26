@@ -130,6 +130,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        drawer.closeDrawer(GravityCompat.START);
+
         int id = item.getItemId();
         if (id == R.id.nav_home) {
             showMainFragment();
@@ -141,7 +144,6 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this,AboutPreferenceActivity.class));
         }
 
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
