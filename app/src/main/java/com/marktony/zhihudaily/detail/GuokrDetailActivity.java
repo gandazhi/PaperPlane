@@ -12,18 +12,30 @@ import com.marktony.zhihudaily.app.App;
  */
 public class GuokrDetailActivity extends AppCompatActivity {
 
+    private GuokrDetailFragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frame);
 
-        GuokrDetailFragment fragment = GuokrDetailFragment.newInstance();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, fragment)
-                .commit();
+        if (savedInstanceState != null) {
+            fragment = (GuokrDetailFragment) getSupportFragmentManager().getFragment(savedInstanceState, "fragment");
+        } else {
+            fragment = GuokrDetailFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, fragment)
+                    .commit();
+        }
 
         new GuokrDetailPresenter(this, fragment);
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getSupportFragmentManager().putFragment(outState, "fragment", fragment);
     }
 
 }

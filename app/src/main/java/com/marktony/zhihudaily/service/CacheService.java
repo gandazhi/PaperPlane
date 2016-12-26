@@ -12,7 +12,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,9 +22,7 @@ import com.marktony.zhihudaily.app.VolleySingleton;
 import com.marktony.zhihudaily.bean.ZhihuDailyStory;
 import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.util.Api;
-import com.marktony.zhihudaily.util.DateFormatter;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -234,9 +231,9 @@ public class CacheService extends Service {
         long timeStamp = (c.getTimeInMillis() / 1000) - Long.parseLong(sp.getString("time_of_saving_articles", "7"))*24*60*60;
 
         String[] whereArgs = new String[] {String.valueOf(timeStamp)};
-        db.delete("Zhihu", "zhihu_time < ?", whereArgs);
-        db.delete("Guokr", "guokr_time < ?", whereArgs);
-        db.delete("Douban", "douban_time < ?", whereArgs);
+        db.delete("Zhihu", "zhihu_time < ? and bookmark != 1", whereArgs);
+        db.delete("Guokr", "guokr_time < ? and bookmark != 1", whereArgs);
+        db.delete("Douban", "douban_time < ? and bookmark != 1", whereArgs);
 
     }
 
