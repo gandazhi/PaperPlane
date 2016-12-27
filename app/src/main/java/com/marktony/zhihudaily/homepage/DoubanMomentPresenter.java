@@ -14,10 +14,11 @@ import com.google.gson.JsonSyntaxException;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.db.DatabaseHelper;
+import com.marktony.zhihudaily.detail.DetailActivity;
 import com.marktony.zhihudaily.interfaze.OnStringListener;
-import com.marktony.zhihudaily.detail.DoubanDetailActivity;
 import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.util.Api;
+import com.marktony.zhihudaily.bean.BeanType;
 import com.marktony.zhihudaily.util.DateFormatter;
 import com.marktony.zhihudaily.util.NetworkState;
 
@@ -56,13 +57,15 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
     @Override
     public void startReading(int position) {
         DoubanMomentNews.posts item = list.get(position);
-        Intent intent = new Intent(context, DoubanDetailActivity.class);
+        Intent intent = new Intent(context, DetailActivity.class);
+
+        intent.putExtra("type", BeanType.TYPE_DOUBAN);
         intent.putExtra("id", item.getId());
         intent.putExtra("title", item.getTitle());
         if (item.getThumbs().size() == 0){
-            intent.putExtra("image", "");
+            intent.putExtra("coverUrl", "");
         } else {
-            intent.putExtra("image", item.getThumbs().get(0).getMedium().getUrl());
+            intent.putExtra("coverUrl", item.getThumbs().get(0).getMedium().getUrl());
         }
         context.startActivity(intent);
     }

@@ -6,10 +6,10 @@ import com.marktony.zhihudaily.BasePresenter;
 import com.marktony.zhihudaily.BaseView;
 
 /**
- * Created by Lizhaotailang on 2016/9/17.
+ * Created by lizhaotailang on 2016/12/27.
  */
 
-public interface ZhihuDetailContract {
+public class DetailContract {
 
     interface View extends BaseView<Presenter> {
 
@@ -25,9 +25,7 @@ public interface ZhihuDetailContract {
 
         void showResultWithoutBody(String url);
 
-        void showMainImage(String url);
-
-        void setUsingLocalImage();
+        void showCover(String url);
 
         void setTitle(String title);
 
@@ -45,19 +43,13 @@ public interface ZhihuDetailContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter{
 
         void openInBrowser();
 
         void shareAsText();
 
-        void requestData();
-
-        void setId(int id);
-
         void openUrl(WebView webView, String url);
-
-        void reload();
 
         void copyText();
 
@@ -66,6 +58,8 @@ public interface ZhihuDetailContract {
         void addToOrDeleteFromBookmarks();
 
         boolean queryIfIsBookmarked();
+
+        void requestData();
 
     }
 

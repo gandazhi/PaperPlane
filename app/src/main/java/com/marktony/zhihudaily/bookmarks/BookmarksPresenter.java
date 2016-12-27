@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.marktony.zhihudaily.adapter.BookmarksAdapter;
@@ -13,13 +11,10 @@ import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import com.marktony.zhihudaily.db.DatabaseHelper;
-import com.marktony.zhihudaily.detail.DoubanDetailActivity;
-import com.marktony.zhihudaily.detail.GuokrDetailActivity;
-import com.marktony.zhihudaily.detail.ZhihuDetailActivity;
-import com.marktony.zhihudaily.homepage.MainActivity;
+import com.marktony.zhihudaily.detail.DetailActivity;
+import com.marktony.zhihudaily.bean.BeanType;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static com.marktony.zhihudaily.adapter.BookmarksAdapter.TYPE_DOUBAN_NORMAL;
@@ -90,37 +85,39 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
     }
 
     @Override
-    public void startZhihuReading(int position) {
-        context.startActivity(new Intent(context, ZhihuDetailActivity.class)
-                .putExtra("id",zhihuList.get(position - 1).getId())
-        );
-    }
+    public void startReading(BeanType type, int position) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        switch (type) {
+            case TYPE_ZHIHU:
+                ZhihuDailyNews.Question q = zhihuList.get(position - 1);
+                intent.putExtra("type", BeanType.TYPE_ZHIHU);
+                intent.putExtra("id",q.getId());
+                intent.putExtra("title", q.getTitle());
+                intent.putExtra("coverUrl", q.getImages().get(0));
+                break;
 
-    @Override
-    public void startGuokrReading(int position) {
-        GuokrHandpickNews.result item = guokrList.get(position - zhihuList.size() - 2);
-        context.startActivity(new Intent(context, GuokrDetailActivity.class)
-                .putExtra("id", item.getId())
-                .putExtra("headlineImageUrl", item.getHeadline_img())
-                .putExtra("title", item.getTitle())
-        );
-
-    }
-
-    @Override
-    public void startDoubanReading(int position) {
-        DoubanMomentNews.posts item = doubanList.get(position - zhihuList.size() - guokrList.size() - 3);
-        Intent intent = new Intent(context, DoubanDetailActivity.class);
-        intent.putExtra("id", item.getId());
-        intent.putExtra("title", item.getTitle());
-        if (item.getThumbs().size() == 0){
-            intent.putExtra("image", "");
-        } else {
-            intent.putExtra("image", item.getThumbs().get(0).getMedium().getUrl());
+            case TYPE_GUOKR:
+                GuokrHandpickNews.result r = guokrList.get(position - zhihuList.size() - 2);
+                intent.putExtra("type", BeanType.TYPE_GUOKR);
+                intent.putExtra("id", r.getId());
+                intent.putExtra("title", r.getTitle());
+                intent.putExtra("coverUrl", r.getHeadline_img());
+                break;
+            case TYPE_DOUBAN:
+                DoubanMomentNews.posts p = doubanList.get(position - zhihuList.size() - guokrList.size() - 3);
+                intent.putExtra("type", BeanType.TYPE_DOUBAN);
+                intent.putExtra("id", p.getId());
+                intent.putExtra("title", p.getTitle());
+                if (p.getThumbs().size() == 0){
+                    intent.putExtra("coverUrl", "");
+                } else {
+                    intent.putExtra("image", p.getThumbs().get(0).getMedium().getUrl());
+                }
+                break;
+            default:
+                break;
         }
-
         context.startActivity(intent);
-
     }
 
     @Override
@@ -169,13 +166,13 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
         int p = random.nextInt(types.size());
         while (true) {
             if (types.get(p) == BookmarksAdapter.TYPE_ZHIHU_NORMAL) {
-                startZhihuReading(p);
+                startReading(BeanType.TYPE_ZHIHU, p);
                 break;
             } else if (types.get(p) == BookmarksAdapter.TYPE_GUOKR_NORMAL) {
-                startGuokrReading(p);
+                startReading(BeanType.TYPE_GUOKR, p);
                 break;
             } else if (types.get(p) == BookmarksAdapter.TYPE_DOUBAN_NORMAL) {
-                startDoubanReading(p);
+                startReading(BeanType.TYPE_DOUBAN, p);
                 break;
             } else {
                 p = random.nextInt(types.size());

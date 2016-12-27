@@ -2,6 +2,7 @@ package com.marktony.zhihudaily.search;
 
 import com.marktony.zhihudaily.BasePresenter;
 import com.marktony.zhihudaily.BaseView;
+import com.marktony.zhihudaily.bean.BeanType;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
@@ -31,11 +32,7 @@ public interface SearchContract {
 
         void loadResults(String queryWords);
 
-        void startZhihuReading(int position);
-
-        void startGuokrReading(int position);
-
-        void startDoubanReading(int position);
+        void startReading(BeanType type, int position);
 
     }
 

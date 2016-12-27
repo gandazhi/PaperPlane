@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.adapter.BookmarksAdapter;
+import com.marktony.zhihudaily.bean.BeanType;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
@@ -103,11 +104,11 @@ public class SearchFragment extends Fragment
                 public void OnItemClick(View v, int position) {
                     int type = recyclerView.findViewHolderForLayoutPosition(position).getItemViewType();
                     if (type == BookmarksAdapter.TYPE_ZHIHU_NORMAL) {
-                        presenter.startZhihuReading(position);
+                        presenter.startReading(BeanType.TYPE_ZHIHU, position);
                     } else if (type == BookmarksAdapter.TYPE_GUOKR_NORMAL) {
-                        presenter.startGuokrReading(position);
+                        presenter.startReading(BeanType.TYPE_GUOKR, position);
                     } else if (type == BookmarksAdapter.TYPE_DOUBAN_NORMAL) {
-                        presenter.startDoubanReading(position);
+                        presenter.startReading(BeanType.TYPE_DOUBAN, position);
                     }
                 }
             });

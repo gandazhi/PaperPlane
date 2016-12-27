@@ -94,7 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             case 4:
                 /**
                  * bookmark means if this obj is bookmarked
-                 * it has 2 value, 0 and 1
+                 * it has two value, 0 and 1
                  * because SQLite doesn't has a boolean value
                  * so use the 0 and 1 value replaced
                  * 0 --> NOT MARKED, 1 ---> MARKED

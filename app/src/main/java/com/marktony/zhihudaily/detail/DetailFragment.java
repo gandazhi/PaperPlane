@@ -1,6 +1,6 @@
 package com.marktony.zhihudaily.detail;
 
-import android.content.res.Configuration;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
@@ -9,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,11 +26,11 @@ import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
 
 /**
- * Created by Lizhaotailang on 2016/9/17.
+ * Created by lizhaotailang on 2016/12/27.
  */
 
-public class ZhihuDetailFragment extends Fragment
-        implements ZhihuDetailContract.View {
+public class DetailFragment extends Fragment
+        implements DetailContract.View {
 
     private ImageView imageView;
     private WebView webView;
@@ -39,31 +38,30 @@ public class ZhihuDetailFragment extends Fragment
     private CollapsingToolbarLayout toolbarLayout;
     private SwipeRefreshLayout refreshLayout;
 
-    public ZhihuDetailFragment() {}
+    private Context context;
 
-    public static ZhihuDetailFragment newInstance() {
-        return new ZhihuDetailFragment();
-    }
+    private DetailContract.Presenter presenter;
 
-    private ZhihuDetailContract.Presenter presenter;
+    public DetailFragment() {}
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter.setId(getActivity().getIntent().getIntExtra("id", 0));
+        this.context = getContext();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.universal_read_layout, container, false);
+        View view = inflater.inflate(R.layout.universal_read_layout, container, false);
 
         initViews(view);
+
         setHasOptionsMenu(true);
 
-        presenter.start();
+        presenter.requestData();
 
-        // when click the toolbar, make the scroll view scroll to top
         view.findViewById(R.id.toolbar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +72,7 @@ public class ZhihuDetailFragment extends Fragment
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.start();
+                presenter.requestData();
             }
         });
 
@@ -156,60 +154,23 @@ public class ZhihuDetailFragment extends Fragment
     }
 
     @Override
-    public void setPresenter(ZhihuDetailContract.Presenter presenter) {
-        if (presenter != null) {
-            this.presenter = presenter;
-        }
-    }
-
-    @Override
-    public void initViews(View view) {
-
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
-        //设置下拉刷新的按钮的颜色
-        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
-
-        webView = (WebView) view.findViewById(R.id.web_view);
-        webView.setScrollbarFadingEnabled(true);
-
-        AppCompatActivity activity = (ZhihuDetailActivity) getActivity();
-        activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        imageView = (ImageView) view.findViewById(R.id.image_view);
-        scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
-        toolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.toolbar_layout);
-
-        //能够和js交互
-        webView.getSettings().setJavaScriptEnabled(true);
-        //缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
-        webView.getSettings().setBuiltInZoomControls(false);
-        //缓存
-        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        //开启DOM storage API功能
-        webView.getSettings().setDomStorageEnabled(true);
-        //开启application Cache功能
-        webView.getSettings().setAppCacheEnabled(false);
-
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                presenter.openUrl(view, url);
-                return true;
-            }
-
-        });
-
-    }
-
-    @Override
     public void showLoading() {
-        refreshLayout.setRefreshing(true);
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
+            }
+        });
     }
 
     @Override
     public void stopLoading() {
-        refreshLayout.setRefreshing(false);
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     @Override
@@ -218,7 +179,7 @@ public class ZhihuDetailFragment extends Fragment
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        presenter.reload();
+                        presenter.requestData();
                     }
                 })
                 .show();
@@ -234,25 +195,20 @@ public class ZhihuDetailFragment extends Fragment
         webView.loadDataWithBaseURL("x-data://base",result,"text/html","utf-8",null);
     }
 
-    // if the result not contain the 'body', call this function to load another url
     @Override
     public void showResultWithoutBody(String url) {
         webView.loadUrl(url);
     }
 
     @Override
-    public void showMainImage(String url) {
-        Glide.with(getActivity())
+    public void showCover(String url) {
+        Glide.with(context)
                 .load(url)
                 .asBitmap()
-                .centerCrop()
                 .placeholder(R.drawable.placeholder)
+                .centerCrop()
+                .error(R.drawable.placeholder)
                 .into(imageView);
-    }
-
-    @Override
-    public void setUsingLocalImage() {
-        imageView.setImageResource(R.drawable.placeholder);
     }
 
     @Override
@@ -290,6 +246,53 @@ public class ZhihuDetailFragment extends Fragment
         Snackbar.make(imageView, R.string.deleted_from_bookmarks, Snackbar.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void setPresenter(DetailContract.Presenter presenter) {
+        if (presenter != null) {
+            this.presenter = presenter;
+        }
+    }
+
+    @Override
+    public void initViews(View view) {
+
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        //设置下拉刷新的按钮的颜色
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
+
+        webView = (WebView) view.findViewById(R.id.web_view);
+        webView.setScrollbarFadingEnabled(true);
+
+        DetailActivity activity = (DetailActivity) getActivity();
+        activity.setSupportActionBar((Toolbar) view.findViewById(R.id.toolbar));
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        imageView = (ImageView) view.findViewById(R.id.image_view);
+        scrollView = (NestedScrollView) view.findViewById(R.id.scrollView);
+        toolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.toolbar_layout);
+
+        //能够和js交互
+        webView.getSettings().setJavaScriptEnabled(true);
+        //缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
+        webView.getSettings().setBuiltInZoomControls(false);
+        //缓存
+        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        //开启DOM storage API功能
+        webView.getSettings().setDomStorageEnabled(true);
+        //开启application Cache功能
+        webView.getSettings().setAppCacheEnabled(false);
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                presenter.openUrl(view, url);
+                return true;
+            }
+
+        });
+
+    }
+
     // to change the title's font size of toolbar layout
     private void setCollapsingToolbarLayoutTitle(String title) {
         toolbarLayout.setTitle(title);
@@ -299,9 +302,4 @@ public class ZhihuDetailFragment extends Fragment
         toolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        presenter.reload();
-    }
 }

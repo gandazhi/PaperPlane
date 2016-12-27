@@ -5,6 +5,7 @@ import com.marktony.zhihudaily.BaseView;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
+import com.marktony.zhihudaily.bean.BeanType;
 
 import java.util.ArrayList;
 
@@ -33,11 +34,7 @@ public interface BookmarksContract {
 
         void loadResults(boolean refresh);
 
-        void startZhihuReading(int position);
-
-        void startGuokrReading(int position);
-
-        void startDoubanReading(int position);
+        void startReading(BeanType type, int position);
 
         void checkForFreshData();
 

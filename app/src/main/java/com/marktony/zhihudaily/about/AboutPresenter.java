@@ -69,6 +69,8 @@ public class AboutPresenter implements AboutContract.Presenter {
 
     // use CustomTabsIntent open the url first
     // if it get failed, use the inner browser
+    // code can be simplified due to follow on github and follow on
+    // zhihu code
     @Override
     public void followOnGithub() {
         if (sp.getBoolean("in_app_browser",true)){

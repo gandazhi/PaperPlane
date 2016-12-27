@@ -13,10 +13,11 @@ import com.google.gson.JsonSyntaxException;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.db.DatabaseHelper;
+import com.marktony.zhihudaily.detail.DetailActivity;
 import com.marktony.zhihudaily.interfaze.OnStringListener;
-import com.marktony.zhihudaily.detail.GuokrDetailActivity;
 import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.util.Api;
+import com.marktony.zhihudaily.bean.BeanType;
 import com.marktony.zhihudaily.util.NetworkState;
 
 import java.util.ArrayList;
@@ -50,9 +51,10 @@ public class GuokrPresenter implements GuokrContract.Presenter {
     @Override
     public void startReading(int position) {
         GuokrHandpickNews.result item = list.get(position);
-        context.startActivity(new Intent(context, GuokrDetailActivity.class)
+        context.startActivity(new Intent(context, DetailActivity.class)
+                .putExtra("type", BeanType.TYPE_GUOKR)
                 .putExtra("id", item.getId())
-                .putExtra("headlineImageUrl", item.getHeadline_img())
+                .putExtra("coverUrl", item.getHeadline_img())
                 .putExtra("title", item.getTitle())
         );
     }

@@ -8,7 +8,8 @@
     app:behavior_hideable="true"
     app:behavior_peekHeight="0dp"
     style="?attr/bottomSheetStyle"
-    android:id="@+id/reading_bottom_sheet">
+    android:id="@+id/reading_bottom_sheet"
+    android:background="@color/viewBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +34,8 @@
             android:layout_marginRight="16dp"
             android:text="@string/action_add_to_bookmarks"
             android:gravity="center_vertical"
-            android:id="@+id/textView"/>
+            android:id="@+id/textView"
+            android:textColor="@color/textColorPrimary"/>
 
     </LinearLayout>
 
@@ -58,7 +60,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/action_copy_link"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:textColor="@color/textColorPrimary"/>
 
     </LinearLayout>
 
@@ -83,7 +86,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/action_open_in_browser"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:textColor="@color/textColorPrimary"/>
 
     </LinearLayout>
 
@@ -108,7 +112,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/action_copy_text"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:textColor="@color/textColorPrimary"/>
 
     </LinearLayout>
 
@@ -133,7 +138,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/action_share_as_text"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:textColor="@color/textColorPrimary"/>
 
     </LinearLayout>
 

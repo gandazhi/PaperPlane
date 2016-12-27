@@ -13,10 +13,11 @@ import com.google.gson.JsonSyntaxException;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import com.marktony.zhihudaily.db.DatabaseHelper;
-import com.marktony.zhihudaily.detail.ZhihuDetailActivity;
+import com.marktony.zhihudaily.detail.DetailActivity;
 import com.marktony.zhihudaily.interfaze.OnStringListener;
 import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.util.Api;
+import com.marktony.zhihudaily.bean.BeanType;
 import com.marktony.zhihudaily.util.DateFormatter;
 import com.marktony.zhihudaily.util.NetworkState;
 
@@ -152,9 +153,13 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     @Override
     public void startReading(int position) {
-        context.startActivity(new Intent(context, ZhihuDetailActivity.class)
-                .putExtra("id",list.get(position).getId())
-        );
+
+        context.startActivity(new Intent(context, DetailActivity.class)
+                .putExtra("type", BeanType.TYPE_ZHIHU)
+                .putExtra("id", list.get(position).getId())
+                .putExtra("title", list.get(position).getTitle())
+                .putExtra("coverUrl", list.get(position).getImages().get(0)));
+
     }
 
     @Override

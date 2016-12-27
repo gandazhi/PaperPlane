@@ -21,6 +21,7 @@ import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import com.marktony.zhihudaily.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.bean.BeanType;
 
 import java.util.ArrayList;
 
@@ -117,11 +118,11 @@ public class BookmarksFragment extends Fragment
                 public void OnItemClick(View v, int position) {
                     int type = recyclerView.findViewHolderForLayoutPosition(position).getItemViewType();
                     if (type == BookmarksAdapter.TYPE_ZHIHU_NORMAL) {
-                        presenter.startZhihuReading(position);
+                        presenter.startReading(BeanType.TYPE_ZHIHU, position);
                     } else if (type == BookmarksAdapter.TYPE_GUOKR_NORMAL) {
-                        presenter.startGuokrReading(position);
+                        presenter.startReading(BeanType.TYPE_GUOKR, position);
                     } else if (type == BookmarksAdapter.TYPE_DOUBAN_NORMAL) {
-                        presenter.startDoubanReading(position);
+                        presenter.startReading(BeanType.TYPE_DOUBAN, position);
                     }
                 }
             });
