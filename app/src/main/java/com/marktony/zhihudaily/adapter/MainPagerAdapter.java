@@ -26,10 +26,6 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     private ZhihuDailyFragment zhihuFragment;
     private DoubanMomentFragment doubanFragment;
 
-    private ZhihuDailyPresenter zhihuPresenter;
-    private GuokrPresenter guokrPresenter;
-    private DoubanMomentPresenter doubanPresenter;
-
     public GuokrFragment getGuokrFragment() {
         return guokrFragment;
     }
@@ -42,19 +38,11 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         return doubanFragment;
     }
 
-    public DoubanMomentPresenter getDoubanPresenter() {
-        return doubanPresenter;
-    }
-
-    public GuokrPresenter getGuokrPresenter() {
-        return guokrPresenter;
-    }
-
-    public ZhihuDailyPresenter getZhihuPresenter() {
-        return zhihuPresenter;
-    }
-
-    public MainPagerAdapter(FragmentManager fm, Context context) {
+    public MainPagerAdapter(FragmentManager fm,
+                            Context context,
+                            ZhihuDailyFragment zhihuDailyFragment,
+                            GuokrFragment guokrFragment,
+                            DoubanMomentFragment doubanMomentFragment) {
         super(fm);
         this.context = context;
         titles = new String[] {
@@ -62,22 +50,21 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                 context.getResources().getString(R.string.guokr_handpick),
                 context.getResources().getString(R.string.douban_moment)
         };
+
+        this.zhihuFragment = zhihuDailyFragment;
+        this.guokrFragment = guokrFragment;
+        this.doubanFragment = doubanMomentFragment;
+
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 1){
-            guokrFragment = GuokrFragment.newInstance();
-            guokrPresenter = new GuokrPresenter(context, guokrFragment);
             return guokrFragment;
         } else if (position == 2){
-            doubanFragment = DoubanMomentFragment.newInstance();
-            doubanPresenter = new DoubanMomentPresenter(context, doubanFragment);
             return doubanFragment;
         }
 
-        zhihuFragment = ZhihuDailyFragment.newInstance();
-        zhihuPresenter = new ZhihuDailyPresenter(context, zhihuFragment);
         return zhihuFragment;
     }
 

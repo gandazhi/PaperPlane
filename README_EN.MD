@@ -1,8 +1,8 @@
 # Paper Plane
 
 [![Platform](https://img.shields.io/badge/platform-Android-blue.svg)](https://github.com/marktony/ZhiHuDaily)
-![Release](https://img.shields.io/badge/release-3.1.3-blue.svg)
-![Gradle](https://img.shields.io/badge/gradle-2.2.2-blue.svg)
+![Release](https://img.shields.io/badge/release-3.2.0-blue.svg)
+![Gradle](https://img.shields.io/badge/gradle-2.2.3-blue.svg)
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/marktony/ZhiHuDaily/master/LICENSE)
 
 ![icon](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/icon.png)
@@ -30,7 +30,7 @@ API of ZhiHuDaily is [知乎日报 API 分析](https://github.com/izzyleung/Zhih
 * [Flyme Apps Market](http://app.flyme.cn/apps/public/detail?package_name=com.marktony.zhihudaily)
 * [Cool market](http://www.coolapk.com/apk/com.marktony.zhihudaily)
 * Smartisan App Market
-* [Google Drive](https://drive.google.com/open?id=0B3yYs4KaSVg_RDlkSEhxTWVBeG8)
+* [Google Drive](https://drive.google.com/open?id=0B3yYs4KaSVg_MnpfVVY1S0s0MVU)
 
 ## Open Source Library
 Name | Introduction

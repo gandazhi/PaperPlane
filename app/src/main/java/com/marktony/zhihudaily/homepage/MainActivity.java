@@ -3,6 +3,7 @@ package com.marktony.zhihudaily.homepage;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
@@ -34,7 +36,6 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
 
     public static final String ACTION_BOOKMARKS = "com.marktony.zhihudaily.bookmarks";
-    public static final String ACTION_FEEL_LUCKY = "com.marktony.zhihudaily.homepage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +44,33 @@ public class MainActivity extends AppCompatActivity
 
         initViews();
 
-        mainFragment = MainFragment.newInstance();
-        bookmarksFragment = BookmarksFragment.newInstance();
+        if (savedInstanceState != null) {
+            mainFragment = (MainFragment) getSupportFragmentManager().getFragment(savedInstanceState, "MainFragment");
+            bookmarksFragment = (BookmarksFragment) getSupportFragmentManager().getFragment(savedInstanceState, "BookmarksFragment");
+        } else {
+            mainFragment = MainFragment.newInstance();
+            bookmarksFragment = BookmarksFragment.newInstance();
+        }
+
+        if (!mainFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.layout_fragment, mainFragment, "MainFragment")
+                    .commit();
+        }
+
+        if (!bookmarksFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.layout_fragment, bookmarksFragment, "BookmarksFragment")
+                    .commit();
+        }
+
+        new BookmarksPresenter(MainActivity.this, bookmarksFragment);
 
         String action = getIntent().getAction();
 
         if (action.equals(ACTION_BOOKMARKS)) {
             showBookmarksFragment();
             navigationView.setCheckedItem(R.id.nav_bookmarks);
-        } else if (action.equals(ACTION_FEEL_LUCKY)) {
-            showMainFragment();
-            navigationView.setCheckedItem(R.id.nav_home);
         } else {
             showMainFragment();
             navigationView.setCheckedItem(R.id.nav_home);
@@ -86,9 +103,6 @@ public class MainActivity extends AppCompatActivity
     private void showMainFragment() {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        if (!mainFragment.isAdded()) {
-            fragmentTransaction.add(R.id.layout_fragment, mainFragment, "MainFragment");
-        }
         fragmentTransaction.show(mainFragment);
         fragmentTransaction.hide(bookmarksFragment);
         fragmentTransaction.commit();
@@ -100,11 +114,6 @@ public class MainActivity extends AppCompatActivity
     private void showBookmarksFragment() {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-        if (!bookmarksFragment.isAdded()) {
-            fragmentTransaction.add(R.id.layout_fragment, bookmarksFragment, "BookmarksFragment");
-            new BookmarksPresenter(this, bookmarksFragment);
-        }
         fragmentTransaction.show(bookmarksFragment);
         fragmentTransaction.hide(mainFragment);
         fragmentTransaction.commit();
@@ -138,6 +147,20 @@ public class MainActivity extends AppCompatActivity
             showMainFragment();
         } else if (id == R.id.nav_bookmarks) {
             showBookmarksFragment();
+        } else if (id == R.id.nav_change_theme) {
+
+            SharedPreferences sp =  getSharedPreferences("user_settings",MODE_PRIVATE);
+            if ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
+                    == Configuration.UI_MODE_NIGHT_YES) {
+                sp.edit().putInt("theme", 0).apply();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            } else {
+                sp.edit().putInt("theme", 1).apply();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+            getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+            recreate();
+
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this,SettingsPreferenceActivity.class));
         } else if (id == R.id.nav_about) {
@@ -151,4 +174,17 @@ public class MainActivity extends AppCompatActivity
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mainFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, "MainFragment", mainFragment);
+        }
+
+        if (bookmarksFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, "BookmarksFragment", bookmarksFragment);
+        }
+    }
+
 }

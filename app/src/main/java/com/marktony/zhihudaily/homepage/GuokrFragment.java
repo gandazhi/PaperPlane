@@ -86,7 +86,14 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
 
     @Override
     public void showError() {
-        Snackbar.make(recyclerView,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(refreshLayout, R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.refresh();
+                    }
+                })
+                .show();
     }
 
     @Override

@@ -21,8 +21,6 @@
     <string name="loading_more">正在加载…</string>
     <string name="loaded_failed">加载失败!</string>
     <string name="retry">重试</string>
-    <string name="no_network_connected">当前没有网络连接…</string>
-    <string name="go_to_set">设置</string>
     <string name="copied_to_clipboard">复制成功</string>
     <string name="copied_to_clipboard_failed">复制失败</string>
     <string name="added_to_bookmarks">已添加到收藏</string>
@@ -51,7 +49,7 @@
     <string name="share_to">分享至</string>
 
     <!--activity关于-->
-    <string name="version">版本:V3.1.3</string>
+    <string name="version">版本:V3.2.0</string>
     <string name="rate">为纸飞机应用评分</string>
     <string name="feedback">反馈Bug / 建议</string>
     <string name="donate">捐赠开发者</string>

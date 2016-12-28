@@ -144,7 +144,14 @@ public class DoubanMomentFragment extends Fragment
 
     @Override
     public void showLoadingError() {
-         Snackbar.make(fab,R.string.loaded_failed,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(fab, R.string.loaded_failed,Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.refresh();
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -161,17 +168,6 @@ public class DoubanMomentFragment extends Fragment
         } else {
             adapter.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void showNetworkError() {
-        Snackbar.make(fab,R.string.no_network_connected,Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.go_to_set, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        presenter.goToSettings();
-                    }
-                }).show();
     }
 
     @Override

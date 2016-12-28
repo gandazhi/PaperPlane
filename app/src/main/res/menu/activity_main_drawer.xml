@@ -15,7 +15,7 @@
     <item android:title="@string/other_settings">
         <menu>
 
-            <item android:id="@+id/action_change_theme"
+            <item android:id="@+id/nav_change_theme"
                 android:title="@string/change_theme"
                 android:icon="@drawable/ic_brightness_6_black_24dp" />
 

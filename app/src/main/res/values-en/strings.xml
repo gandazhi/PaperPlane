@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Paper Plane</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="nav_home">Home</string>
     <string name="nav_bookmarks">Bookmarks</string>
 
@@ -18,8 +21,6 @@
     <string name="loaded_failed">Load failed!</string>
     <string name="loading_more">Loading more…</string>
     <string name="retry">Retry</string>
-    <string name="no_network_connected">No Network Connected…</string>
-    <string name="go_to_set">SETTINGS</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="copied_to_clipboard_failed">Copy to clipboard failed</string>
     <string name="added_to_bookmarks">Added to bookmarks</string>
@@ -48,7 +49,7 @@
     <string name="share_to">Share to</string>
 
     <!--activity about-->
-    <string name="version">Version:V3.1.3</string>
+    <string name="version">Version:V3.2.0</string>
     <string name="rate">Rate</string>
     <string name="feedback">Report Bugs / Advices</string>
     <string name="donate">Donate Developer</string>

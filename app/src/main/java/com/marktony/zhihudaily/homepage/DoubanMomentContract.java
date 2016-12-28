@@ -22,8 +22,6 @@ public interface DoubanMomentContract {
 
         void showResults(ArrayList<DoubanMomentNews.posts> list);
 
-        void showNetworkError();
-
         void showPickDialog();
 
     }
@@ -37,8 +35,6 @@ public interface DoubanMomentContract {
         void refresh();
 
         void loadMore(long date);
-
-        void goToSettings();
 
         void feelLucky();
 
