@@ -147,7 +147,7 @@ public class InnerBrowserFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_more, menu);
+        inflater.inflate(R.menu.menu_browser, menu);
     }
 
     @Override

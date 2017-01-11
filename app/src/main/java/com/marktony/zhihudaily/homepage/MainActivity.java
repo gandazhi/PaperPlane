@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.about.AboutPreferenceActivity;
@@ -149,17 +150,38 @@ public class MainActivity extends AppCompatActivity
             showBookmarksFragment();
         } else if (id == R.id.nav_change_theme) {
 
-            SharedPreferences sp =  getSharedPreferences("user_settings",MODE_PRIVATE);
-            if ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
-                    == Configuration.UI_MODE_NIGHT_YES) {
-                sp.edit().putInt("theme", 0).apply();
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            } else {
-                sp.edit().putInt("theme", 1).apply();
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }
-            getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
-            recreate();
+            // change the day/night mode after the drawer closed
+            drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+                @Override
+                public void onDrawerSlide(View drawerView, float slideOffset) {
+
+                }
+
+                @Override
+                public void onDrawerOpened(View drawerView) {
+
+                }
+
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                    SharedPreferences sp =  getSharedPreferences("user_settings",MODE_PRIVATE);
+                    if ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
+                            == Configuration.UI_MODE_NIGHT_YES) {
+                        sp.edit().putInt("theme", 0).apply();
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    } else {
+                        sp.edit().putInt("theme", 1).apply();
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    }
+                    getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+                    recreate();
+                }
+
+                @Override
+                public void onDrawerStateChanged(int newState) {
+
+                }
+            });
 
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this,SettingsPreferenceActivity.class));
