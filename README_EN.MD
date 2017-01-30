@@ -59,7 +59,7 @@ If you think, I deserve to get paid for my work, you can leave me a little money
 
 ## License
 
-    Copyright 2016 lizhaotailang
+    Copyright 2017 lizhaotailang
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
