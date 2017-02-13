@@ -139,7 +139,29 @@ public class ZhihuDailyFragment extends Fragment
             @Override
             public void onClick(View view) {
                 if (tabLayout.getSelectedTabPosition() == 0) {
-                    showPickDialog();
+                    Calendar now = Calendar.getInstance();
+                    now.set(mYear, mMonth, mDay);
+                    DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                            mYear = year;
+                            mMonth = monthOfYear;
+                            mDay = dayOfMonth;
+                            Calendar temp = Calendar.getInstance();
+                            temp.clear();
+                            temp.set(year, monthOfYear, dayOfMonth);
+                            presenter.loadPosts(temp.getTimeInMillis(), true);
+                        }
+                    }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
+
+                    dialog.setMaxDate(Calendar.getInstance());
+                    Calendar minDate = Calendar.getInstance();
+                    // 2013.5.20是知乎日报api首次上线
+                    minDate.set(2013, 5, 20);
+                    dialog.setMinDate(minDate);
+                    dialog.vibrate(false);
+
+                    dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
                 } else if (tabLayout.getSelectedTabPosition() == 2) {
                     ViewPager p = (ViewPager) getActivity().findViewById(R.id.view_pager);
                     MainPagerAdapter ad = (MainPagerAdapter) p.getAdapter();
@@ -222,34 +244,6 @@ public class ZhihuDailyFragment extends Fragment
         } else {
             adapter.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void showPickDialog() {
-        Calendar now = Calendar.getInstance();
-        now.set(mYear, mMonth, mDay);
-        DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                mYear = year;
-                mMonth = monthOfYear;
-                mDay = dayOfMonth;
-                Calendar temp = Calendar.getInstance();
-                temp.clear();
-                temp.set(year, monthOfYear, dayOfMonth);
-                presenter.loadPosts(temp.getTimeInMillis(), true);
-            }
-        }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
-
-        dialog.setMaxDate(Calendar.getInstance());
-        Calendar minDate = Calendar.getInstance();
-        // 2013.5.20是知乎日报api首次上线
-        minDate.set(2013, 5, 20);
-        dialog.setMinDate(minDate);
-        dialog.vibrate(false);
-
-        dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
-
     }
 
 }

@@ -186,7 +186,6 @@ public class DoubanMomentFragment extends Fragment
         }
     }
 
-    @Override
     public void showPickDialog() {
 
         Calendar now = Calendar.getInstance();

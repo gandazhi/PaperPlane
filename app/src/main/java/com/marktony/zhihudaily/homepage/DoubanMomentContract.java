@@ -38,8 +38,6 @@ public interface DoubanMomentContract {
 
         void showResults(ArrayList<DoubanMomentNews.posts> list);
 
-        void showPickDialog();
-
     }
 
     interface Presenter extends BasePresenter {

@@ -38,8 +38,6 @@ public interface ZhihuDailyContract {
 
         void showResults(ArrayList<ZhihuDailyNews.Question> list);
 
-        void showPickDialog();
-
     }
 
     interface Presenter extends BasePresenter {

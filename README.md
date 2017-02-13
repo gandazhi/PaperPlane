@@ -21,7 +21,7 @@ API of ZhiHuDaily comes from repository [ZhihuDailyPurify](https://github.com/iz
 ![screenshot](https://github.com/marktony/ZhiHuDaily/blob/master/art/screenshot.png)
 
 ## Open the project in Android Studio
-To open this project in Android Studio, begin by checking out of the branches, and then open the `PaperPlane` dictionary in Android Studio. The following series of steps illustrate how to open the `PaperPlane/` branch.
+To open this project in Android Studio, begin by checking out of the branches, and then open the `PaperPlane/` dictionary in Android Studio. The following series of steps illustrate how to open the `PaperPlane` branch.
 
 Clone the repository:
 ```
