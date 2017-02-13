@@ -1,63 +1,74 @@
-# 纸飞机
+# Paper Plane
 
 [![Platform](https://img.shields.io/badge/platform-Android-blue.svg)](https://github.com/marktony/ZhiHuDaily)
 ![Release](https://img.shields.io/badge/release-3.2.0-blue.svg)
 ![Gradle](https://img.shields.io/badge/gradle-2.2.3-blue.svg)
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/marktony/ZhiHuDaily/master/LICENSE)
 
-![icon](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/icon.png)
+![icon](https://github.com/marktony/ZhiHuDaily/blob/master/art/icon.png)
 
-中文版 | [English](https://github.com/marktony/ZhiHuDaily/blob/master/README_EN.MD)
+English | [中文版](https://github.com/marktony/ZhiHuDaily/blob/master/README_CN.MD)
 
-原名知乎小报，V3.0.0之后正式更名为纸飞机，是一款集合了知乎日报、果壳精选和豆瓣一刻的综合性阅读客户端。
+## Introduction
 
-项目架构采用[Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)
+Paper Plane is a reading app based on Android platform which contains articles from Zhihu Daily, Guokr Handpick and Douban Moment.
 
-其中知乎日报API来自 [知乎日报 API 分析](https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90)
+API of ZhiHuDaily comes from repository [ZhihuDailyPurify](https://github.com/izzyleung/ZhihuDailyPurify)'s [wiki](https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90).
 
-## API的使用声明
->izzyleung
+ The architecture of this project is [Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)'s todo-mvp.
 
-> 以下所有 API 均由 知乎（Zhihu.Inc） 提供，本人（Xiao Liang）采取非正常手段获取。获取与共享之行为或有侵犯知乎权益的嫌疑。若被告知需停止共享与使用，本人会及时删除此页面与整个项目。
-请您暸解相关情况，并遵守知乎协议。
+## Screenshots
+![screenshot](https://github.com/marktony/ZhiHuDaily/blob/master/art/screenshot.png)
 
-## 截屏
-![screenshot](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/screenshot.png)
+## Open the project in Android Studio
+To open this project in Android Studio, begin by checking out of the branches, and then open the `PaperPlane` dictionary in Android Studio. The following series of steps illustrate how to open the 'PaperPlane/' branch.
 
-## 下载链接与应用商店
-* [![google-play-badge](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.marktony.zhihudaily)
-* [小米应用商店](http://app.mi.com/detail/312703?ref=search)
-* [魅族应用商店](http://app.flyme.cn/apps/public/detail?package_name=com.marktony.zhihudaily)
-* [酷市场](http://www.coolapk.com/apk/com.marktony.zhihudaily)
-* 锤子应用商店
+Clone the repository:
+```
+git clone https://github.com/marktony/PaperPlane.git
+```
+
+checkout the master branch:
+```
+git checkout master
+```
+
+Note: If you want to review a different branch, replace the `master` with the name you want to checkout like the `dev`.
+
+Finally open the `PaperPlane/` directory in Android Studio.
+
+## Download APK
+* [![google-play-badge](https://github.com/marktony/ZhiHuDaily/blob/master/art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.marktony.zhihudaily)
+* [Xiaomi Apps market](http://app.mi.com/detail/312703?ref=search)
+* [Cool market](http://www.coolapk.com/apk/com.marktony.zhihudaily)
+* Smartisan App Market
 * [Google Drive](https://drive.google.com/open?id=0B3yYs4KaSVg_MnpfVVY1S0s0MVU)
 
-## 开源项目
-名称 | 介绍
+## Related open source libraries
+Name | Introduction
 --------- | --------
-[Volley](https://android.googlesource.com/platform/frameworks/volley/) | Volley is an HTTP library that makes networking for Android apps easier and most importantly, faster. Volley is available through the open AOSP repository.
-[MaterialDateTimePicker](https://github.com/wdullaer/MaterialDateTimePicker) | Pick a date or time on Android in style
-[Glide](https://github.com/bumptech/glide) | An image loading and caching library for Android focused on smooth scrolling
 [Android Support Libraries](https://developer.android.com/topic/libraries/support-library/index.html) | The Android Support Library offers a number of features that are not built into the framework. These libraries offer backward-compatible versions of new features, provide useful UI elements that are not included in the framework, and provide a range of utilities that apps can draw on.
+[Glide](https://github.com/bumptech/glide) | An image loading and caching library for Android focused on smooth scrolling.
 [Gson](https://github.com/google/gson) | A Java serialization/deserialization library that can convert Java Objects into JSON and back.
+[MaterialDateTimePicker](https://github.com/wdullaer/MaterialDateTimePicker) | Pick a date or time on Android in style.
+[Volley](https://android.googlesource.com/platform/frameworks/volley/) | Volley is an HTTP library that makes networking for Android apps easier and most importantly, faster. Volley is available through the open AOSP repository.
 
-## 我的其他项目
-+ [知乎专栏](https://github.com/marktony/zhuanlan) -- 知乎专栏API分析 + 第三方知乎专栏Android客户端
-+ [饭否精选](https://github.com/marktony/FanfouHandpick) -- 使用Kotlin开发的饭否精选客户端
-+ [简单翻译](https://github.com/marktony/Translator) -- 翻译App
-+ [Reader](https://github.com/marktony/Reader) -- MVP + Volley + Gson, 内容包含了糗事百科，煎蛋和内涵段子
+## Contact me
+If you have any question about this repository, please email me and I will reply you as soon as possible.
 
-## 联系我
-marktonymengyi#gmail.com (替换#为@)
+marktonymengyi#gmail.com (replace '#' with '@')
 
-My blog 我的博客：[blog](http://marktony.github.io/)
+My blog：[blog](http://marktony.github.io/)
 
-## 支持我的工作
-如果你认为我值得获得一定的报酬，请使用微信扫描下面的二维码向我捐赠。
+## Support me
+If my project is helpful to you, please support me a cup of coffee.
 
-![Wechat_QRCode](https://github.com/marktony/ZhiHuDaily/blob/master/screenshots/wechat_qrcode.png)
+[PayPal](https://www.paypal.me/TonnyL/1)
 
-## 许可证
+![Wechat Pay](https://github.com/marktony/ZhiHuDaily/blob/master/art/wechat_qrcode.png)
+![Ali Pay](https://github.com/marktony/ZhiHuDaily/blob/master/art/alipay_qr_code.png)
+
+## License
 
     Copyright 2017 lizhaotailang
 
