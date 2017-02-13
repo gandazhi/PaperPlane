@@ -9,6 +9,8 @@
 
 [English](https://github.com/marktony/ZhiHuDaily/) | 中文版
 
+## 介绍
+
 纸飞机是一个基于Android平台，集合了知乎日报、果壳精选和豆瓣一刻的阅读App。
 
 项目架构采用[Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)
