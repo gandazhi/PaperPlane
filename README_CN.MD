@@ -1,13 +1,15 @@
 # 纸飞机
 
-[![Platform](https://img.shields.io/badge/platform-Android-blue.svg)](https://github.com/marktony/ZhiHuDaily)
-![Release](https://img.shields.io/badge/release-3.2.0-blue.svg)
-![Gradle](https://img.shields.io/badge/gradle-2.2.3-blue.svg)
-[![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/marktony/ZhiHuDaily/master/LICENSE)
+[![Build Status](https://travis-ci.org/TonnyL/PaperPlane.svg?branch=master)](https://travis-ci.org/TonnyL/PaperPlane)
 
-![icon](https://github.com/marktony/ZhiHuDaily/blob/master/art/icon.png)
+<div align="center">
+	<img src="./art/logo.png" width="128">
+</div>
 
 [English](https://github.com/marktony/ZhiHuDaily/) | 中文版
+
+## 注意
+项目正在重构，如果你需要查看或者下载v2.3.0版本的源码，请前往[release](https://github.com/TonnyL/PaperPlane/releases).
 
 ## 介绍
 
@@ -18,7 +20,7 @@
 知乎日报API来自项目[ZhihuDailyPurify](https://github.com/izzyleung/ZhihuDailyPurify)的[wiki](https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90).
 
 ## 截屏
-![screenshot](https://github.com/marktony/ZhiHuDaily/blob/master/art/screenshot.png)
+![screenshot](./art/screenshot.png)
 
 ## 在Android Studio中打开
 首先需要获取项目的一个分支，然后在Android Studio中打开`PaperPlane/`目录。下面是一系列步骤介绍了如何打开此项目。
@@ -52,19 +54,6 @@ Note:如果需要查看其它分支，请将`master`替换为其它分支的名�
 [Gson](https://github.com/google/gson) | A Java serialization/deserialization library that can convert Java Objects into JSON and back.
 [MaterialDateTimePicker](https://github.com/wdullaer/MaterialDateTimePicker) | Pick a date or time on Android in style
 [Volley](https://android.googlesource.com/platform/frameworks/volley/) | Volley is an HTTP library that makes networking for Android apps easier and most importantly, faster. Volley is available through the open AOSP repository.
-
-## 联系我
-对项目有问题，请向我发送邮件，我会尽快回复。
-
-marktonymengyi#gmail.com (替换#为@)
-
-## 支持我的工作
-如果我的项目对你有帮助的话，请我喝杯咖啡吧。
-
-[PayPal](https://www.paypal.me/TonnyL/1)
-
-![Wechat Pay](https://github.com/marktony/ZhiHuDaily/blob/master/art/wechat_qrcode.png)
-![Ali Pay](https://github.com/marktony/ZhiHuDaily/blob/master/art/alipay_qr_code.png)
 
 ## 许可证
 

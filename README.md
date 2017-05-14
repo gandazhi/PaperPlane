@@ -1,13 +1,16 @@
 # Paper Plane
 
-[![Platform](https://img.shields.io/badge/platform-Android-blue.svg)](https://github.com/marktony/ZhiHuDaily)
-![Release](https://img.shields.io/badge/release-3.2.0-blue.svg)
-![Gradle](https://img.shields.io/badge/gradle-2.2.3-blue.svg)
-[![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/marktony/ZhiHuDaily/master/LICENSE)
+[![Build Status](https://travis-ci.org/TonnyL/PaperPlane.svg?branch=master)](https://travis-ci.org/TonnyL/PaperPlane)
 
-![icon](https://github.com/marktony/ZhiHuDaily/blob/master/art/icon.png)
+<div align="center">
+	<img src="./art/logo.png" width="128">
+</div>
 
-English | [中文版](https://github.com/marktony/ZhiHuDaily/blob/master/README_CN.MD)
+English | [中文版](./README_CN.MD)
+
+## Notice
+The project is under refactoring, if you want to check out or download the source code of
+ version v3.2.0, please see the [release](https://github.com/TonnyL/PaperPlane/releases).
 
 ## Introduction
 
@@ -15,10 +18,10 @@ Paper Plane is a reading app based on Android platform which contains articles f
 
 API of ZhiHuDaily comes from repository [ZhihuDailyPurify](https://github.com/izzyleung/ZhihuDailyPurify)'s [wiki](https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90).
 
- The architecture of this project is [Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)'s todo-mvp.
+The architecture of this project is [Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)'s todo-mvp.
 
 ## Screenshots
-![screenshot](https://github.com/marktony/ZhiHuDaily/blob/master/art/screenshot.png)
+![screenshot](./art/screenshot.png)
 
 ## Open the project in Android Studio
 To open this project in Android Studio, begin by checking out of the branches, and then open the `PaperPlane/` dictionary in Android Studio. The following series of steps illustrate how to open the `PaperPlane` branch.
@@ -52,21 +55,6 @@ Name | Introduction
 [Gson](https://github.com/google/gson) | A Java serialization/deserialization library that can convert Java Objects into JSON and back.
 [MaterialDateTimePicker](https://github.com/wdullaer/MaterialDateTimePicker) | Pick a date or time on Android in style.
 [Volley](https://android.googlesource.com/platform/frameworks/volley/) | Volley is an HTTP library that makes networking for Android apps easier and most importantly, faster. Volley is available through the open AOSP repository.
-
-## Contact me
-If you have any question about this repository, please email me and I will reply you as soon as possible.
-
-marktonymengyi#gmail.com (replace '#' with '@')
-
-My blog：[blog](http://marktony.github.io/)
-
-## Support me
-If my project is helpful to you, please support me a cup of coffee.
-
-[PayPal](https://www.paypal.me/TonnyL/1)
-
-![Wechat Pay](https://github.com/marktony/ZhiHuDaily/blob/master/art/wechat_qrcode.png)
-![Ali Pay](https://github.com/marktony/ZhiHuDaily/blob/master/art/alipay_qr_code.png)
 
 ## License
 
