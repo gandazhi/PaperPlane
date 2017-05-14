@@ -8,9 +8,6 @@
 
 [English](https://github.com/marktony/ZhiHuDaily/) | 中文版
 
-## 注意
-项目正在重构，如果你需要查看或者下载v2.3.0版本的源码，请前往[release](https://github.com/TonnyL/PaperPlane/releases).
-
 ## 介绍
 
 纸飞机是一个基于Android平台，集合了知乎日报、果壳精选和豆瓣一刻的阅读App。

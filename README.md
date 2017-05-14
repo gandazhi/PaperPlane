@@ -8,10 +8,6 @@
 
 English | [中文版](./README_CN.MD)
 
-## Notice
-The project is under refactoring, if you want to check out or download the source code of
- version v3.2.0, please see the [release](https://github.com/TonnyL/PaperPlane/releases).
-
 ## Introduction
 
 Paper Plane is a reading app based on Android platform which contains articles from Zhihu Daily, Guokr Handpick and Douban Moment.
