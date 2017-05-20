@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="single"
+        android:enabled="true">
+
+        <item
+            android:id="@+id/nav_timeline"
+            android:enabled="true"
+            android:icon="@drawable/ic_rss_feed_black_24dp"
+            android:title="Timeline"/>
+
+        <item
+            android:id="@+id/nav_bookmarks"
+            android:enabled="true"
+            android:icon="@drawable/ic_favorite_black_24dp"
+            android:title="Favorites" />
+
+        <item
+            android:id="@+id/nav_movie"
+            android:enabled="true"
+            android:icon="@drawable/ic_movie_black_24dp"
+            android:title="Movies" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:enabled="true"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="Settings" />
+
+    </group>
+</menu>

@@ -6,7 +6,7 @@
 	<img src="./art/logo.png" width="128">
 </div>
 
-English | [中文版](./README_CN.MD)
+** The project is under refactoring, if you wanna download the source code of version v3.2.0, please see the [release](https://github.com/TonnyL/PaperPlane/releases). **
 
 ## Introduction
 

@@ -101,8 +101,8 @@ public class SearchPresenter implements SearchContract.Presenter {
         cursor = db.rawQuery("select * from Guokr where bookmark = 1 and guokr_news like '%" + queryWords + "%'", null);
         if (cursor.moveToFirst()) {
             do {
-                GuokrHandpickNews.result result = gson.fromJson(cursor.getString(cursor.getColumnIndex("guokr_news")), GuokrHandpickNews.result.class);
-                guokrList.add(result);
+                GuokrHandpickNews.result Result = gson.fromJson(cursor.getString(cursor.getColumnIndex("guokr_news")), GuokrHandpickNews.result.class);
+                guokrList.add(Result);
                 types.add(TYPE_GUOKR_NORMAL);
             } while (cursor.moveToNext());
         }

@@ -157,8 +157,8 @@ public class GuokrPresenter implements GuokrContract.Presenter {
             Cursor cursor = db.query("Guokr", null, null, null, null, null, null);
             if (cursor.moveToFirst()) {
                 do {
-                    GuokrHandpickNews.result result = gson.fromJson(cursor.getString(cursor.getColumnIndex("guokr_news")), GuokrHandpickNews.result.class);
-                    list.add(result);
+                    GuokrHandpickNews.result Result = gson.fromJson(cursor.getString(cursor.getColumnIndex("guokr_news")), GuokrHandpickNews.result.class);
+                    list.add(Result);
                 } while (cursor.moveToNext());
             }
             cursor.close();

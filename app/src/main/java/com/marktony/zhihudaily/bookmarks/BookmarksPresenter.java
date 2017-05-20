@@ -156,8 +156,8 @@ public class BookmarksPresenter implements BookmarksContract.Presenter {
         cursor = db.rawQuery("select * from Guokr where bookmark = ?", new String[]{"1"});
         if (cursor.moveToFirst()) {
             do {
-                GuokrHandpickNews.result result = gson.fromJson(cursor.getString(cursor.getColumnIndex("guokr_news")), GuokrHandpickNews.result.class);
-                guokrList.add(result);
+                GuokrHandpickNews.result Result = gson.fromJson(cursor.getString(cursor.getColumnIndex("guokr_news")), GuokrHandpickNews.result.class);
+                guokrList.add(Result);
                 types.add(TYPE_GUOKR_NORMAL);
             } while (cursor.moveToNext());
         }

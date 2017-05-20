@@ -123,17 +123,17 @@ public class BookmarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             case TYPE_GUOKR_NORMAL:
 
                 if (!guokrList.isEmpty()) {
-                    GuokrHandpickNews.result result = guokrList.get(position - zhihuList.size() - 2);
+                    GuokrHandpickNews.result Result = guokrList.get(position - zhihuList.size() - 2);
 
                     Glide.with(context)
-                            .load(result.getHeadline_img_tb())
+                            .load(Result.getHeadline_img_tb())
                             .asBitmap()
                             .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                             .error(R.drawable.placeholder)
                             .centerCrop()
                             .into(((NormalViewHolder) holder).imageView);
 
-                    ((NormalViewHolder) holder).textViewTitle.setText(result.getTitle());
+                    ((NormalViewHolder) holder).textViewTitle.setText(Result.getTitle());
                 }
 
                 break;

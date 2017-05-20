@@ -1,33 +1,23 @@
-/*
- * Copyright 2017 lizhaotailang
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-    }
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+
+    compileSdkVersion 'android-O'
+    buildToolsVersion '26.0.0 rc2'
+
     defaultConfig {
         applicationId "com.marktony.zhihudaily"
-        minSdkVersion 15
-        targetSdkVersion 25
+        minSdkVersion 21
+        targetSdkVersion 26
         versionCode 18
         versionName "V3.2.0"
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -35,28 +25,55 @@ android {
         }
     }
 
-    productFlavors {
-
+    lintOptions {
+        abortOnError false
     }
+}
 
-    android {
-        lintOptions {
-            abortOnError false
-        }
-    }
+ext {
+    supportLibVersion = '26.0.0-beta1'
+    gsonVersion = '2.8.0'
+    datetimePickerVersion = '3.1.3'
+    glideVersion = '3.7.0'
+    archLifecycleVersion = '1.0.0-alpha1'
+    archRoomVersion = '1.0.0-alpha1'
+    retrofitVersion = '2.2.0'
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/library-1.0.19.jar')
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.android.support:design:25.1.1'
-    compile 'com.android.support:recyclerview-v7:25.1.1'
-    compile 'com.android.support:preference-v14:25.1.1'
-    compile 'com.android.support:customtabs:25.1.1'
-    compile 'com.android.support:cardview-v7:25.1.1'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.wdullaer:materialdatetimepicker:3.1.1'
+
+    // Support series
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
+    compile "com.android.support:preference-v14:${supportLibVersion}"
+    compile "com.android.support:customtabs:${supportLibVersion}"
+    compile "com.android.support:cardview-v7:${supportLibVersion}"
+
+    // Life cycle series
+    compile "android.arch.lifecycle:extensions:${archLifecycleVersion}"
+    annotationProcessor "android.arch.lifecycle:compiler:${archLifecycleVersion}"
+
+    // Room
+    compile "android.arch.persistence.room:runtime:${archRoomVersion}"
+    annotationProcessor "android.arch.persistence.room:compiler:${archRoomVersion}"
+
+    // Retrofit series
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+
+    // Gson
+    compile "com.google.code.gson:gson:${gsonVersion}"
+
+    // Glide
+    compile "com.github.bumptech.glide:glide:${glideVersion}"
+
+    // Material date time picker
+    compile ("com.wdullaer:materialdatetimepicker:${datetimePickerVersion}") {
+        exclude group: 'com.android.support'
+    }
+
+    // Junit
     testCompile 'junit:junit:4.12'
 }

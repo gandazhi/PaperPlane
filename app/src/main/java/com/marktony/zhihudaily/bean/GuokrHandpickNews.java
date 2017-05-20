@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Lizhaotailang on 2016/9/16.
+ * Immutable model class for a guokr handpick news post.
  */
 
 public class GuokrHandpickNews {

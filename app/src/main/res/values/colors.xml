@@ -16,9 +16,12 @@
   -->
 
 <resources>
-    <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#00796B</color>
-    <color name="colorAccent">#009688</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#ffe0e0e0</color>
+    <color name="colorAccent">#03A9F4</color>
+
+    <color name="colorBaseBackground">#fafafa</color>
+    <color name="colorNavItemUnselected">#757575</color>
 
     <color name="textColorPrimary">#616161</color>
     <color name="viewBackground">@android:color/white</color>
