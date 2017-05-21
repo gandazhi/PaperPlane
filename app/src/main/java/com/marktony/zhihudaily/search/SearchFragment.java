@@ -35,7 +35,7 @@ import com.marktony.zhihudaily.bean.BeanType;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
-import com.marktony.zhihudaily.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewOnClickListener;
 
 import java.util.ArrayList;
 

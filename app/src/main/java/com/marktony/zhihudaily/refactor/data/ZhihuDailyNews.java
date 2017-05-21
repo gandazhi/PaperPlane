@@ -1,5 +1,6 @@
 package com.marktony.zhihudaily.refactor.data;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -11,9 +12,11 @@ import java.util.List;
 
 public class ZhihuDailyNews {
 
+    @Expose
     @SerializedName("date")
     private String date;
 
+    @Expose
     @SerializedName("stories")
     private List<Question> stories;
 
@@ -35,20 +38,31 @@ public class ZhihuDailyNews {
 
     public class Question {
 
+        @Expose
         @SerializedName("images")
         private List<String> images;
 
+        @Expose
         @SerializedName("type")
         private int type;
 
+        @Expose
         @SerializedName("id")
         private int id;
 
+        @Expose
         @SerializedName("ga_prefix")
         private String gaPrefix;
 
+        @Expose
         @SerializedName("title")
         private String title;
+
+        @Expose
+        private boolean favorited;
+
+        @Expose
+        private boolean outdated;
 
         public List<String> getImages() {
             return images;
@@ -90,6 +104,21 @@ public class ZhihuDailyNews {
             this.title = title;
         }
 
+        public boolean isFavorited() {
+            return favorited;
+        }
+
+        public void setFavorited(boolean favorited) {
+            this.favorited = favorited;
+        }
+
+        public boolean isOutdated() {
+            return outdated;
+        }
+
+        public void setOutdated(boolean outdated) {
+            this.outdated = outdated;
+        }
     }
 
 }

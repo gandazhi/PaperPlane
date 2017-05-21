@@ -31,7 +31,7 @@ import android.view.ViewGroup;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.adapter.DoubanMomentAdapter;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
-import com.marktony.zhihudaily.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewOnClickListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;

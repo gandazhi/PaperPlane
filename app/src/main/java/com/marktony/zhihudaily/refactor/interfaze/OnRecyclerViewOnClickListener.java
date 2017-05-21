@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.marktony.zhihudaily.interfaze;
+package com.marktony.zhihudaily.refactor.interfaze;
 
 import android.view.View;
 

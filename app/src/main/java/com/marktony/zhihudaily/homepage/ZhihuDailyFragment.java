@@ -35,7 +35,7 @@ import com.marktony.zhihudaily.adapter.MainPagerAdapter;
 import com.marktony.zhihudaily.adapter.ZhihuDailyNewsAdapter;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewOnClickListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;

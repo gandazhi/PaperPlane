@@ -56,7 +56,7 @@
     <string name="action_share_as_text">作为文本分享</string>
 
     <!--main menu-->
-    <string name="change_theme">切换主题</string>
+    <string name="night_mode">夜间模式</string>
     <string name="settings">设置</string>
     <string name="about">关于</string>
     <!--navigation view menu end-->

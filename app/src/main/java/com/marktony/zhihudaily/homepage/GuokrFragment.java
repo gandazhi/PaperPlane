@@ -30,7 +30,7 @@ import android.view.ViewGroup;
 import com.marktony.zhihudaily.adapter.GuokrNewsAdapter;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
-import com.marktony.zhihudaily.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewOnClickListener;
 
 import java.util.ArrayList;
 
