@@ -20,7 +20,8 @@ import java.util.List;
  * Created by lizhaotailang on 2017/5/21.
  */
 
-public class DoubanMomentFragment extends Fragment implements DoubanMomentContract.View {
+public class DoubanMomentFragment extends Fragment
+        implements DoubanMomentContract.View {
 
     private DoubanMomentContract.Presenter mPresenter;
 
@@ -28,6 +29,11 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mRefreshLayout;
     private View mEmptyView;
+
+    private LinearLayoutManager mLayoutManager;
+    private DoubanMomentNewsAdapter mAdapter;
+
+    private int mYear, mMonth, mDay;
 
     public DoubanMomentFragment() {
         // Requires default empty constructor.
@@ -45,7 +51,7 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
         initViews(view);
 
         mRefreshLayout.setOnRefreshListener(() -> {
-            mPresenter.refresh();
+            // mPresenter.load(false, );
         });
 
         return view;
@@ -63,6 +69,7 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mEmptyView = view.findViewById(R.id.empty_view);
     }
 
     @Override
@@ -73,7 +80,7 @@ public class DoubanMomentFragment extends Fragment implements DoubanMomentContra
     }
 
     @Override
-    public void showResult(@NonNull List<DoubanMomentNews> list) {
+    public void showResult(@NonNull List<DoubanMomentNews.Posts> list) {
 
     }
 }

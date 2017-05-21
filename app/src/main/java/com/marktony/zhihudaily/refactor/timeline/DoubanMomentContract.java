@@ -19,15 +19,13 @@ public interface DoubanMomentContract {
 
         void setLoadingIndicator(boolean active);
 
-        void showResult(@NonNull List<DoubanMomentNews> list);
+        void showResult(@NonNull List<DoubanMomentNews.Posts> list);
 
     }
 
     interface Presenter extends BasePresenter {
 
-        void refresh();
-
-        void load();
+        void load(boolean forceUpdate, long date);
 
     }
 

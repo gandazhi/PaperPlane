@@ -60,7 +60,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
         } else {
             mLocalDataSource.getZhihuDailyNews(date, new LoadZhihuDailyNewsCallback() {
                 @Override
-                public void onNewsLoaded(List<ZhihuDailyNews.Question> list) {
+                public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
                     refreshCache(list);
                     callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
                 }
@@ -83,9 +83,9 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
             return;
         }
 
-        mLocalDataSource.getItem(String.valueOf(cachedItem.getId()), new GetNewsItemCallback() {
+        mLocalDataSource.getItem(itemId, new GetNewsItemCallback() {
             @Override
-            public void onItemLoaded(ZhihuDailyNews.Question item) {
+            public void onItemLoaded(@NonNull ZhihuDailyNews.Question item) {
                 if (mCachedItems == null) {
                     mCachedItems = new LinkedHashMap<>();
                 }
@@ -97,7 +97,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
             public void onDataNotAvailable() {
                 mRemoteDataSource.getItem(itemId, new GetNewsItemCallback() {
                     @Override
-                    public void onItemLoaded(ZhihuDailyNews.Question item) {
+                    public void onItemLoaded(@NonNull ZhihuDailyNews.Question item) {
                         if (mCachedItems == null) {
                             mCachedItems = new LinkedHashMap<>();
                         }
@@ -115,24 +115,13 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
     }
 
     @Override
-    public void favoriteItem(@NonNull String itemId) {
-        mRemoteDataSource.favoriteItem(itemId);
-        mLocalDataSource.favoriteItem(itemId);
+    public void favoriteItem(@NonNull String itemId, boolean favorited) {
+        mRemoteDataSource.favoriteItem(itemId, favorited);
+        mLocalDataSource.favoriteItem(itemId, favorited);
 
         ZhihuDailyNews.Question cachedItem = getItemWithId(itemId);
         if (cachedItem != null) {
-            cachedItem.setFavorited(true);
-        }
-    }
-
-    @Override
-    public void unFavoriteItem(@NonNull String itemId) {
-        mRemoteDataSource.unFavoriteItem(itemId);
-        mLocalDataSource.unFavoriteItem(itemId);
-
-        ZhihuDailyNews.Question cachedItem = getItemWithId(itemId);
-        if (cachedItem != null) {
-            cachedItem.setFavorited(false);
+            cachedItem.setFavorited(favorited);
         }
     }
 
@@ -157,17 +146,13 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
         mLocalDataSource.saveItem(item);
         mRemoteDataSource.saveItem(item);
 
-        // Do in memory cache update to keep the app UI up to date
-        if (mCachedItems == null) {
-            mCachedItems = new LinkedHashMap<>();
-        }
         mCachedItems.put(String.valueOf(item.getId()), item);
     }
 
     private void getItemsFromRemoteDataSource(long date, @NonNull LoadZhihuDailyNewsCallback callback) {
         mRemoteDataSource.getZhihuDailyNews(date, new LoadZhihuDailyNewsCallback() {
             @Override
-            public void onNewsLoaded(List<ZhihuDailyNews.Question> list) {
+            public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
                 refreshCache(list);
                 refreshLocalDataSource(list);
                 callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));

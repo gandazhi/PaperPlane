@@ -36,14 +36,10 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
     @Override
     public void loadNews(boolean forceUpdate, long date) {
-        loadNews(date, forceUpdate || mFirstLoad, true);
-        mFirstLoad = false;
-    }
 
-    private void loadNews(long date, boolean forceUpdate, boolean showLoadingIndicator) {
-
-        if (showLoadingIndicator) {
+        if (mFirstLoad) {
             mView.setLoadingIndicator(true);
+            mFirstLoad = false;
         }
 
         if (forceUpdate) {
@@ -52,7 +48,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
         mRepository.getZhihuDailyNews(date, new ZhihuDailyNewsDataSource.LoadZhihuDailyNewsCallback() {
             @Override
-            public void onNewsLoaded(List<ZhihuDailyNews.Question> list) {
+            public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
                 mView.showResult(list);
                 mView.setLoadingIndicator(false);
             }

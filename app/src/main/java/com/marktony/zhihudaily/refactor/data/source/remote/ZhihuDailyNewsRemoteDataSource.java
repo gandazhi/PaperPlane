@@ -61,12 +61,7 @@ public class ZhihuDailyNewsRemoteDataSource implements ZhihuDailyNewsDataSource 
     }
 
     @Override
-    public void favoriteItem(@NonNull String itemId) {
-
-    }
-
-    @Override
-    public void unFavoriteItem(@NonNull String itemId) {
+    public void favoriteItem(@NonNull String itemId, boolean favorited) {
 
     }
 

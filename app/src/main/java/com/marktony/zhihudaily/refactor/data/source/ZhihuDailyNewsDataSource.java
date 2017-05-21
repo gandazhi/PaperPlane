@@ -14,7 +14,7 @@ public interface ZhihuDailyNewsDataSource {
 
     interface LoadZhihuDailyNewsCallback {
 
-        void onNewsLoaded(List<ZhihuDailyNews.Question> list);
+        void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list);
 
         void onDataNotAvailable();
 
@@ -22,7 +22,7 @@ public interface ZhihuDailyNewsDataSource {
 
     interface GetNewsItemCallback {
 
-        void onItemLoaded(ZhihuDailyNews.Question item);
+        void onItemLoaded(@NonNull ZhihuDailyNews.Question item);
 
         void onDataNotAvailable();
 
@@ -32,9 +32,7 @@ public interface ZhihuDailyNewsDataSource {
 
     void getItem(@NonNull String itemId, @NonNull GetNewsItemCallback callback);
 
-    void favoriteItem(@NonNull String itemId);
-
-    void unFavoriteItem(@NonNull String itemId);
+    void favoriteItem(@NonNull String itemId, boolean favorited);
 
     void outdateItem(@NonNull String itemId);
 

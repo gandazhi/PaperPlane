@@ -2,7 +2,11 @@ package com.marktony.zhihudaily.refactor.timeline;
 
 import android.support.annotation.NonNull;
 
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.source.DoubanMomentNewsDataSource;
 import com.marktony.zhihudaily.refactor.data.source.DoubanMomentNewsRepository;
+
+import java.util.List;
 
 /**
  * Created by lizhaotailang on 2017/5/21.
@@ -15,6 +19,8 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
 
     @NonNull
     private final DoubanMomentNewsRepository mRepository;
+
+    private boolean mFirstLoad = true;
 
     public DoubanMomentPresenter(@NonNull DoubanMomentContract.View view,
                                  @NonNull DoubanMomentNewsRepository repository) {
@@ -29,12 +35,27 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
     }
 
     @Override
-    public void refresh() {
+    public void load(boolean forceUpdate, long date) {
+        if (mFirstLoad) {
+            mView.setLoadingIndicator(true);
+            mFirstLoad = false;
+        }
 
-    }
+        if (forceUpdate) {
+            mRepository.refreshDoubanMomentNews();
+        }
 
-    @Override
-    public void load() {
+        mRepository.getDoubanMomentNews(date, new DoubanMomentNewsDataSource.LoadDoubanMomentDailyCallback() {
+            @Override
+            public void onNewsLoaded(@NonNull List<DoubanMomentNews.Posts> list) {
+                mView.showResult(list);
+                mView.setLoadingIndicator(false);
+            }
 
+            @Override
+            public void onDataNotAvailable() {
+                mView.setLoadingIndicator(false);
+            }
+        });
     }
 }
