@@ -36,7 +36,7 @@ import com.marktony.zhihudaily.adapter.BookmarksAdapter;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
-import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
 import com.marktony.zhihudaily.bean.BeanType;
 
 import java.util.ArrayList;
@@ -129,7 +129,7 @@ public class BookmarksFragment extends Fragment
         if (adapter == null) {
 
             adapter = new BookmarksAdapter(getActivity(), zhihuList, guokrList, doubanList, types);
-            adapter.setItemListener(new OnRecyclerViewOnClickListener() {
+            adapter.setItemListener(new OnRecyclerViewItemOnClickListener() {
                 @Override
                 public void OnItemClick(View v, int position) {
                     int type = recyclerView.findViewHolderForLayoutPosition(position).getItemViewType();

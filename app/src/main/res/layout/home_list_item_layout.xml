@@ -40,7 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/textViewTitle"
+            android:id="@+id/text_view_title"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:layout_marginRight="8dp"
@@ -53,7 +53,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:id="@+id/imageViewCover"
+            android:id="@+id/image_view_cover"
             android:layout_gravity="center_vertical" />
 
     </LinearLayout>

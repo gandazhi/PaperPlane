@@ -31,10 +31,10 @@ public interface RetrofitService {
 
     interface DoubanMomentService {
 
-        @GET("/stream/date/{date}")
+        @GET("stream/date/{date}")
         Call<DoubanMomentNews> getDoubanList(@Path("date") String date);
 
-        @GET("/post/{id}")
+        @GET("post/{id}")
         Call<DoubanMomentContent> getDoubanContent(@Path("id") String id);
 
     }

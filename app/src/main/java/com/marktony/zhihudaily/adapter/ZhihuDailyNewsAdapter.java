@@ -27,7 +27,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
-import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
 import com.marktony.zhihudaily.R;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private final Context context;
     private final LayoutInflater inflater;
     private List<ZhihuDailyNews.Question> list = new ArrayList<ZhihuDailyNews.Question>();
-    private OnRecyclerViewOnClickListener mListener;
+    private OnRecyclerViewItemOnClickListener mListener;
 
     private static final int TYPE_NORMAL = 0;
     private static final int TYPE_FOOTER = 1;
@@ -102,7 +102,7 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return ZhihuDailyNewsAdapter.TYPE_NORMAL;
     }
 
-    public void setItemClickListener(OnRecyclerViewOnClickListener listener){
+    public void setItemClickListener(OnRecyclerViewItemOnClickListener listener){
         this.mListener = listener;
     }
 
@@ -110,12 +110,12 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         private ImageView itemImg;
         private TextView tvLatestNewsTitle;
-        private OnRecyclerViewOnClickListener listener;
+        private OnRecyclerViewItemOnClickListener listener;
 
-        public NormalViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
+        public NormalViewHolder(View itemView, OnRecyclerViewItemOnClickListener listener) {
             super(itemView);
-            itemImg = (ImageView) itemView.findViewById(R.id.imageViewCover);
-            tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.textViewTitle);
+            itemImg = (ImageView) itemView.findViewById(R.id.image_view_cover);
+            tvLatestNewsTitle = (TextView) itemView.findViewById(R.id.text_view_title);
             this.listener = listener;
             itemView.setOnClickListener(this);
         }

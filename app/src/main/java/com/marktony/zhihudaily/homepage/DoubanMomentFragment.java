@@ -31,7 +31,7 @@ import android.view.ViewGroup;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.adapter.DoubanMomentAdapter;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
-import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
@@ -174,7 +174,7 @@ public class DoubanMomentFragment extends Fragment
     public void showResults(ArrayList<DoubanMomentNews.posts> list) {
         if (adapter == null) {
             adapter = new DoubanMomentAdapter(getContext(), list);
-            adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
+            adapter.setItemClickListener(new OnRecyclerViewItemOnClickListener() {
                 @Override
                 public void OnItemClick(View v, int position) {
                     presenter.startReading(position);

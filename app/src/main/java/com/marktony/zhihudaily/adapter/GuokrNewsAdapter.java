@@ -28,7 +28,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
-import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class GuokrNewsAdapter extends RecyclerView.Adapter<GuokrNewsAdapter.Guok
     private final LayoutInflater inflater;
     private List<GuokrHandpickNews.result> list;
 
-    private OnRecyclerViewOnClickListener mListener;
+    private OnRecyclerViewItemOnClickListener mListener;
 
     public GuokrNewsAdapter(Context context, ArrayList<GuokrHandpickNews.result> list) {
         this.context = context;
@@ -81,7 +81,7 @@ public class GuokrNewsAdapter extends RecyclerView.Adapter<GuokrNewsAdapter.Guok
         return list.size();
     }
 
-    public void setItemClickListener(OnRecyclerViewOnClickListener listener){
+    public void setItemClickListener(OnRecyclerViewItemOnClickListener listener){
         this.mListener = listener;
     }
 
@@ -90,13 +90,13 @@ public class GuokrNewsAdapter extends RecyclerView.Adapter<GuokrNewsAdapter.Guok
         ImageView ivHeadlineImg;
         TextView tvTitle;
 
-        OnRecyclerViewOnClickListener listener;
+        OnRecyclerViewItemOnClickListener listener;
 
-        public GuokrPostViewHolder(View itemView,OnRecyclerViewOnClickListener listener) {
+        public GuokrPostViewHolder(View itemView,OnRecyclerViewItemOnClickListener listener) {
             super(itemView);
 
-            ivHeadlineImg = (ImageView) itemView.findViewById(R.id.imageViewCover);
-            tvTitle = (TextView) itemView.findViewById(R.id.textViewTitle);
+            ivHeadlineImg = (ImageView) itemView.findViewById(R.id.image_view_cover);
+            tvTitle = (TextView) itemView.findViewById(R.id.text_view_title);
 
             this.listener = listener;
 

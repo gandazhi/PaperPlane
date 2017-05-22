@@ -30,7 +30,7 @@ import android.view.ViewGroup;
 import com.marktony.zhihudaily.adapter.GuokrNewsAdapter;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
-import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
 
 import java.util.ArrayList;
 
@@ -116,7 +116,7 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
     public void showResults(ArrayList<GuokrHandpickNews.result> list) {
         if (adapter == null) {
             adapter = new GuokrNewsAdapter(getContext(), list);
-            adapter.setItemClickListener(new OnRecyclerViewOnClickListener() {
+            adapter.setItemClickListener(new OnRecyclerViewItemOnClickListener() {
                 @Override
                 public void OnItemClick(View v, int position) {
                     presenter.startReading(position);

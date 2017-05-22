@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
 
 import java.util.List;
@@ -24,14 +24,14 @@ import java.util.List;
 public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_ITEM = 0x00;
-    private static final int TYPE_FOOTER = 0x01;
+    private static final int TYPE_FOOTER = 0x02;
 
     @NonNull
     private final Context mContext;
 
     @NonNull
     private List<ZhihuDailyNews.Question> mList;
-    private OnRecyclerViewOnClickListener mListener;
+    private OnRecyclerViewItemOnClickListener mListener;
 
     public ZhihuDailyNewsAdapter(@NonNull List<ZhihuDailyNews.Question> list,
                                  @NonNull Context context) {
@@ -69,13 +69,13 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .centerCrop()
                         .into(((ItemViewHolder)viewHolder).itemImg);
             }
-            ((ItemViewHolder)viewHolder).tvLatestNewsTitle.setText(item.getTitle());
+            ((ItemViewHolder)viewHolder).title.setText(item.getTitle());
         }
     }
 
     @Override
     public int getItemCount() {
-        return mList.size() == 0 ? 0 : mList.size() + 1;
+        return mList.isEmpty() ? 0 : mList.size() + 1;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return TYPE_ITEM;
     }
 
-    public void setItemClickListener(OnRecyclerViewOnClickListener listener){
+    public void setItemClickListener(OnRecyclerViewItemOnClickListener listener){
         this.mListener = listener;
     }
 
@@ -94,20 +94,20 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         mList.clear();
         mList.addAll(list);
         notifyDataSetChanged();
-
+        notifyItemRemoved(list.size());
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
         private ImageView itemImg;
-        private TextView tvLatestNewsTitle;
-        private OnRecyclerViewOnClickListener listener;
+        private TextView title;
+        private OnRecyclerViewItemOnClickListener listener;
 
-        public ItemViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
+        public ItemViewHolder(View itemView, OnRecyclerViewItemOnClickListener listener) {
             super(itemView);
-            itemImg = itemView.findViewById(R.id.imageViewCover);
-            tvLatestNewsTitle = itemView.findViewById(R.id.textViewTitle);
+            itemImg = itemView.findViewById(R.id.image_view_cover);
+            title = itemView.findViewById(R.id.text_view_title);
             this.listener = listener;
             itemView.setOnClickListener(this);
         }

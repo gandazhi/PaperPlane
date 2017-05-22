@@ -31,7 +31,7 @@ import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.GuokrHandpickNews;
 import com.marktony.zhihudaily.bean.ZhihuDailyNews;
-import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private List<Integer> types; // to store which type the item is.
 
-    private OnRecyclerViewOnClickListener listener;
+    private OnRecyclerViewItemOnClickListener listener;
 
     public static final int TYPE_ZHIHU_NORMAL = 0;
     public static final int TYPE_ZHIHU_WITH_HEADER = 1;
@@ -181,7 +181,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return types.size();
     }
 
-    public void setItemListener(OnRecyclerViewOnClickListener listener) {
+    public void setItemListener(OnRecyclerViewItemOnClickListener listener) {
         this.listener = listener;
     }
 
@@ -190,12 +190,12 @@ public class BookmarksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         ImageView imageView;
         TextView textViewTitle;
-        OnRecyclerViewOnClickListener listener;
+        OnRecyclerViewItemOnClickListener listener;
 
-        public NormalViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
+        public NormalViewHolder(View itemView, OnRecyclerViewItemOnClickListener listener) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.imageViewCover);
-            textViewTitle = (TextView) itemView.findViewById(R.id.textViewTitle);
+            imageView = (ImageView) itemView.findViewById(R.id.image_view_cover);
+            textViewTitle = (TextView) itemView.findViewById(R.id.text_view_title);
             this.listener = listener;
             itemView.setOnClickListener(this);
         }

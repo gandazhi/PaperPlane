@@ -21,7 +21,7 @@ import android.view.View;
 /**
  * Created by lizhaotailang on 2016/3/18.
  */
-public interface OnRecyclerViewOnClickListener {
+public interface OnRecyclerViewItemOnClickListener {
 
     void OnItemClick(View v,int position);
 

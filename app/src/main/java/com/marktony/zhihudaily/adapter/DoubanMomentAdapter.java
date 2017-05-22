@@ -29,7 +29,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bean.DoubanMomentNews;
-import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewOnClickListener;
+import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int TYPE_FOOTER = 0x02;
     private static final int TYPE_NO_IMG = 0x03;
 
-    private OnRecyclerViewOnClickListener listener;
+    private OnRecyclerViewItemOnClickListener listener;
 
     public DoubanMomentAdapter(@NonNull Context context, @NonNull ArrayList<DoubanMomentNews.posts> list) {
         this.context = context;
@@ -115,7 +115,7 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return list.size() + 1;
     }
 
-    public void setItemClickListener(OnRecyclerViewOnClickListener listener){
+    public void setItemClickListener(OnRecyclerViewItemOnClickListener listener){
         this.listener = listener;
     }
 
@@ -124,12 +124,12 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageView ivHeadlineImg;
         TextView tvTitle;
 
-        OnRecyclerViewOnClickListener listener;
+        OnRecyclerViewItemOnClickListener listener;
 
-        public NormalViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
+        public NormalViewHolder(View itemView, OnRecyclerViewItemOnClickListener listener) {
             super(itemView);
-            ivHeadlineImg = (ImageView) itemView.findViewById(R.id.imageViewCover);
-            tvTitle = (TextView) itemView.findViewById(R.id.textViewTitle);
+            ivHeadlineImg = (ImageView) itemView.findViewById(R.id.image_view_cover);
+            tvTitle = (TextView) itemView.findViewById(R.id.text_view_title);
 
             this.listener = listener;
 
@@ -148,11 +148,11 @@ public class DoubanMomentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         TextView tvTitle;
 
-        OnRecyclerViewOnClickListener listener;
+        OnRecyclerViewItemOnClickListener listener;
 
-        public NoImgViewHolder(View itemView, OnRecyclerViewOnClickListener listener) {
+        public NoImgViewHolder(View itemView, OnRecyclerViewItemOnClickListener listener) {
             super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.textViewTitle);
+            tvTitle = (TextView) itemView.findViewById(R.id.text_view_title);
 
             this.listener = listener;
 

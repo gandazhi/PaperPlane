@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by lizhaotailang on 2017/5/21.
@@ -43,6 +45,14 @@ public class DoubanMomentFragment extends Fragment
         return new DoubanMomentFragment();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mYear = Calendar.getInstance().get(Calendar.YEAR);
+        mMonth = Calendar.getInstance().get(Calendar.MONTH);
+        mDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,10 +61,20 @@ public class DoubanMomentFragment extends Fragment
         initViews(view);
 
         mRefreshLayout.setOnRefreshListener(() -> {
-            // mPresenter.load(false, );
+            mPresenter.load(false, Calendar.getInstance().getTimeInMillis());
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+        Calendar c = Calendar.getInstance();
+        c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+        c.set(mYear, mMonth, mDay);
+        mPresenter.load(true, c.getTimeInMillis());
     }
 
     @Override
@@ -68,7 +88,8 @@ public class DoubanMomentFragment extends Fragment
     public void initViews(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mEmptyView = view.findViewById(R.id.empty_view);
     }
 
@@ -81,6 +102,13 @@ public class DoubanMomentFragment extends Fragment
 
     @Override
     public void showResult(@NonNull List<DoubanMomentNews.Posts> list) {
+        if (mAdapter == null) {
+            mAdapter = new DoubanMomentNewsAdapter(list, getContext());
+            mAdapter.setItemClickListener((v, i) -> {
 
+            });
+            mRecyclerView.setAdapter(mAdapter);
+        }
+        mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
     }
 }

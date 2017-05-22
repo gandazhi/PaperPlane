@@ -5,6 +5,14 @@ import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
 import com.marktony.zhihudaily.refactor.data.source.DoubanMomentNewsDataSource;
+import com.marktony.zhihudaily.refactor.retrofit.RetrofitService;
+import com.marktony.zhihudaily.refactor.util.DateFormatUtil;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by lizhaotailang on 2017/5/21.
@@ -28,7 +36,25 @@ public class DoubanMomentNewsRemoteDataSource implements DoubanMomentNewsDataSou
 
     @Override
     public void getDoubanMomentNews(long date, @NonNull LoadDoubanMomentDailyCallback callback) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(RetrofitService.DOUBAN_MOMENT_BASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
+        RetrofitService.DoubanMomentService service = retrofit.create(RetrofitService.DoubanMomentService.class);
+
+        service.getDoubanList(DateFormatUtil.DoubanDateFormat(date))
+                .enqueue(new Callback<DoubanMomentNews>() {
+                    @Override
+                    public void onResponse(Call<DoubanMomentNews> call, Response<DoubanMomentNews> response) {
+                        callback.onNewsLoaded(response.body().getPosts());
+                    }
+
+                    @Override
+                    public void onFailure(Call<DoubanMomentNews> call, Throwable t) {
+                        callback.onDataNotAvailable();
+                    }
+                });
     }
 
     @Override
@@ -55,4 +81,5 @@ public class DoubanMomentNewsRemoteDataSource implements DoubanMomentNewsDataSou
     public void saveItem(@NonNull DoubanMomentNews.Posts item) {
 
     }
+
 }
