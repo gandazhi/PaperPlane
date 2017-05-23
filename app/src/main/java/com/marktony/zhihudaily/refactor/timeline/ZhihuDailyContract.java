@@ -24,7 +24,7 @@ public interface ZhihuDailyContract {
 
     interface Presenter extends BasePresenter {
 
-        void loadNews(boolean forceUpdate, long date);
+        void loadNews(boolean isLoadMore, boolean forceUpdate, long date);
 
     }
 

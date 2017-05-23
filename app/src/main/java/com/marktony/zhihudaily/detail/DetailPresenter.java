@@ -39,8 +39,6 @@ import com.marktony.zhihudaily.bean.DoubanMomentNews;
 import com.marktony.zhihudaily.bean.DoubanMomentStory;
 import com.marktony.zhihudaily.bean.StringModelImpl;
 import com.marktony.zhihudaily.bean.ZhihuDailyStory;
-import com.marktony.zhihudaily.customtabs.CustomFallback;
-import com.marktony.zhihudaily.customtabs.CustomTabActivityHelper;
 import com.marktony.zhihudaily.db.DatabaseHelper;
 import com.marktony.zhihudaily.interfaze.OnStringListener;
 import com.marktony.zhihudaily.util.Api;
@@ -170,7 +168,7 @@ public class DetailPresenter implements DetailContract.Presenter {
             CustomTabsIntent.Builder customTabsIntent = new CustomTabsIntent.Builder()
                     .setToolbarColor(context.getResources().getColor(R.color.colorAccent))
                     .setShowTitle(true);
-            CustomTabActivityHelper.openCustomTab(
+            /*CustomTabActivityHelper.openCustomTab(
                     (Activity) context,
                     customTabsIntent.build(),
                     Uri.parse(url),
@@ -180,7 +178,7 @@ public class DetailPresenter implements DetailContract.Presenter {
                             super.openUri(activity, uri);
                         }
                     }
-            );
+            );*/
         } else {
 
             try{

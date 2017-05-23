@@ -28,7 +28,7 @@ public interface DoubanMomentNewsDataSource {
 
     }
 
-    void getDoubanMomentNews(long date, @NonNull LoadDoubanMomentDailyCallback callback);
+    void getDoubanMomentNews(boolean loadMore, long date, @NonNull LoadDoubanMomentDailyCallback callback);
 
     void getItem(@NonNull String id, @NonNull GetNewsItemCallback callback);
 

@@ -91,7 +91,7 @@
     <string name="github_url">https://github.com/marktony</string>
     <string name="zhihu_url">https://www.zhihu.com/people/kirin-momo</string>
     <string name="zhihu_account">\@Li Zhaotailang</string>
-    <string name="open_source_license">Open Source License</string>
+    <string name="open_source_licenses">Open Source Licenses</string>
     <string name="easter_egg">Easter Egg</string>
     <string name="easter_egg_content">You clicked my name so many times, do you like me?</string>
     <string name="sure">Positive</string>
@@ -103,7 +103,7 @@
     <string name="no_picture_mode">No image mode</string>
     <string name="no_picture_mode_description">Images will not be loaded when reading articles</string>
     <string name="in_app_browser">In-App Browser</string>
-    <string name="in_app_browser_description">Open links with the built-in browser</string>
+    <string name="in_app_browser_description">Open links with Chrome Custom Tabs</string>
     <string name="time_of_saving_articles">Time of Saving Articles</string>
     <string name="other_settings">Other</string>
     <string name="clear_image_cache">Clear Image Cache</string>
@@ -112,5 +112,7 @@
 
     <string name="network_error">Internet is lost, tap to retry</string>
     <string name="refresh">Refresh</string>
+
+    <string name="something_wrong">发生了一些错误…</string>
 
 </resources>

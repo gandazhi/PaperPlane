@@ -35,7 +35,7 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
     }
 
     @Override
-    public void load(boolean forceUpdate, long date) {
+    public void load(boolean isLoadMore, boolean forceUpdate, long date) {
         if (mFirstLoad) {
             mView.setLoadingIndicator(true);
             mFirstLoad = false;
@@ -45,7 +45,7 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
             mRepository.refreshDoubanMomentNews();
         }
 
-        mRepository.getDoubanMomentNews(date, new DoubanMomentNewsDataSource.LoadDoubanMomentDailyCallback() {
+        mRepository.getDoubanMomentNews(isLoadMore, date, new DoubanMomentNewsDataSource.LoadDoubanMomentDailyCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<DoubanMomentNews.Posts> list) {
                 mView.showResult(list);

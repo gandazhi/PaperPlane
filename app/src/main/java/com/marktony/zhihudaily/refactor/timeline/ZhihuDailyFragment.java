@@ -33,7 +33,6 @@ public class ZhihuDailyFragment extends Fragment
     private SwipeRefreshLayout mRefreshLayout;
     private View mEmptyView;
 
-    private LinearLayoutManager mLayoutManager;
     private ZhihuDailyNewsAdapter mAdapter;
 
     private int mYear, mMonth, mDay;
@@ -66,20 +65,37 @@ public class ZhihuDailyFragment extends Fragment
         mRefreshLayout.setOnRefreshListener(() -> {
             Calendar c = Calendar.getInstance();
             c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-            mPresenter.loadNews(false, c.getTimeInMillis());
+            mPresenter.loadNews(false, false, c.getTimeInMillis());
         });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            boolean isSlidingToLast = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                // 当不滚动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    // 获取最后一个完全显示的item position
+                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                    int totalItemCount = manager.getItemCount();
+
+                    // 判断是否滚动到底部并且是向下滑动
+                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
+                        Calendar c = Calendar.getInstance();
+                        c.set(mYear, mMonth, --mDay);
+                        mPresenter.loadNews(true, false, c.getTimeInMillis());
+                    }
+                }
+
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
-                if (lastVisibleItemPosition + 1 == mAdapter.getItemCount()) {
-                    Calendar c = Calendar.getInstance();
-                    c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-                    c.set(mYear, mMonth, --mDay);
-                    mPresenter.loadNews(false, c.getTimeInMillis());
-                }
+                isSlidingToLast = dy > 0;
             }
         });
 
@@ -93,7 +109,7 @@ public class ZhihuDailyFragment extends Fragment
         Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
         c.set(mYear, mMonth, mDay);
-        mPresenter.loadNews(true, c.getTimeInMillis());
+        mPresenter.loadNews(false, true, c.getTimeInMillis());
     }
 
     @Override
@@ -107,8 +123,7 @@ public class ZhihuDailyFragment extends Fragment
     public void initViews(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mEmptyView = view.findViewById(R.id.empty_view);
     }
 

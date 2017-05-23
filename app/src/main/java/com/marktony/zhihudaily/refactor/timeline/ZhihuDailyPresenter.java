@@ -1,6 +1,7 @@
 package com.marktony.zhihudaily.refactor.timeline;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
 import com.marktony.zhihudaily.refactor.data.source.ZhihuDailyNewsDataSource;
@@ -35,7 +36,7 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
     }
 
     @Override
-    public void loadNews(boolean forceUpdate, long date) {
+    public void loadNews(boolean isLoadMore, boolean forceUpdate, long date) {
 
         if (mFirstLoad) {
             mView.setLoadingIndicator(true);
@@ -46,7 +47,11 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
             mRepository.refreshZhihuDailyNews();
         }
 
-        mRepository.getZhihuDailyNews(date, new ZhihuDailyNewsDataSource.LoadZhihuDailyNewsCallback() {
+        if (isLoadMore) {
+            Log.d("TAG", "loadNews: load more");
+        }
+
+        mRepository.getZhihuDailyNews(isLoadMore, date, new ZhihuDailyNewsDataSource.LoadZhihuDailyNewsCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
                 mView.showResult(list);

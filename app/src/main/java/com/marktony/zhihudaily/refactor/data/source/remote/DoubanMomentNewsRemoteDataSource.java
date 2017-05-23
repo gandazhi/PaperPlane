@@ -35,7 +35,7 @@ public class DoubanMomentNewsRemoteDataSource implements DoubanMomentNewsDataSou
     }
 
     @Override
-    public void getDoubanMomentNews(long date, @NonNull LoadDoubanMomentDailyCallback callback) {
+    public void getDoubanMomentNews(boolean loadMore, long date, @NonNull LoadDoubanMomentDailyCallback callback) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.DOUBAN_MOMENT_BASE)
                 .addConverterFactory(GsonConverterFactory.create())

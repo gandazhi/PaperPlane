@@ -35,7 +35,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.about.AboutPreferenceActivity;
 import com.marktony.zhihudaily.bookmarks.BookmarksFragment;
 import com.marktony.zhihudaily.bookmarks.BookmarksPresenter;
 import com.marktony.zhihudaily.service.CacheService;
@@ -202,7 +201,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this,SettingsPreferenceActivity.class));
         } else if (id == R.id.nav_about) {
-            startActivity(new Intent(this,AboutPreferenceActivity.class));
+            //startActivity(new Intent(this,AboutPreferenceActivity.class));
         }
 
         return true;

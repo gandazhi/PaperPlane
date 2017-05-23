@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.refactor.info;
+package com.marktony.zhihudaily.refactor.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

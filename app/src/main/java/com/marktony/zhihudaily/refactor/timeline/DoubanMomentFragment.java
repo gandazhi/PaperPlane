@@ -32,7 +32,6 @@ public class DoubanMomentFragment extends Fragment
     private SwipeRefreshLayout mRefreshLayout;
     private View mEmptyView;
 
-    private LinearLayoutManager mLayoutManager;
     private DoubanMomentNewsAdapter mAdapter;
 
     private int mYear, mMonth, mDay;
@@ -61,7 +60,39 @@ public class DoubanMomentFragment extends Fragment
         initViews(view);
 
         mRefreshLayout.setOnRefreshListener(() -> {
-            mPresenter.load(false, Calendar.getInstance().getTimeInMillis());
+            mPresenter.load(false, false, Calendar.getInstance().getTimeInMillis());
+        });
+
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            boolean isSlidingToLast = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                // 当不滚动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    // 获取最后一个完全显示的itemposition
+                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                    int totalItemCount = manager.getItemCount();
+
+                    // 判断是否滚动到底部并且是向下滑动
+                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
+                        Calendar c = Calendar.getInstance();
+                        c.set(mYear, mMonth, --mDay);
+                        mPresenter.load(true, false, c.getTimeInMillis());
+                    }
+                }
+
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                isSlidingToLast = dy > 0;
+            }
         });
 
         return view;
@@ -74,7 +105,7 @@ public class DoubanMomentFragment extends Fragment
         Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
         c.set(mYear, mMonth, mDay);
-        mPresenter.load(true, c.getTimeInMillis());
+        mPresenter.load(false, true, c.getTimeInMillis());
     }
 
     @Override
@@ -88,8 +119,7 @@ public class DoubanMomentFragment extends Fragment
     public void initViews(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mEmptyView = view.findViewById(R.id.empty_view);
     }
 
@@ -108,6 +138,8 @@ public class DoubanMomentFragment extends Fragment
 
             });
             mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.updateData(list);
         }
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
     }

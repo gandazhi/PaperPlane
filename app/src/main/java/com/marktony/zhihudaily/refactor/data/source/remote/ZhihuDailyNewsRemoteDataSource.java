@@ -31,7 +31,7 @@ public class ZhihuDailyNewsRemoteDataSource implements ZhihuDailyNewsDataSource 
     }
 
     @Override
-    public void getZhihuDailyNews(long date, @NonNull LoadZhihuDailyNewsCallback callback) {
+    public void getZhihuDailyNews(boolean loadMore, long date, @NonNull LoadZhihuDailyNewsCallback callback) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.ZHIHU_DAILY_BASE)

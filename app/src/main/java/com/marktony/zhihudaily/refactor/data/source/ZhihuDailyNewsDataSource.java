@@ -28,7 +28,7 @@ public interface ZhihuDailyNewsDataSource {
 
     }
 
-    void getZhihuDailyNews(long date, @NonNull LoadZhihuDailyNewsCallback callback);
+    void getZhihuDailyNews(boolean loadMore, long date, @NonNull LoadZhihuDailyNewsCallback callback);
 
     void getItem(@NonNull String itemId, @NonNull GetNewsItemCallback callback);
 
