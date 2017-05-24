@@ -23,4 +23,10 @@
     <color name="textColorPrimary">#616161</color>
     <color name="viewBackground">#212a2f</color>
 
+    <color name="colorBaseBackground">#262626</color>
+
+    <color name="colorNavItemSelected">#35464e</color>
+    <color name="colorNavItemUnselected">#616161</color>
+
+
 </resources>

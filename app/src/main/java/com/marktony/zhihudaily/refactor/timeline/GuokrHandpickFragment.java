@@ -12,47 +12,34 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
 
-import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
-
 
 /**
- * Created by lizhaotailang on 2017/5/21.
+ * Created by lizhaotailang on 2017/5/24.
  */
 
-public class ZhihuDailyFragment extends Fragment
-        implements ZhihuDailyContract.View {
+public class GuokrHandpickFragment extends Fragment
+        implements GuokrHandpickContract.View{
 
-    private ZhihuDailyContract.Presenter mPresenter;
+    private GuokrHandpickContract.Presenter mPresenter;
 
-    // View references.
+    // View reference.
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mRefreshLayout;
     private View mEmptyView;
 
-    private ZhihuDailyNewsAdapter mAdapter;
+    private GuokrHandpickNewsAdapter mAdapter;
 
-    private int mYear, mMonth, mDay;
+    private int mOffset = 0;
 
-    public ZhihuDailyFragment() {
-        // An empty constructor is needed as a fragment.
+    public GuokrHandpickFragment() {
+        // Requires an empty constructor.
     }
 
-    public static ZhihuDailyFragment newInstance() {
-        return new ZhihuDailyFragment();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Calendar c = Calendar.getInstance();
-        c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
+    public static GuokrHandpickFragment newInstance() {
+        return new GuokrHandpickFragment();
     }
 
     @Nullable
@@ -63,9 +50,8 @@ public class ZhihuDailyFragment extends Fragment
         initViews(view);
 
         mRefreshLayout.setOnRefreshListener(() -> {
-            Calendar c = Calendar.getInstance();
-            c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-            mPresenter.loadNews(false, false, c.getTimeInMillis());
+            mPresenter.load(true, 0, 20);
+            mOffset = 0;
         });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -83,9 +69,7 @@ public class ZhihuDailyFragment extends Fragment
 
                     // 判断是否滚动到底部并且是向下滑动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(mYear, mMonth, --mDay);
-                        mPresenter.loadNews(true, false, c.getTimeInMillis());
+                        mPresenter.load(false, mOffset++, 20);
                     }
                 }
 
@@ -106,14 +90,30 @@ public class ZhihuDailyFragment extends Fragment
     public void onResume() {
         super.onResume();
         mPresenter.start();
-        Calendar c = Calendar.getInstance();
-        c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-        c.set(mYear, mMonth, mDay);
-        mPresenter.loadNews(false, true, c.getTimeInMillis());
+        mPresenter.load(true, mOffset, 20);
     }
 
     @Override
-    public void setPresenter(ZhihuDailyContract.Presenter presenter) {
+    public void setLoadingIndicator(boolean active) {
+        mRefreshLayout.post(() -> mRefreshLayout.setRefreshing(active));
+    }
+
+    @Override
+    public void showResult(@NonNull List<GuokrHandpickNews.Result> list) {
+        if (mAdapter == null) {
+            mAdapter = new GuokrHandpickNewsAdapter(list, getContext());
+            mAdapter.setItemClickListener((v, p) -> {
+
+            });
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.updateData(list);
+        }
+        mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    @Override
+    public void setPresenter(GuokrHandpickContract.Presenter presenter) {
         if (presenter != null) {
             mPresenter = presenter;
         }
@@ -125,24 +125,5 @@ public class ZhihuDailyFragment extends Fragment
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mEmptyView = view.findViewById(R.id.empty_view);
-    }
-
-    @Override
-    public void setLoadingIndicator(boolean active) {
-        mRefreshLayout.post(() -> mRefreshLayout.setRefreshing(active));
-    }
-
-    @Override
-    public void showResult(@NonNull List<ZhihuDailyNews.Question> list) {
-        if (mAdapter == null) {
-            mAdapter = new ZhihuDailyNewsAdapter(list, getContext());
-            mAdapter.setItemClickListener((v, i) -> {
-
-            });
-            mRecyclerView.setAdapter(mAdapter);
-        } else {
-            mAdapter.updateData(list);
-        }
-        mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
     }
 }

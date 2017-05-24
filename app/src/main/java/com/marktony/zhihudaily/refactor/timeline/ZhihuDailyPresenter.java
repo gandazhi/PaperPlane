@@ -1,7 +1,6 @@
 package com.marktony.zhihudaily.refactor.timeline;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
 import com.marktony.zhihudaily.refactor.data.source.ZhihuDailyNewsDataSource;
@@ -45,10 +44,6 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
 
         if (forceUpdate) {
             mRepository.refreshZhihuDailyNews();
-        }
-
-        if (isLoadMore) {
-            Log.d("TAG", "loadNews: load more");
         }
 
         mRepository.getZhihuDailyNews(isLoadMore, date, new ZhihuDailyNewsDataSource.LoadZhihuDailyNewsCallback() {

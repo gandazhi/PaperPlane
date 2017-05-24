@@ -200,7 +200,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
         if (mCachedItems == null || mCachedItems.isEmpty()) {
             return null;
         }
-        return mCachedItems.get(id);
+        return (mCachedItems == null || mCachedItems.isEmpty()) ? null : mCachedItems.get(id);
     }
 
 }

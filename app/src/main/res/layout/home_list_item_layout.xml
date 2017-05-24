@@ -25,6 +25,7 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="1dp"
     app:cardPreventCornerOverlap="true"
+    android:stateListAnimator="@drawable/lift_on_touch"
     android:layout_marginTop="8dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp">
@@ -43,7 +44,6 @@
             android:id="@+id/text_view_title"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginEnd="8dp"
             android:gravity="center_vertical"
             android:maxLines="3"

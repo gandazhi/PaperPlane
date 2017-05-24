@@ -15,30 +15,36 @@ import com.marktony.zhihudaily.R;
 
 public class TimelineFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    private final int pageCount = 2;
+    private final int pageCount = 3;
     private String[] titles;
 
     private ZhihuDailyFragment mZhihuFragment;
     private DoubanMomentFragment mDoubanFragment;
+    private GuokrHandpickFragment mGuokrFragment;
 
     public TimelineFragmentPagerAdapter(@NonNull FragmentManager fm,
                                         @NonNull Context context,
                                         @NonNull ZhihuDailyFragment zhihuDailyFragment,
-                                        @NonNull DoubanMomentFragment doubanMomentFragment) {
+                                        @NonNull DoubanMomentFragment doubanMomentFragment,
+                                        @NonNull GuokrHandpickFragment guokrFragment) {
         super(fm);
         titles = new String[]{
                 context.getString(R.string.zhihu_daily),
-                context.getString(R.string.douban_moment)};
+                context.getString(R.string.douban_moment),
+                context.getString(R.string.guokr_handpick)};
         this.mZhihuFragment = zhihuDailyFragment;
         this.mDoubanFragment = doubanMomentFragment;
+        this.mGuokrFragment = guokrFragment;
     }
 
     @Override
     public Fragment getItem(int i) {
         if (i == 0) {
             return mZhihuFragment;
+        } else if (i == 1) {
+            return mDoubanFragment;
         }
-        return mDoubanFragment;
+        return mGuokrFragment;
     }
 
     @Override

@@ -17,19 +17,38 @@ import com.marktony.zhihudaily.refactor.timeline.TimelineFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView mBottomNavigationView;
+    private static final String KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID = "KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID";
 
     private TimelineFragment mTimelineFragment;
     private InfoFragment mInfoFragment;
+
+    private BottomNavigationView mBottomNavigationView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.re_activity_main);
 
-        mBottomNavigationView = findViewById(R.id.bottom_nav);
+        initViews();
 
         initFragments(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            int id = savedInstanceState.getInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID, R.id.nav_timeline);
+            switch (id) {
+                case R.id.nav_timeline:
+                    showFragment(mTimelineFragment);
+                    break;
+                case R.id.nav_favorites:
+                    showFragment(mInfoFragment);
+                    break;
+                case R.id.nav_info:
+                    showFragment(mInfoFragment);
+                    break;
+            }
+        } else {
+            showFragment(mTimelineFragment);
+        }
 
         mBottomNavigationView.setOnNavigationItemSelectedListener((menuItem -> {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -38,15 +57,11 @@ public class MainActivity extends AppCompatActivity {
                     showFragment(mTimelineFragment);
                 break;
 
-                case R.id.nav_movie:
+                case R.id.nav_info:
                     showFragment(mInfoFragment);
                     break;
 
-                case R.id.nav_settings:
-                    showFragment(mInfoFragment);
-                    break;
-
-                case R.id.nav_bookmarks:
+                case R.id.nav_favorites:
                     showFragment(mInfoFragment);
                     break;
 
@@ -57,6 +72,19 @@ public class MainActivity extends AppCompatActivity {
             ft.commit();
             return true;
         }));
+    }
+
+    private void initViews() {
+        mBottomNavigationView = findViewById(R.id.bottom_nav);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID, mBottomNavigationView.getSelectedItemId());
+        FragmentManager fm = getSupportFragmentManager();
+        fm.putFragment(outState, TimelineFragment.class.getSimpleName(), mTimelineFragment);
+        fm.putFragment(outState, InfoFragment.class.getSimpleName(), mInfoFragment);
     }
 
     private void initFragments(Bundle savedInstanceState) {

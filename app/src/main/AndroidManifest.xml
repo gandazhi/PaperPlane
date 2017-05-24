@@ -22,7 +22,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".app.App"
+        android:name=".refactor.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -45,7 +45,7 @@
                 android:resource="@xml/shortcuts" />
         </activity>
 
-        <activity android:name=".detail.DetailActivity"
+        <activity android:name=".refactor.details.DetailsActivity"
             android:label="@string/title_activity_read"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -54,16 +54,6 @@
             android:name=".settings.SettingsPreferenceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
             android:label="@string/settings"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".about.AboutPreferenceActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
-            android:label="@string/about"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".innerbrowser.InnerBrowserActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".search.SearchActivity"

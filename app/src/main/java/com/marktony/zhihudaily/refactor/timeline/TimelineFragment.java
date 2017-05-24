@@ -13,10 +13,13 @@ import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.data.source.DoubanMomentNewsRepository;
+import com.marktony.zhihudaily.refactor.data.source.GuokrHandpickNewsRepository;
 import com.marktony.zhihudaily.refactor.data.source.ZhihuDailyNewsRepository;
 import com.marktony.zhihudaily.refactor.data.source.local.DoubanMomentNewsLocalDataSource;
+import com.marktony.zhihudaily.refactor.data.source.local.GuokrHandpickNewsLocalDataSource;
 import com.marktony.zhihudaily.refactor.data.source.local.ZhihuDailyNewsLocalDataSource;
 import com.marktony.zhihudaily.refactor.data.source.remote.DoubanMomentNewsRemoteDataSource;
+import com.marktony.zhihudaily.refactor.data.source.remote.GuokrHandpickNewsRemoteDataSource;
 import com.marktony.zhihudaily.refactor.data.source.remote.ZhihuDailyNewsRemoteDataSource;
 
 /**
@@ -29,6 +32,7 @@ public class TimelineFragment extends Fragment {
 
     private ZhihuDailyFragment mZhihuFragment;
     private DoubanMomentFragment mDoubanFragment;
+    private GuokrHandpickFragment mGuokrFragment;
 
     public TimelineFragment() {
         // Requires the empty constructor
@@ -41,9 +45,11 @@ public class TimelineFragment extends Fragment {
             FragmentManager fm = getChildFragmentManager();
             mZhihuFragment = (ZhihuDailyFragment) fm.getFragment(savedInstanceState, ZhihuDailyFragment.class.getSimpleName());
             mDoubanFragment = (DoubanMomentFragment) fm.getFragment(savedInstanceState, DoubanMomentFragment.class.getSimpleName());
+            mGuokrFragment = (GuokrHandpickFragment) fm.getFragment(savedInstanceState, GuokrHandpickFragment.class.getSimpleName());
         } else {
             mZhihuFragment = ZhihuDailyFragment.newInstance();
             mDoubanFragment = DoubanMomentFragment.newInstance();
+            mGuokrFragment = GuokrHandpickFragment.newInstance();
         }
 
         new ZhihuDailyPresenter(mZhihuFragment, ZhihuDailyNewsRepository.getInstance(
@@ -53,6 +59,10 @@ public class TimelineFragment extends Fragment {
         new DoubanMomentPresenter(mDoubanFragment, DoubanMomentNewsRepository.getInstance(
                 DoubanMomentNewsRemoteDataSource.getInstance(),
                 DoubanMomentNewsLocalDataSource.getInstance()));
+
+        new GuokrHandpickPresenter(mGuokrFragment, GuokrHandpickNewsRepository.getInstance(
+                GuokrHandpickNewsRemoteDataSource.getInstance(),
+                GuokrHandpickNewsLocalDataSource.getInstance()));
     }
 
     @Nullable
@@ -75,6 +85,7 @@ public class TimelineFragment extends Fragment {
         FragmentManager fm = getChildFragmentManager();
         fm.putFragment(outState, ZhihuDailyFragment.class.getSimpleName(), mZhihuFragment);
         fm.putFragment(outState, DoubanMomentFragment.class.getSimpleName(), mDoubanFragment);
+        fm.putFragment(outState, GuokrHandpickFragment.class.getSimpleName(), mGuokrFragment);
     }
 
     private void initViews(View view) {
@@ -83,7 +94,9 @@ public class TimelineFragment extends Fragment {
                 getChildFragmentManager(),
                 getContext(),
                 mZhihuFragment,
-                mDoubanFragment));
+                mDoubanFragment,
+                mGuokrFragment));
+        mViewPager.setOffscreenPageLimit(3);
 
         TabLayout mTabLayout = view.findViewById(R.id.tab_layout);
         mTabLayout.setupWithViewPager(mViewPager);

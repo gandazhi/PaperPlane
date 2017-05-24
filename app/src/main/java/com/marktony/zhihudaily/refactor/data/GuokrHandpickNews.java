@@ -1,23 +1,39 @@
 package com.marktony.zhihudaily.refactor.data;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 /**
- * Created by lizhaotailang on 2017/5/20.
+ * Created by lizhaotailang on 2017/5/24.
  */
 
 public class GuokrHandpickNews {
 
+    @Expose
     @SerializedName("now")
     private String now;
 
+    @Expose
     @SerializedName("ok")
     private boolean ok;
 
+    @Expose
+    @SerializedName("limit")
+    private int limit;
+
+    @Expose
     @SerializedName("result")
     private List<Result> result;
+
+    @Expose
+    @SerializedName("offset")
+    private int offset;
+
+    @Expose
+    @SerializedName("total")
+    private int total;
 
     public String getNow() {
         return now;
@@ -35,6 +51,30 @@ public class GuokrHandpickNews {
         this.ok = ok;
     }
 
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
     public List<Result> getResult() {
         return result;
     }
@@ -45,138 +85,186 @@ public class GuokrHandpickNews {
 
     public class Result {
 
-        @SerializedName("link_v2_sync_img")
-        private String linkV2SyncImg;
+        @Expose
+        @SerializedName("image")
+        private String image;
 
-        @SerializedName("source_name")
-        private String sourceName;
+        @Expose
+        @SerializedName("is_replyable")
+        private boolean isReplyable;
 
-        @SerializedName("video_url")
-        private String videoUrl;
+        @Expose
+        @SerializedName("channels")
+        private List<Channel> channels;
 
-        @SerializedName("current_user_has_collected")
-        private boolean currentUserHasCollected;
+        @Expose
+        @SerializedName("channel_keys")
+        private List<String> channelKeys;
 
-        @SerializedName("likings_count")
-        private int likingsCount;
+        @Expose
+        @SerializedName("preface")
+        private String preface;
 
-        @SerializedName("images")
-        private String[] images;
-
-        @SerializedName("video_duration")
-        private String videoDuration;
-
+        @Expose
         @SerializedName("id")
         private int id;
 
-        @SerializedName("category")
-        private String category;
+        @Expose
+        @SerializedName("subject")
+        private Channel subject;
 
-        @SerializedName("style")
-        private String style;
+        @Expose
+        @SerializedName("copyright")
+        private String copyright;
 
-        @SerializedName("title")
-        private String title;
+        @Expose
+        @SerializedName("author")
+        private Author author;
 
-        @SerializedName("source_data")
-        private SourceData sourceData;
+        @Expose
+        @SerializedName("image_description")
+        private String imageDescription;
 
-        @SerializedName("headline_img_tb")
-        private String headlineImgTb;
+        @Expose
+        @SerializedName("is_show_summary")
+        private boolean isShowSummary;
 
-        @SerializedName("link_v2")
-        private String linkV2;
+        @Expose
+        @SerializedName("minisite_key")
+        private String minisiteKey;
 
-        @SerializedName("date_picked")
-        private double datePicked;
+        @Expose
+        @SerializedName("image_info")
+        private ImageInfo imageInfo;
 
-        @SerializedName("is_top")
-        private boolean isTop;
+        @Expose
+        @SerializedName("subject_key")
+        private String subjectKey;
 
-        @SerializedName("link")
-        private String link;
+        @Expose
+        @SerializedName("minisite")
+        private Minisite minisite;
 
-        @SerializedName("headline_img")
-        private String headlineImg;
+        @Expose
+        @SerializedName("tags")
+        private List<String> tags;
 
+        @Expose
+        @SerializedName("date_published")
+        private String datePublished;
+
+        @Expose
+        @SerializedName("avatar")
+        private List<Author> authors;
+
+        @Expose
         @SerializedName("replies_count")
         private int repliesCount;
 
-        @SerializedName("current_user_has_liked")
-        private boolean currentUserHasLiked;
+        @Expose
+        @SerializedName("is_author_external")
+        private boolean isAuthorExternal;
 
-        @SerializedName("page_source")
-        private String pageSource;
+        @Expose
+        @SerializedName("recommends_count")
+        private int recommendsCount;
 
-        @SerializedName("author")
-        private String author;
+        @Expose
+        @SerializedName("title_hide")
+        private String titleHide;
 
+        @Expose
+        @SerializedName("date_modified")
+        private String dateModified;
+
+        @Expose
+        @SerializedName("url")
+        private String url;
+
+        @Expose
+        @SerializedName("title")
+        private String title;
+
+        @Expose
+        @SerializedName("small_image")
+        private String smallImage;
+
+        @Expose
         @SerializedName("summary")
         private String summary;
 
-        @SerializedName("source")
-        private String source;
+        @Expose
+        @SerializedName("ukey_author")
+        private String ukeyAuthor;
 
-        @SerializedName("reply_root_id")
-        private int replyRootId;
-
+        @Expose
         @SerializedName("date_created")
-        private double dateCreated;
+        private String dateCreated;
 
-        public String getLinkV2SyncImg() {
-            return linkV2SyncImg;
+        @Expose
+        @SerializedName("resource_url")
+        private String resourceUrl;
+
+        @Expose
+        private boolean favorited;
+
+        @Expose
+        private boolean outdated;
+
+        public boolean isFavorited() {
+            return favorited;
         }
 
-        public void setLinkV2SyncImg(String linkV2SyncImg) {
-            this.linkV2SyncImg = linkV2SyncImg;
+        public void setFavorited(boolean favorited) {
+            this.favorited = favorited;
         }
 
-        public String getSourceName() {
-            return sourceName;
+        public boolean isOutdated() {
+            return outdated;
         }
 
-        public void setSourceName(String sourceName) {
-            this.sourceName = sourceName;
+        public void setOutdated(boolean outdated) {
+            this.outdated = outdated;
         }
 
-        public String getVideoUrl() {
-            return videoUrl;
+        public String getImage() {
+            return image;
         }
 
-        public void setVideoUrl(String videoUrl) {
-            this.videoUrl = videoUrl;
+        public void setImage(String image) {
+            this.image = image;
         }
 
-        public boolean isCurrentUserHasCollected() {
-            return currentUserHasCollected;
+        public boolean isReplyable() {
+            return isReplyable;
         }
 
-        public void setCurrentUserHasCollected(boolean currentUserHasCollected) {
-            this.currentUserHasCollected = currentUserHasCollected;
+        public void setReplyable(boolean replyable) {
+            isReplyable = replyable;
         }
 
-        public int getLikingsCount() {
-            return likingsCount;
+        public List<Channel> getChannels() {
+            return channels;
         }
 
-        public void setLikingsCount(int likingsCount) {
-            this.likingsCount = likingsCount;
+        public void setChannels(List<Channel> channels) {
+            this.channels = channels;
         }
 
-        public String[] getImages() {
-            return images;
+        public List<String> getChannelKeys() {
+            return channelKeys;
         }
 
-        public void setImages(String[] images) {
-            this.images = images;
+        public void setChannelKeys(List<String> channelKeys) {
+            this.channelKeys = channelKeys;
         }
 
-        public String getVideoDuration() {
-            return videoDuration;
+        public String getPreface() {
+            return preface;
         }
 
-        public void setVideoDuration(String videoDuration) {
-            this.videoDuration = videoDuration;
+        public void setPreface(String preface) {
+            this.preface = preface;
         }
 
         public int getId() {
@@ -187,84 +275,100 @@ public class GuokrHandpickNews {
             this.id = id;
         }
 
-        public String getCategory() {
-            return category;
+        public Channel getSubject() {
+            return subject;
         }
 
-        public void setCategory(String category) {
-            this.category = category;
+        public void setSubject(Channel subject) {
+            this.subject = subject;
         }
 
-        public String getStyle() {
-            return style;
+        public String getCopyright() {
+            return copyright;
         }
 
-        public void setStyle(String style) {
-            this.style = style;
+        public void setCopyright(String copyright) {
+            this.copyright = copyright;
         }
 
-        public String getTitle() {
-            return title;
+        public Author getAuthor() {
+            return author;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
+        public void setAuthor(Author author) {
+            this.author = author;
         }
 
-        public SourceData getSourceData() {
-            return sourceData;
+        public String getImageDescription() {
+            return imageDescription;
         }
 
-        public void setSourceData(SourceData sourceData) {
-            this.sourceData = sourceData;
+        public void setImageDescription(String imageDescription) {
+            this.imageDescription = imageDescription;
         }
 
-        public String getHeadlineImgTb() {
-            return headlineImgTb;
+        public boolean isShowSummary() {
+            return isShowSummary;
         }
 
-        public void setHeadlineImgTb(String headlineImgTb) {
-            this.headlineImgTb = headlineImgTb;
+        public void setShowSummary(boolean showSummary) {
+            isShowSummary = showSummary;
         }
 
-        public String getLinkV2() {
-            return linkV2;
+        public String getMinisiteKey() {
+            return minisiteKey;
         }
 
-        public void setLinkV2(String linkV2) {
-            this.linkV2 = linkV2;
+        public void setMinisiteKey(String minisiteKey) {
+            this.minisiteKey = minisiteKey;
         }
 
-        public double getDatePicked() {
-            return datePicked;
+        public ImageInfo getImageInfo() {
+            return imageInfo;
         }
 
-        public void setDatePicked(double datePicked) {
-            this.datePicked = datePicked;
+        public void setImageInfo(ImageInfo imageInfo) {
+            this.imageInfo = imageInfo;
         }
 
-        public boolean is_top() {
-            return isTop;
+        public String getSubjectKey() {
+            return subjectKey;
         }
 
-        public void setTop(boolean top) {
-            this.isTop = top;
+        public void setSubjectKey(String subjectKey) {
+            this.subjectKey = subjectKey;
         }
 
-        public String getLink() {
-            return link;
+        public Minisite getMinisite() {
+            return minisite;
         }
 
-        public void setLink(String link) {
-            this.link = link;
+        public void setMinisite(Minisite minisite) {
+            this.minisite = minisite;
         }
 
-        public String getHeadlineImg() {
-            return headlineImg;
+        public List<String> getTags() {
+            return tags;
         }
 
-        public void setHeadlineImg(String headlineImg) {
-            this.headlineImg = headlineImg;
+        public void setTags(List<String> tags) {
+            this.tags = tags;
+        }
+
+        public String getDatePublished() {
+            return datePublished;
+        }
+
+        public void setDatePublished(String datePublished) {
+            this.datePublished = datePublished;
+        }
+
+        public List<Author> getAuthors() {
+            return authors;
+        }
+
+        public void setAuthors(List<Author> authors) {
+            this.authors = authors;
         }
 
         public int getRepliesCount() {
@@ -275,99 +379,44 @@ public class GuokrHandpickNews {
             this.repliesCount = repliesCount;
         }
 
-        public boolean isCurrentUserHasLiked() {
-            return currentUserHasLiked;
+        public boolean isAuthorExternal() {
+            return isAuthorExternal;
         }
 
-        public void setCurrentUserHasLiked(boolean currentUserHasLiked) {
-            this.currentUserHasLiked = currentUserHasLiked;
+        public void setAuthorExternal(boolean authorExternal) {
+            isAuthorExternal = authorExternal;
         }
 
-        public String getPageSource() {
-            return pageSource;
+        public int getRecommendsCount() {
+            return recommendsCount;
         }
 
-        public void setPageSource(String pageSource) {
-            this.pageSource = pageSource;
+        public void setRecommendsCount(int recommendsCount) {
+            this.recommendsCount = recommendsCount;
         }
 
-        public String getAuthor() {
-            return author;
+        public String getTitleHide() {
+            return titleHide;
         }
 
-        public void setAuthor(String author) {
-            this.author = author;
+        public void setTitleHide(String titleHide) {
+            this.titleHide = titleHide;
         }
 
-        public String getSummary() {
-            return summary;
+        public String getDateModified() {
+            return dateModified;
         }
 
-        public void setSummary(String summary) {
-            this.summary = summary;
+        public void setDateModified(String dateModified) {
+            this.dateModified = dateModified;
         }
 
-        public String getSource() {
-            return source;
+        public String getUrl() {
+            return url;
         }
 
-        public void setSource(String source) {
-            this.source = source;
-        }
-
-        public int getReplyRootId() {
-            return replyRootId;
-        }
-
-        public void setReplyRootId(int replyRootId) {
-            this.replyRootId = replyRootId;
-        }
-
-        public double getDateCreated() {
-            return dateCreated;
-        }
-
-        public void setDateCreated(double dateCreated) {
-            this.dateCreated = dateCreated;
-        }
-    }
-
-    public class SourceData {
-
-        @SerializedName("image")
-        private String image;
-
-        @SerializedName("summary")
-        private String summary;
-
-        @SerializedName("id")
-        private String id;
-
-        @SerializedName("title")
-        private String title;
-
-        public String getImage() {
-            return image;
-        }
-
-        public void setImage(String image) {
-            this.image = image;
-        }
-
-        public String getSummary() {
-            return summary;
-        }
-
-        public void setSummary(String summary) {
-            this.summary = summary;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
+        public void setUrl(String url) {
+            this.url = url;
         }
 
         public String getTitle() {
@@ -377,6 +426,411 @@ public class GuokrHandpickNews {
         public void setTitle(String title) {
             this.title = title;
         }
+
+        public String getSmallImage() {
+            return smallImage;
+        }
+
+        public void setSmallImage(String smallImage) {
+            this.smallImage = smallImage;
+        }
+
+        public String getSummary() {
+            return summary;
+        }
+
+        public void setSummary(String summary) {
+            this.summary = summary;
+        }
+
+        public String getUkeyAuthor() {
+            return ukeyAuthor;
+        }
+
+        public void setUkeyAuthor(String ukeyAuthor) {
+            this.ukeyAuthor = ukeyAuthor;
+        }
+
+        public String getDateCreated() {
+            return dateCreated;
+        }
+
+        public void setDateCreated(String dateCreated) {
+            this.dateCreated = dateCreated;
+        }
+
+        public String getResourceUrl() {
+            return resourceUrl;
+        }
+
+        public void setResourceUrl(String resourceUrl) {
+            this.resourceUrl = resourceUrl;
+        }
+
+        public class Channel {
+
+            @Expose
+            @SerializedName("url")
+            private String url;
+
+            @Expose
+            @SerializedName("date_created")
+            private String dateCreated;
+
+            @Expose
+            @SerializedName("name")
+            private String name;
+
+            @Expose
+            @SerializedName("key")
+            private String key;
+
+            @Expose
+            @SerializedName("articles_count")
+            private int articlesCount;
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            public String getDateCreated() {
+                return dateCreated;
+            }
+
+            public void setDateCreated(String dateCreated) {
+                this.dateCreated = dateCreated;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getKey() {
+                return key;
+            }
+
+            public void setKey(String key) {
+                this.key = key;
+            }
+
+            public int getArticlesCount() {
+                return articlesCount;
+            }
+
+            public void setArticlesCount(int articlesCount) {
+                this.articlesCount = articlesCount;
+            }
+        }
+
+        public class Author {
+
+            @Expose
+            @SerializedName("ukey")
+            private String ukey;
+
+            @Expose
+            @SerializedName("is_title_authorized")
+            private String isTitleAuthorized;
+
+            @Expose
+            @SerializedName("nickname")
+            private String nickname;
+
+            @Expose
+            @SerializedName("master_category")
+            private String masterCategory;
+
+            @Expose
+            @SerializedName("amended_reliability")
+            private String amendedReliability;
+
+            @Expose
+            @SerializedName("is_exists")
+            private boolean isExists;
+
+            @Expose
+            @SerializedName("title")
+            private String title;
+
+            @Expose
+            @SerializedName("url")
+            private String url;
+
+            @Expose
+            @SerializedName("gender")
+            private String gender;
+
+            @Expose
+            @SerializedName("followers_count")
+            private int followersCount;
+
+            @Expose
+            @SerializedName("avatar")
+            private Avatar avatar;
+
+            @Expose
+            @SerializedName("resource_url")
+            private String resourceUrl;
+
+            public String getUkey() {
+                return ukey;
+            }
+
+            public void setUkey(String ukey) {
+                this.ukey = ukey;
+            }
+
+            public String getIsTitleAuthorized() {
+                return isTitleAuthorized;
+            }
+
+            public void setIsTitleAuthorized(String isTitleAuthorized) {
+                this.isTitleAuthorized = isTitleAuthorized;
+            }
+
+            public String getNickname() {
+                return nickname;
+            }
+
+            public void setNickname(String nickname) {
+                this.nickname = nickname;
+            }
+
+            public String getMasterCategory() {
+                return masterCategory;
+            }
+
+            public void setMasterCategory(String masterCategory) {
+                this.masterCategory = masterCategory;
+            }
+
+            public String getAmendedReliability() {
+                return amendedReliability;
+            }
+
+            public void setAmendedReliability(String amendedReliability) {
+                this.amendedReliability = amendedReliability;
+            }
+
+            public boolean isExists() {
+                return isExists;
+            }
+
+            public void setExists(boolean exists) {
+                isExists = exists;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            public String getGender() {
+                return gender;
+            }
+
+            public void setGender(String gender) {
+                this.gender = gender;
+            }
+
+            public int getFollowersCount() {
+                return followersCount;
+            }
+
+            public void setFollowersCount(int followersCount) {
+                this.followersCount = followersCount;
+            }
+
+            public Avatar getAvatar() {
+                return avatar;
+            }
+
+            public void setAvatar(Avatar avatar) {
+                this.avatar = avatar;
+            }
+
+            public String getResourceUrl() {
+                return resourceUrl;
+            }
+
+            public void setResourceUrl(String resourceUrl) {
+                this.resourceUrl = resourceUrl;
+            }
+
+            public class Avatar {
+
+                @Expose
+                @SerializedName("large")
+                private String large;
+
+                @Expose
+                @SerializedName("small")
+                private String small;
+
+                @Expose
+                @SerializedName("normal")
+                private String normal;
+
+                public String getLarge() {
+                    return large;
+                }
+
+                public void setLarge(String large) {
+                    this.large = large;
+                }
+
+                public String getSmall() {
+                    return small;
+                }
+
+                public void setSmall(String small) {
+                    this.small = small;
+                }
+
+                public String getNormal() {
+                    return normal;
+                }
+
+                public void setNormal(String normal) {
+                    this.normal = normal;
+                }
+            }
+
+        }
+
+        public class ImageInfo {
+
+            @Expose
+            @SerializedName("url")
+            private String url;
+
+            @Expose
+            @SerializedName("width")
+            private int width;
+
+            @Expose
+            @SerializedName("height")
+            private int height;
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            public int getWidth() {
+                return width;
+            }
+
+            public void setWidth(int width) {
+                this.width = width;
+            }
+
+            public int getHeight() {
+                return height;
+            }
+
+            public void setHeight(int height) {
+                this.height = height;
+            }
+        }
+
+        public class Minisite {
+
+            @Expose
+            @SerializedName("name")
+            private String name;
+
+            @Expose
+            @SerializedName("url")
+            private String url;
+
+            @Expose
+            @SerializedName("introduction")
+            private String introduction;
+
+            @Expose
+            @SerializedName("key")
+            private String key;
+
+            @Expose
+            @SerializedName("date_created")
+            private String dateCreated;
+
+            @Expose
+            @SerializedName("icon")
+            private String icon;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            public String getIntroduction() {
+                return introduction;
+            }
+
+            public void setIntroduction(String introduction) {
+                this.introduction = introduction;
+            }
+
+            public String getKey() {
+                return key;
+            }
+
+            public void setKey(String key) {
+                this.key = key;
+            }
+
+            public String getDateCreated() {
+                return dateCreated;
+            }
+
+            public void setDateCreated(String dateCreated) {
+                this.dateCreated = dateCreated;
+            }
+
+            public String getIcon() {
+                return icon;
+            }
+
+            public void setIcon(String icon) {
+                this.icon = icon;
+            }
+        }
+
     }
 
 }

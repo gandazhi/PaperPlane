@@ -24,7 +24,7 @@ import java.util.List;
 public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_ITEM = 0x00;
-    private static final int TYPE_FOOTER = 0x02;
+    private static final int TYPE_FOOTER = 0x01;
 
     @NonNull
     private final Context mContext;

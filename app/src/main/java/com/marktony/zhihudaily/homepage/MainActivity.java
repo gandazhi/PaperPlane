@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
 
         if (action.equals(ACTION_BOOKMARKS)) {
             showBookmarksFragment();
-            navigationView.setCheckedItem(R.id.nav_bookmarks);
+            navigationView.setCheckedItem(R.id.nav_favorites);
         } else {
             showMainFragment();
             navigationView.setCheckedItem(R.id.nav_home);
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_home) {
             showMainFragment();
-        } else if (id == R.id.nav_bookmarks) {
+        } else if (id == R.id.nav_favorites) {
             showBookmarksFragment();
         } else if (id == R.id.nav_change_theme) {
 
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity
                 }
             });
 
-        } else if (id == R.id.nav_settings) {
+        } else if (id == R.id.nav_info) {
             startActivity(new Intent(this,SettingsPreferenceActivity.class));
         } else if (id == R.id.nav_about) {
             //startActivity(new Intent(this,AboutPreferenceActivity.class));
