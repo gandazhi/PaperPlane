@@ -98,7 +98,7 @@ public class BookmarksFragment extends Fragment
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         refreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
     }

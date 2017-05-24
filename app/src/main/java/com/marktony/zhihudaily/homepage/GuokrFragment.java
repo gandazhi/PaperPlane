@@ -94,7 +94,7 @@ public class GuokrFragment extends Fragment implements GuokrContract.View{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         //设置下拉刷新的按钮的颜色
         refreshLayout.setColorSchemeResources(R.color.colorPrimary);
 

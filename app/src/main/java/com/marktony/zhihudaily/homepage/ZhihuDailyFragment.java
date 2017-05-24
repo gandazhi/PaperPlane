@@ -187,7 +187,7 @@ public class ZhihuDailyFragment extends Fragment
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         //设置下拉刷新的按钮的颜色
         refresh.setColorSchemeResources(R.color.colorPrimary);
 

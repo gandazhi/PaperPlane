@@ -142,7 +142,7 @@ public class DoubanMomentFragment extends Fragment
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setRippleColor(getResources().getColor(R.color.colorPrimaryDark));
 
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         //设置下拉刷新的按钮的颜色
         refreshLayout.setColorSchemeResources(R.color.colorPrimary);
 

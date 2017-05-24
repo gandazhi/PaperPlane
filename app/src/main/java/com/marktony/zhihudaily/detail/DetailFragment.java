@@ -272,7 +272,7 @@ public class DetailFragment extends Fragment
     @Override
     public void initViews(View view) {
 
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         //设置下拉刷新的按钮的颜色
         refreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
