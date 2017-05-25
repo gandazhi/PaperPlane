@@ -112,8 +112,8 @@ public class DetailFragment extends Fragment
 
             View view = getActivity().getLayoutInflater().inflate(R.layout.reading_actions_sheet, null);
 
-            if (presenter.queryIfIsBookmarked()) {
-                ((TextView) view.findViewById(R.id.textView)).setText(R.string.action_delete_from_bookmarks);
+            /*if (presenter.queryIfIsBookmarked()) {
+                ((TextView) view.findViewById(R.id.text_view_favorite)).setText(R.string.action_delete_from_bookmarks);
                 ((ImageView) view.findViewById(R.id.imageView))
                         .setColorFilter(getContext().getResources().getColor(R.color.colorPrimary));
             }
@@ -161,7 +161,7 @@ public class DetailFragment extends Fragment
                     dialog.dismiss();
                     presenter.shareAsText();
                 }
-            });
+            });*/
 
             dialog.setContentView(view);
             dialog.show();
@@ -316,6 +316,10 @@ public class DetailFragment extends Fragment
         toolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
         toolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarPlus1);
         toolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
+    }
+
+    private String convertZhihuArticle() {
+        return null;
     }
 
 }

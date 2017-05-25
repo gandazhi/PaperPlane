@@ -3,8 +3,8 @@ package com.marktony.zhihudaily.refactor.timeline;
 import android.support.annotation.NonNull;
 
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
-import com.marktony.zhihudaily.refactor.data.source.GuokrHandpickDataSource;
-import com.marktony.zhihudaily.refactor.data.source.GuokrHandpickNewsRepository;
+import com.marktony.zhihudaily.refactor.data.source.datasource.GuokrHandpickDataSource;
+import com.marktony.zhihudaily.refactor.data.source.repository.GuokrHandpickNewsRepository;
 
 import java.util.List;
 

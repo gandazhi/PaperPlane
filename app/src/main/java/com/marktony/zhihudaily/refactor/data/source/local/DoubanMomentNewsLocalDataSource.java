@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
-import com.marktony.zhihudaily.refactor.data.source.DoubanMomentNewsDataSource;
+import com.marktony.zhihudaily.refactor.data.source.datasource.DoubanMomentNewsDataSource;
 
 /**
  * Created by lizhaotailang on 2017/5/21.
@@ -32,17 +32,17 @@ public class DoubanMomentNewsLocalDataSource implements DoubanMomentNewsDataSour
     }
 
     @Override
-    public void getItem(@NonNull String id, @NonNull GetNewsItemCallback callback) {
+    public void getItem(int id, @NonNull GetNewsItemCallback callback) {
 
     }
 
     @Override
-    public void favoriteItem(@NonNull String itemId, boolean favorited) {
+    public void favoriteItem(int itemId, boolean favorited) {
 
     }
 
     @Override
-    public void outdateItem(@NonNull String itemId) {
+    public void outdateItem(int itemId) {
 
     }
 

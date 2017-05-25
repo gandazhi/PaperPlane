@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.refactor.data.source;
+package com.marktony.zhihudaily.refactor.data.source.datasource;
 
 import android.support.annotation.NonNull;
 
@@ -32,7 +32,7 @@ public interface GuokrHandpickDataSource {
 
     void getItem(int itemId, @NonNull GetNewsItemCallback callback);
 
-    void favoriteItem(int itemId, boolean favorited);
+    void favoriteItem(int itemId, boolean favorite);
 
     void outdateItem(int itemId);
 

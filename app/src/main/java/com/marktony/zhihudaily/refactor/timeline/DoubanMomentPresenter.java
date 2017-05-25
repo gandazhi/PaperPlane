@@ -3,8 +3,8 @@ package com.marktony.zhihudaily.refactor.timeline;
 import android.support.annotation.NonNull;
 
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
-import com.marktony.zhihudaily.refactor.data.source.DoubanMomentNewsDataSource;
-import com.marktony.zhihudaily.refactor.data.source.DoubanMomentNewsRepository;
+import com.marktony.zhihudaily.refactor.data.source.datasource.DoubanMomentNewsDataSource;
+import com.marktony.zhihudaily.refactor.data.source.repository.DoubanMomentNewsRepository;
 
 import java.util.List;
 

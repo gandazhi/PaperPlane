@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.refactor.data.source.DoubanMomentNewsRepository;
-import com.marktony.zhihudaily.refactor.data.source.GuokrHandpickNewsRepository;
-import com.marktony.zhihudaily.refactor.data.source.ZhihuDailyNewsRepository;
+import com.marktony.zhihudaily.refactor.data.source.repository.DoubanMomentNewsRepository;
+import com.marktony.zhihudaily.refactor.data.source.repository.GuokrHandpickNewsRepository;
+import com.marktony.zhihudaily.refactor.data.source.repository.ZhihuDailyNewsRepository;
 import com.marktony.zhihudaily.refactor.data.source.local.DoubanMomentNewsLocalDataSource;
 import com.marktony.zhihudaily.refactor.data.source.local.GuokrHandpickNewsLocalDataSource;
 import com.marktony.zhihudaily.refactor.data.source.local.ZhihuDailyNewsLocalDataSource;
@@ -83,9 +83,15 @@ public class TimelineFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         FragmentManager fm = getChildFragmentManager();
-        fm.putFragment(outState, ZhihuDailyFragment.class.getSimpleName(), mZhihuFragment);
-        fm.putFragment(outState, DoubanMomentFragment.class.getSimpleName(), mDoubanFragment);
-        fm.putFragment(outState, GuokrHandpickFragment.class.getSimpleName(), mGuokrFragment);
+        if (mZhihuFragment.isAdded()) {
+            fm.putFragment(outState, ZhihuDailyFragment.class.getSimpleName(), mZhihuFragment);
+        }
+        if (mGuokrFragment.isAdded()) {
+            fm.putFragment(outState, DoubanMomentFragment.class.getSimpleName(), mDoubanFragment);
+        }
+        if (mDoubanFragment.isAdded()) {
+            fm.putFragment(outState, GuokrHandpickFragment.class.getSimpleName(), mGuokrFragment);
+        }
     }
 
     private void initViews(View view) {

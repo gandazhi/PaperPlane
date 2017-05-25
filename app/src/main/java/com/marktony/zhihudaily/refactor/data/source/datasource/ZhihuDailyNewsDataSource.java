@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.refactor.data.source;
+package com.marktony.zhihudaily.refactor.data.source.datasource;
 
 import android.support.annotation.NonNull;
 
@@ -30,11 +30,11 @@ public interface ZhihuDailyNewsDataSource {
 
     void getZhihuDailyNews(boolean loadMore, long date, @NonNull LoadZhihuDailyNewsCallback callback);
 
-    void getItem(@NonNull String itemId, @NonNull GetNewsItemCallback callback);
+    void getItem(int itemId, @NonNull GetNewsItemCallback callback);
 
-    void favoriteItem(@NonNull String itemId, boolean favorited);
+    void favoriteItem(int itemId, boolean favorite);
 
-    void outdateItem(@NonNull String itemId);
+    void outdateItem(int itemId);
 
     void refreshZhihuDailyNews();
 

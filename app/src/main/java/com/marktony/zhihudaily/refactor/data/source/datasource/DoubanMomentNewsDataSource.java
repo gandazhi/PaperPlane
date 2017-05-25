@@ -1,4 +1,4 @@
-package com.marktony.zhihudaily.refactor.data.source;
+package com.marktony.zhihudaily.refactor.data.source.datasource;
 
 import android.support.annotation.NonNull;
 
@@ -30,11 +30,11 @@ public interface DoubanMomentNewsDataSource {
 
     void getDoubanMomentNews(boolean loadMore, long date, @NonNull LoadDoubanMomentDailyCallback callback);
 
-    void getItem(@NonNull String id, @NonNull GetNewsItemCallback callback);
+    void getItem(int id, @NonNull GetNewsItemCallback callback);
 
-    void favoriteItem(@NonNull String itemId, boolean favorited);
+    void favoriteItem(int itemId, boolean favorite);
 
-    void outdateItem(@NonNull String itemId);
+    void outdateItem(int itemId);
 
     void refreshDoubanMomentNews();
 

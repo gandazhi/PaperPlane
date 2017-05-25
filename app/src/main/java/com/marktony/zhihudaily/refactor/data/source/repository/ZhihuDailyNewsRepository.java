@@ -1,9 +1,10 @@
-package com.marktony.zhihudaily.refactor.data.source;
+package com.marktony.zhihudaily.refactor.data.source.repository;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
+import com.marktony.zhihudaily.refactor.data.source.datasource.ZhihuDailyNewsDataSource;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -25,7 +26,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
     @NonNull
     private final ZhihuDailyNewsDataSource mRemoteDataSource;
 
-    private Map<String, ZhihuDailyNews.Question> mCachedItems;
+    private Map<Integer, ZhihuDailyNews.Question> mCachedItems;
 
     private boolean mCacheIsDirty = false;
     private boolean mLoadMore = false;
@@ -81,7 +82,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
     }
 
     @Override
-    public void getItem(@NonNull String itemId, @NonNull GetNewsItemCallback callback) {
+    public void getItem(int itemId, @NonNull GetNewsItemCallback callback) {
         ZhihuDailyNews.Question cachedItem = getItemWithId(itemId);
 
         if (cachedItem != null) {
@@ -95,7 +96,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
                 if (mCachedItems == null) {
                     mCachedItems = new LinkedHashMap<>();
                 }
-                mCachedItems.put(String.valueOf(item.getId()), item);
+                mCachedItems.put(item.getId(), item);
                 callback.onItemLoaded(item);
             }
 
@@ -107,7 +108,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
                         if (mCachedItems == null) {
                             mCachedItems = new LinkedHashMap<>();
                         }
-                        mCachedItems.put(String.valueOf(item.getId()), item);
+                        mCachedItems.put(item.getId(), item);
                         callback.onItemLoaded(item);
                     }
 
@@ -121,18 +122,18 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
     }
 
     @Override
-    public void favoriteItem(@NonNull String itemId, boolean favorited) {
+    public void favoriteItem(int itemId, boolean favorited) {
         mRemoteDataSource.favoriteItem(itemId, favorited);
         mLocalDataSource.favoriteItem(itemId, favorited);
 
         ZhihuDailyNews.Question cachedItem = getItemWithId(itemId);
         if (cachedItem != null) {
-            cachedItem.setFavorited(favorited);
+            cachedItem.setFavorite(favorited);
         }
     }
 
     @Override
-    public void outdateItem(@NonNull String itemId) {
+    public void outdateItem(int itemId) {
         mRemoteDataSource.outdateItem(itemId);
         mLocalDataSource.outdateItem(itemId);
 
@@ -153,7 +154,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
         mLocalDataSource.saveItem(item);
         mRemoteDataSource.saveItem(item);
 
-        mCachedItems.put(String.valueOf(item.getId()), item);
+        mCachedItems.put(item.getId(), item);
     }
 
     private void getItemsFromRemoteDataSource(long date, @NonNull LoadZhihuDailyNewsCallback callback) {
@@ -185,7 +186,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
             mCacheIsDirty = false;
         }
         for (ZhihuDailyNews.Question item : list) {
-            mCachedItems.put(String.valueOf(item.getId()), item);
+            mCachedItems.put(item.getId(), item);
         }
     }
 
@@ -196,7 +197,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
     }
 
     @Nullable
-    private ZhihuDailyNews.Question getItemWithId(@NonNull String id) {
+    private ZhihuDailyNews.Question getItemWithId(int id) {
         if (mCachedItems == null || mCachedItems.isEmpty()) {
             return null;
         }

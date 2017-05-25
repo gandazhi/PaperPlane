@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
-import com.marktony.zhihudaily.refactor.data.source.GuokrHandpickDataSource;
+import com.marktony.zhihudaily.refactor.data.source.datasource.GuokrHandpickDataSource;
 
 /**
  * Created by lizhaotailang on 2017/5/24.
@@ -37,7 +37,7 @@ public class GuokrHandpickNewsLocalDataSource implements GuokrHandpickDataSource
     }
 
     @Override
-    public void favoriteItem(int itemId, boolean favorited) {
+    public void favoriteItem(int itemId, boolean favorite) {
 
     }
 

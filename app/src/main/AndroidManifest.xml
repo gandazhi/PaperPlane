@@ -33,7 +33,7 @@
             android:name=".refactor.ui.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,18 +48,13 @@
         <activity android:name=".refactor.details.DetailsActivity"
             android:label="@string/title_activity_read"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Translucent" />
 
-        <activity
-            android:name=".settings.SettingsPreferenceActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
-            android:label="@string/settings"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".search.SearchActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
             android:label="@string/search_bookmarks"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -68,7 +63,7 @@
         <activity android:name=".refactor.ui.LicenseActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
             android:label="@string/open_source_licenses"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
 
         <service android:name=".service.CacheService" />
 

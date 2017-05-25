@@ -6,7 +6,11 @@ import android.support.annotation.StringRes;
 
 import com.marktony.zhihudaily.refactor.BasePresenter;
 import com.marktony.zhihudaily.refactor.BaseView;
-import com.marktony.zhihudaily.refactor.data.ArticleType;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentContent;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyContent;
+
+import java.util.List;
 
 /**
  * Created by lizhaotailang on 2017/5/24.
@@ -20,20 +24,23 @@ public interface DetailsContract {
 
         void showMessage(@StringRes int stringRes);
 
-        void setTitle(@NonNull String title);
+        void showZhihuDailyContent(@NonNull ZhihuDailyContent content);
 
-        void showResult(@ArticleType.TYPE int type, @NonNull String content, boolean withoutBody);
-
-        void showCover(@Nullable String url);
+        void showDoubanMomentContent(@NonNull DoubanMomentContent content, @Nullable List<DoubanMomentNews.Posts.Thumbs> list);
 
     }
 
     interface Presenter extends BasePresenter {
 
-        void favorite(boolean favorited);
+        // void load(@NonNull String id);
+
+        void favorite(boolean favorite);
 
         void refresh(@NonNull String id);
 
+        void loadDoubanContent(boolean forceUpdate, int id);
+
+        void loadZhihuDailyContent(boolean forceUpdate, int id);
     }
 
 }

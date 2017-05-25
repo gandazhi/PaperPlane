@@ -523,16 +523,15 @@ public class DetailPresenter implements DetailContract.Presenter {
             theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
         }
 
-        return new StringBuilder()
-                .append("<!DOCTYPE html>\n")
-                .append("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n")
-                .append("<head>\n")
-                .append("\t<meta charset=\"utf-8\" />")
-                .append(css)
-                .append("\n</head>\n")
-                .append(theme)
-                .append(preResult)
-                .append("</body></html>").toString();
+        return "<!DOCTYPE html>\n"
+                + "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
+                + "<head>\n"
+                + "\t<meta charset=\"utf-8\" />"
+                + css
+                + "\n</head>\n"
+                + theme
+                + preResult
+                + "</body></html>";
     }
 
     private void convertGuokrContent(String content) {

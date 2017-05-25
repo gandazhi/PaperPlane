@@ -1,5 +1,6 @@
 package com.marktony.zhihudaily.refactor.timeline;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.refactor.data.ContentType;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.details.DetailsActivity;
 
 import java.util.Calendar;
 import java.util.List;
@@ -135,6 +138,12 @@ public class DoubanMomentFragment extends Fragment
         if (mAdapter == null) {
             mAdapter = new DoubanMomentNewsAdapter(list, getContext());
             mAdapter.setItemClickListener((v, i) -> {
+
+                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, list.get(i).getId());
+                intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_DOUBAN_MOMENT);
+                intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, list.get(i).getTitle());
+                startActivity(intent);
 
             });
             mRecyclerView.setAdapter(mAdapter);

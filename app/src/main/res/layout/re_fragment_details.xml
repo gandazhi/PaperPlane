@@ -45,6 +45,7 @@
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 android:scrollbarStyle="insideInset"
+                android:src="@drawable/placeholder"
                 android:scrollbarAlwaysDrawVerticalTrack="true" />
 
             <android.support.v7.widget.Toolbar

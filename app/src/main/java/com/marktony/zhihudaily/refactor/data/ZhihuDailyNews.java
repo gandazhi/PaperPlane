@@ -59,7 +59,7 @@ public class ZhihuDailyNews {
         private String title;
 
         @Expose
-        private boolean favorited;
+        private boolean favorite;
 
         @Expose
         private boolean outdated;
@@ -104,12 +104,12 @@ public class ZhihuDailyNews {
             this.title = title;
         }
 
-        public boolean isFavorited() {
-            return favorited;
+        public boolean isFavorite() {
+            return favorite;
         }
 
-        public void setFavorited(boolean favorited) {
-            this.favorited = favorited;
+        public void setFavorite(boolean favorite) {
+            this.favorite = favorite;
         }
 
         public boolean isOutdated() {

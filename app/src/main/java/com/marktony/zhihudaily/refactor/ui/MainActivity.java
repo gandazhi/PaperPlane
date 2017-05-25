@@ -83,8 +83,12 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID, mBottomNavigationView.getSelectedItemId());
         FragmentManager fm = getSupportFragmentManager();
-        fm.putFragment(outState, TimelineFragment.class.getSimpleName(), mTimelineFragment);
-        fm.putFragment(outState, InfoFragment.class.getSimpleName(), mInfoFragment);
+        if (mTimelineFragment.isAdded()) {
+            fm.putFragment(outState, TimelineFragment.class.getSimpleName(), mTimelineFragment);
+        }
+        if (mInfoFragment.isAdded()) {
+            fm.putFragment(outState, InfoFragment.class.getSimpleName(), mInfoFragment);
+        }
     }
 
     private void initFragments(Bundle savedInstanceState) {

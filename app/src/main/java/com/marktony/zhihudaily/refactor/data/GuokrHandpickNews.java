@@ -206,17 +206,17 @@ public class GuokrHandpickNews {
         private String resourceUrl;
 
         @Expose
-        private boolean favorited;
+        private boolean favorite;
 
         @Expose
         private boolean outdated;
 
-        public boolean isFavorited() {
-            return favorited;
+        public boolean isFavorite() {
+            return favorite;
         }
 
-        public void setFavorited(boolean favorited) {
-            this.favorited = favorited;
+        public void setFavorite(boolean favorite) {
+            this.favorite = favorite;
         }
 
         public boolean isOutdated() {

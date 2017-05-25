@@ -1,26 +1,36 @@
 package com.marktony.zhihudaily.refactor.details;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.customtabs.CustomTabsHelper;
-import com.marktony.zhihudaily.refactor.data.ArticleType;
+import com.marktony.zhihudaily.refactor.data.ContentType;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentContent;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyContent;
 import com.marktony.zhihudaily.refactor.util.InfoConstants;
+
+import java.util.List;
 
 /**
  * Created by lizhaotailang on 2017/5/24.
@@ -36,20 +46,28 @@ public class DetailsFragment extends Fragment
 
     private DetailsContract.Presenter mPresenter;
 
-    private int id;
+    private int mId;
+    private ContentType mType;
+    private String mTitle;
+
+    private boolean mIsNightMode = false;
+    private boolean mFavorite = false;
 
     public DetailsFragment() {
         // Requires an empty constructor.
     }
 
-    public static DetailsFragment newInstance() {
-        return new DetailsFragment();
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //id = getActivity().getIntent().getIntExtra()
+        mId = getActivity().getIntent().getIntExtra(DetailsActivity.KEY_ARTICLE_ID, -1);
+        mType = (ContentType) getActivity().getIntent().getSerializableExtra(DetailsActivity.KEY_ARTICLE_TYPE);
+        mTitle = getActivity().getIntent().getStringExtra(DetailsActivity.KEY_ARTICLE_TITLE);
+        mIsNightMode = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(InfoConstants.KEY_NIGHT_MODE, false);
+    }
+
+    public static DetailsFragment newInstance() {
+        return new DetailsFragment();
     }
 
     @Nullable
@@ -59,11 +77,88 @@ public class DetailsFragment extends Fragment
 
         initViews(view);
 
+        setTitle(mTitle);
+
         mRefreshLayout.setOnRefreshListener(() -> {
 
         });
 
+        setHasOptionsMenu(true);
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+        if (mType == ContentType.TYPE_ZHIHU_DAILY) {
+
+        }
+        mPresenter.loadDoubanContent(true, mId);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_more, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            getActivity().onBackPressed();
+        } else if (id == R.id.action_more) {
+
+            final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
+
+            View view = getActivity().getLayoutInflater().inflate(R.layout.reading_actions_sheet, null);
+
+            AppCompatTextView favorite = view.findViewById(R.id.text_view_favorite);
+            AppCompatTextView copyLink = view.findViewById(R.id.text_view_copy_link);
+            AppCompatTextView openWithBrowser = view.findViewById(R.id.text_view_open_with_browser);
+            AppCompatTextView copyContent = view.findViewById(R.id.text_view_copy_content);
+            AppCompatTextView shareAsText = view.findViewById(R.id.text_view_share_as_text);
+
+            if (mFavorite) {
+                ((TextView) view.findViewById(R.id.text_view_favorite)).setText(R.string.action_delete_from_bookmarks);
+            }
+
+            // add to bookmarks or delete from bookmarks
+            favorite.setOnClickListener(v -> {
+                dialog.dismiss();
+                mPresenter.favorite(!mFavorite);
+            });
+
+            // copy the article's link to clipboard
+            copyLink.setOnClickListener(v -> {
+                //
+                dialog.dismiss();
+            });
+
+            // open the link in system browser
+            openWithBrowser.setOnClickListener(v -> {
+                //
+                dialog.dismiss();
+            });
+
+            // copy the text content to clipboard
+            copyContent.setOnClickListener(v -> {
+                //
+                dialog.dismiss();
+            });
+
+            // shareAsText the content as text
+            shareAsText.setOnClickListener(v -> {
+                //
+                dialog.dismiss();
+            });
+
+            dialog.setContentView(view);
+            dialog.show();
+        }
+        return true;
     }
 
     @Override
@@ -124,25 +219,99 @@ public class DetailsFragment extends Fragment
     }
 
     @Override
-    public void setTitle(@NonNull String title) {
+    public void showZhihuDailyContent(@NonNull ZhihuDailyContent content) {
+        mFavorite = content.isFavorited();
+
+        if (content.getBody() != null) {
+            String result = content.getBody();
+            result = result.replace("<div class=\"img-place-holder\">", "");
+            result = result.replace("<div class=\"headline\">", "");
+
+            // 在api中，css的地址是以一个数组的形式给出，这里需要设置
+            // in fact,in api,css addresses are given as an array
+            // api中还有js的部分，这里不再解析js
+            // javascript is included,but here I don't use it
+            // 不再选择加载网络css，而是加载本地assets文件夹中的css
+            // use the css file from local assets folder,not from network
+            String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_daily.css\" type=\"text/css\">";
+
+
+            // 根据主题的不同确定不同的加载内容
+            // load content judging by different theme
+            String theme = "<body className=\"\" onload=\"onLoaded()\">";
+            if (mIsNightMode) {
+                theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
+            }
+
+            result = "<!DOCTYPE html>\n"
+                    + "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
+                    + "<head>\n"
+                    + "\t<meta charset=\"utf-8\" />"
+                    + css
+                    + "\n</head>\n"
+                    + theme
+                    + result
+                    + "</body></html>";
+
+            mWebView.loadDataWithBaseURL("x-data://base", result,"text/html","utf-8",null);
+        } else {
+            mWebView.loadDataWithBaseURL("x-data://base", content.getShareUrl(),"text/html","utf-8",null);
+        }
+
+    }
+
+    @Override
+    public void showDoubanMomentContent(@NonNull DoubanMomentContent content, @Nullable List<DoubanMomentNews.Posts.Thumbs> list) {
+        mFavorite = content.isFavorite();
+
+        String css;
+        String body = content.getContent();
+        if (mIsNightMode) {
+            css = "<link rel=\"stylesheet\" href=\"file:///android_asset/douban_dark.css\" type=\"text/css\">";
+        } else {
+            css = "<link rel=\"stylesheet\" href=\"file:///android_asset/douban_light.css\" type=\"text/css\">";
+        }
+        if (list != null) {
+            setCover(list.get(0).getMedium().getUrl());
+            for (DoubanMomentNews.Posts.Thumbs t : list) {
+                String old = "<img id=\"" + t.getTagName()+ "\" />";
+                String newStr = "<img id=\"" + t.getTagName() + "\" "
+                        + "src=\"" + t.getMedium().getUrl() + "\"/>";
+                body = body.replace(old, newStr);
+            }
+        } else {
+            setCover(null);
+        }
+        String result = "<!DOCTYPE html>\n"
+                + "<html lang=\"ZH-CN\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
+                + "<head>\n<meta charset=\"utf-8\" />\n"
+                + css
+                + "\n</head>\n<body>\n"
+                + "<div class=\"container bs-docs-container\">\n"
+                + "<div class=\"post-container\">\n"
+                + body
+                + "</div>\n</div>\n</body>\n</html>";
+
+        mWebView.loadDataWithBaseURL("x-data://base", result,"text/html","utf-8",null);
+    }
+
+
+    private void setTitle(@NonNull String title) {
         setCollapsingToolbarLayoutTitle(title);
     }
 
-    @Override
-    public void showResult(@ArticleType.TYPE int type, @NonNull String content, boolean withoutBody) {
-        boolean nightMode = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(InfoConstants.KEY_NIGHT_MODE, false);
-
-    }
-
-    @Override
-    public void showCover(@Nullable String url) {
-        Glide.with(getContext())
-                .load(url)
-                .asBitmap()
-                .placeholder(R.drawable.placeholder)
-                .centerCrop()
-                .error(R.drawable.placeholder)
-                .into(mImageView);
+    private void setCover(@Nullable String url) {
+        if (url != null) {
+            Glide.with(getContext())
+                    .load(url)
+                    .asBitmap()
+                    .placeholder(R.drawable.placeholder)
+                    .centerCrop()
+                    .error(R.drawable.placeholder)
+                    .into(mImageView);
+        } else {
+            mImageView.setImageResource(R.drawable.placeholder);
+        }
     }
 
     // to change the title's font size of toolbar layout
@@ -153,4 +322,13 @@ public class DetailsFragment extends Fragment
         mToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarPlus1);
         mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
     }
+
+    private void convertGuokrContent(String content) {
+        return;
+    }
+
+    private void shareAsText() {
+
+    }
+
 }

@@ -1,9 +1,10 @@
-package com.marktony.zhihudaily.refactor.data.source;
+package com.marktony.zhihudaily.refactor.data.source.repository;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
+import com.marktony.zhihudaily.refactor.data.source.datasource.GuokrHandpickDataSource;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -117,13 +118,13 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
     }
 
     @Override
-    public void favoriteItem(int itemId, boolean favorited) {
-        mRemoteDataSource.favoriteItem(itemId, favorited);
-        mLocalDataSource.favoriteItem(itemId, favorited);
+    public void favoriteItem(int itemId, boolean favorite) {
+        mRemoteDataSource.favoriteItem(itemId, favorite);
+        mLocalDataSource.favoriteItem(itemId, favorite);
 
         GuokrHandpickNews.Result cachedItem = getItemWithId(itemId);
         if (cachedItem != null) {
-            cachedItem.setFavorited(favorited);
+            cachedItem.setFavorite(favorite);
         }
     }
 

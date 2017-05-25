@@ -29,7 +29,7 @@ public interface RetrofitService {
         Call<ZhihuDailyNews> getZhihuList(@Path("date") String date);
 
         @GET("{id}")
-        Call<ZhihuDailyContent> getZhihuContent(@Path("id") String id);
+        Call<ZhihuDailyContent> getZhihuContent(@Path("id") int id);
 
     }
 
@@ -39,7 +39,7 @@ public interface RetrofitService {
         Call<DoubanMomentNews> getDoubanList(@Path("date") String date);
 
         @GET("post/{id}")
-        Call<DoubanMomentContent> getDoubanContent(@Path("id") String id);
+        Call<DoubanMomentContent> getDoubanContent(@Path("id") int id);
 
     }
 

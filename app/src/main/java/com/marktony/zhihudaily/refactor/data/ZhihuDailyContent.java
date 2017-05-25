@@ -1,5 +1,6 @@
 package com.marktony.zhihudaily.refactor.data;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -10,38 +11,52 @@ import java.util.List;
 
 public class ZhihuDailyContent {
 
+    @Expose
     @SerializedName("body")
     private String body;
 
+    @Expose
     @SerializedName("image_source")
     private String imageSource;
 
+    @Expose
     @SerializedName("title")
     private String title;
 
+    @Expose
     @SerializedName("image")
     private String image;
 
+    @Expose
     @SerializedName("share_url")
     private String shareUrl;
 
+    @Expose
     @SerializedName("is")
     private List<String> js;
 
+    @Expose
     @SerializedName("ga_prefix")
     private String gaPrefix;
 
+    @Expose
     @SerializedName("images")
     private List<String> images;
 
+    @Expose
     @SerializedName("type")
     private int type;
 
+    @Expose
     @SerializedName("id")
     private int id;
 
+    @Expose
     @SerializedName("css")
     private List<String> css;
+
+    @Expose
+    private boolean favorited;
 
     public String getBody() {
         return body;
@@ -129,5 +144,13 @@ public class ZhihuDailyContent {
 
     public void setCss(List<String> css) {
         this.css = css;
+    }
+
+    public boolean isFavorited() {
+        return favorited;
+    }
+
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
     }
 }

@@ -38,7 +38,6 @@ import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.bookmarks.BookmarksFragment;
 import com.marktony.zhihudaily.bookmarks.BookmarksPresenter;
 import com.marktony.zhihudaily.service.CacheService;
-import com.marktony.zhihudaily.settings.SettingsPreferenceActivity;
 
 
 public class MainActivity extends AppCompatActivity
@@ -199,9 +198,9 @@ public class MainActivity extends AppCompatActivity
             });
 
         } else if (id == R.id.nav_info) {
-            startActivity(new Intent(this,SettingsPreferenceActivity.class));
+
         } else if (id == R.id.nav_about) {
-            //startActivity(new Intent(this,AboutPreferenceActivity.class));
+
         }
 
         return true;

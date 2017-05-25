@@ -21,11 +21,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="preferenceTheme">@style/myPreferenceScreen</item>
+        <item name="actionBarStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:actionBarStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -35,9 +34,13 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.Translucent">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 
-    <style name="AppTheme.FullScreen" parent="AppTheme.NoActionBar">
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+
+    <style name="AppTheme.FullScreen" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
     </style>
 
