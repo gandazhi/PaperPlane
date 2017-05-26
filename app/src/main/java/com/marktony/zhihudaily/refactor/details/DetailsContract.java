@@ -6,6 +6,7 @@ import android.support.annotation.StringRes;
 
 import com.marktony.zhihudaily.refactor.BasePresenter;
 import com.marktony.zhihudaily.refactor.BaseView;
+import com.marktony.zhihudaily.refactor.data.ContentType;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentContent;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickContent;
@@ -31,19 +32,26 @@ public interface DetailsContract {
 
         void showGuokrHandpickContent(@NonNull GuokrHandpickContent content);
 
+        void share(@Nullable String link);
+
+        void copyLink(@Nullable String link);
+
+        void openWithBrowser(@Nullable String link);
+
     }
 
     interface Presenter extends BasePresenter {
 
-        void favorite(boolean favorite);
-
-        void refresh(@NonNull String id);
+        void favorite(ContentType type, boolean favorite);
 
         void loadDoubanContent(int id);
 
         void loadZhihuDailyContent(int id);
 
         void loadGuokrHandpickContent(int id);
+
+        void getLink(ContentType type, int requestCode, int id);
+
     }
 
 }

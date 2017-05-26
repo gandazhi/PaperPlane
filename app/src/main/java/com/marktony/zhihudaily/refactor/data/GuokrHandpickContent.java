@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Created by lizhaotailang on 2017/5/26.
+ * Be noticed that the field 'authors' is ignored cause it is a variable type.
  */
 
 public class GuokrHandpickContent {
@@ -120,10 +121,6 @@ public class GuokrHandpickContent {
         @Expose
         @SerializedName("date_published")
         private String datePublished;
-
-        @Expose
-        @SerializedName("authors")
-        private List<Author> authors;
 
         @Expose
         @SerializedName("replies_count")
@@ -318,14 +315,6 @@ public class GuokrHandpickContent {
 
         public void setDatePublished(String datePublished) {
             this.datePublished = datePublished;
-        }
-
-        public List<Author> getAuthors() {
-            return authors;
-        }
-
-        public void setAuthors(List<Author> authors) {
-            this.authors = authors;
         }
 
         public int getRepliesCount() {

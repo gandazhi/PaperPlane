@@ -1,5 +1,8 @@
 package com.marktony.zhihudaily.refactor.details;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -10,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +24,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
@@ -32,6 +37,8 @@ import com.marktony.zhihudaily.refactor.data.ZhihuDailyContent;
 import com.marktony.zhihudaily.refactor.util.InfoConstants;
 
 import java.util.List;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * Created by lizhaotailang on 2017/5/24.
@@ -54,6 +61,10 @@ public class DetailsFragment extends Fragment
 
     private boolean mIsNightMode = false;
     private boolean mFavorite = false;
+
+    public static int REQUEST_SHARE = 0;
+    public static int REQUEST_COPY_LINK = 1;
+    public static int REQUEST_OPEN_WITH_BROWSER = 2;
 
     public DetailsFragment() {
         // Requires an empty constructor.
@@ -96,8 +107,10 @@ public class DetailsFragment extends Fragment
         mPresenter.start();
         if (mType == ContentType.TYPE_ZHIHU_DAILY) {
             mPresenter.loadZhihuDailyContent(mId);
-        } else {
+        } else if (mType == ContentType.TYPE_DOUBAN_MOMENT){
             mPresenter.loadDoubanContent(mId);
+        } else {
+            mPresenter.loadGuokrHandpickContent(mId);
         }
     }
 
@@ -121,8 +134,7 @@ public class DetailsFragment extends Fragment
             AppCompatTextView favorite = view.findViewById(R.id.text_view_favorite);
             AppCompatTextView copyLink = view.findViewById(R.id.text_view_copy_link);
             AppCompatTextView openWithBrowser = view.findViewById(R.id.text_view_open_with_browser);
-            AppCompatTextView copyContent = view.findViewById(R.id.text_view_copy_content);
-            AppCompatTextView shareAsText = view.findViewById(R.id.text_view_share_as_text);
+            AppCompatTextView share = view.findViewById(R.id.text_view_share);
 
             if (mFavorite) {
                 favorite.setText(R.string.unfavorite);
@@ -131,30 +143,25 @@ public class DetailsFragment extends Fragment
             // add to bookmarks or delete from bookmarks
             favorite.setOnClickListener(v -> {
                 dialog.dismiss();
-                mPresenter.favorite(!mFavorite);
+                mPresenter.favorite(mType, !mFavorite);
+                mFavorite = !mFavorite;
             });
 
             // copy the article's link to clipboard
             copyLink.setOnClickListener(v -> {
-                //
+                mPresenter.getLink(mType, REQUEST_COPY_LINK, mId);
                 dialog.dismiss();
             });
 
             // open the link in system browser
             openWithBrowser.setOnClickListener(v -> {
-                //
+                mPresenter.getLink(mType, REQUEST_OPEN_WITH_BROWSER, mId);
                 dialog.dismiss();
             });
 
-            // copy the text content to clipboard
-            copyContent.setOnClickListener(v -> {
-                //
-                dialog.dismiss();
-            });
-
-            // shareAsText the content as text
-            shareAsText.setOnClickListener(v -> {
-                //
+            // getLink the content as text
+            share.setOnClickListener(v -> {
+                mPresenter.getLink(mType, REQUEST_SHARE, mId);
                 dialog.dismiss();
             });
 
@@ -182,9 +189,6 @@ public class DetailsFragment extends Fragment
         activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
         mImageView = view.findViewById(R.id.image_view);
-
-        //mRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
-        //mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
         mToolbarLayout = view.findViewById(R.id.toolbar_layout);
         mScrollView = view.findViewById(R.id.nested_scroll_view);
@@ -218,7 +222,7 @@ public class DetailsFragment extends Fragment
 
     @Override
     public void showMessage(int stringRes) {
-
+        Toast.makeText(getContext(), stringRes, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -235,17 +239,8 @@ public class DetailsFragment extends Fragment
             result = result.replace("<div class=\"img-place-holder\">", "");
             result = result.replace("<div class=\"headline\">", "");
 
-            // 在api中，css的地址是以一个数组的形式给出，这里需要设置
-            // in fact,in api,css addresses are given as an array
-            // api中还有js的部分，这里不再解析js
-            // javascript is included,but here I don't use it
-            // 不再选择加载网络css，而是加载本地assets文件夹中的css
-            // use the css file from local assets folder,not from network
             String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zhihu_daily.css\" type=\"text/css\">";
 
-
-            // 根据主题的不同确定不同的加载内容
-            // load content judging by different theme
             String theme = "<body className=\"\" onload=\"onLoaded()\">";
             if (mIsNightMode) {
                 theme = "<body className=\"\" onload=\"onLoaded()\" class=\"night\">";
@@ -281,7 +276,7 @@ public class DetailsFragment extends Fragment
         } else {
             css = "<link rel=\"stylesheet\" href=\"file:///android_asset/douban_light.css\" type=\"text/css\">";
         }
-        if (list != null) {
+        if (list != null && !list.isEmpty()) {
             setCover(list.get(0).getMedium().getUrl());
             for (DoubanMomentNews.Posts.Thumbs t : list) {
                 String old = "<img id=\"" + t.getTagName()+ "\" />";
@@ -307,9 +302,68 @@ public class DetailsFragment extends Fragment
 
     @Override
     public void showGuokrHandpickContent(@NonNull GuokrHandpickContent content) {
-        String result = content.getResult().getContent();
+        mFavorite = content.getResult().isFavorite();
+
+        setCover(content.getResult().getImageInfo().getUrl());
+
+        String body = content.getResult().getContent();
+
+        String css;
+
+        if (mIsNightMode) {
+            css = "<div class=\"article\" id=\"contentMain\" style=\"background-color:#212b30\">";
+        } else {
+            css = "<div class=\"article\" id=\"contentMain\">";
+        }
+
+        String result = "<!DOCTYPE html>\n"
+                + "<html lang=\"ZH-CN\" xmlns=\"http://www.w3.org/1999/xhtml\">\n"
+                + "<head>\n<meta charset=\"utf-8\" />\n"
+                + "\n<link rel=\"stylesheet\" href=\"file:///android_asset/guokr_master.css\" />\n"
+                + css
+                + "<script src=\"file:///android_asset/guokr.base.js\"></script>\n"
+                + "<script src=\"file:///android_asset/guokr.articleInline.js\"></script>"
+                + "<script>\n"
+                + "var ukey = null;\n"
+                + "</script>\n"
+                + "\n</head>\n<div class=\"content\" id=\"articleContent\"><body>\n"
+                + body
+                + "\n</div></body>\n</html>";
+        mWebView.loadDataWithBaseURL("x-data://base", result,"text/html","utf-8",null);
     }
 
+    @Override
+    public void share(@Nullable String link) {
+        try {
+            Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
+            String shareText = "" + mTitle + " " + link;
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_to)));
+        } catch (android.content.ActivityNotFoundException ex) {
+            showMessage(R.string.something_wrong);
+        }
+    }
+
+    @Override
+    public void copyLink(@Nullable String link) {
+        if (link != null) {
+            ClipboardManager manager = (ClipboardManager) getContext().getSystemService(CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("text", Html.fromHtml(link).toString());
+            manager.setPrimaryClip(clipData);
+            showMessage(R.string.copied_to_clipboard);
+        } else {
+            showMessage(R.string.something_wrong);
+        }
+    }
+
+    @Override
+    public void openWithBrowser(@Nullable String link) {
+        if (link != null) {
+            CustomTabsHelper.openUrl(getContext(), link);
+        } else {
+            showMessage(R.string.something_wrong);
+        }
+    }
 
     private void setTitle(@NonNull String title) {
         setCollapsingToolbarLayoutTitle(title);
@@ -336,10 +390,6 @@ public class DetailsFragment extends Fragment
         mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
         mToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarPlus1);
         mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
-    }
-
-    private void shareAsText() {
-
     }
 
 }

@@ -2,6 +2,8 @@ package com.marktony.zhihudaily.refactor.details;
 
 import android.support.annotation.NonNull;
 
+import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.refactor.data.ContentType;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentContent;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickContent;
@@ -48,7 +50,7 @@ public class DetailsPresenter implements DetailsContract.Presenter {
     }
 
     public DetailsPresenter(@NonNull DetailsContract.View view,
-                           @NonNull GuokrHandpickContentRepository guokrContentRepository) {
+                            @NonNull GuokrHandpickContentRepository guokrContentRepository) {
         this.mView = view;
         this.mView.setPresenter(this);
         mGuokrContentRepository = guokrContentRepository;
@@ -60,13 +62,14 @@ public class DetailsPresenter implements DetailsContract.Presenter {
     }
 
     @Override
-    public void favorite(boolean favorite) {
-
-    }
-
-    @Override
-    public void refresh(@NonNull String id) {
-
+    public void favorite(ContentType type, boolean favorite) {
+        if (type == ContentType.TYPE_ZHIHU_DAILY) {
+            mZhihuContentRepository.favorite(favorite);
+        } else if (type == ContentType.TYPE_DOUBAN_MOMENT) {
+            mDoubanContentRepository.favorite(favorite);
+        } else {
+            mGuokrContentRepository.favorite(favorite);
+        }
     }
 
     @Override
@@ -84,14 +87,18 @@ public class DetailsPresenter implements DetailsContract.Presenter {
 
                     @Override
                     public void onDataNotAvailable() {
-
+                        if (mView.isActive()) {
+                            mView.showMessage(R.string.something_wrong);
+                        }
                     }
                 });
             }
 
             @Override
             public void onDataNotAvailable() {
-
+                if (mView.isActive()) {
+                    mView.showMessage(R.string.something_wrong);
+                }
             }
         });
     }
@@ -108,7 +115,9 @@ public class DetailsPresenter implements DetailsContract.Presenter {
 
             @Override
             public void onDataNotAvailable() {
-
+                if (mView.isActive()) {
+                    mView.showMessage(R.string.something_wrong);
+                }
             }
         });
     }
@@ -125,8 +134,90 @@ public class DetailsPresenter implements DetailsContract.Presenter {
 
             @Override
             public void onDataNotAvailable() {
-
+                if (mView.isActive()) {
+                    mView.showMessage(R.string.something_wrong);
+                }
             }
         });
+    }
+
+    @Override
+    public void getLink(ContentType type, int requestCode, int id) {
+        switch (type) {
+            case TYPE_ZHIHU_DAILY:
+                mZhihuContentRepository.getZhihuDailyContent(id, new ZhihuDailyContentDataSource.LoadZhihuDailyContentCallback() {
+                    @Override
+                    public void onContentLoaded(@NonNull ZhihuDailyContent content) {
+                        if (mView.isActive()) {
+                            String url = content.getShareUrl();
+                            if (requestCode == DetailsFragment.REQUEST_SHARE) {
+                                mView.share(url);
+                            } else if (requestCode == DetailsFragment.REQUEST_COPY_LINK) {
+                                mView.copyLink(url);
+                            } else if (requestCode == DetailsFragment.REQUEST_OPEN_WITH_BROWSER){
+                                mView.openWithBrowser(url);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        if (mView.isActive()) {
+                            mView.showMessage(R.string.share_error);
+                        }
+                    }
+                });
+                break;
+            case TYPE_DOUBAN_MOMENT:
+                mDoubanContentRepository.getDoubanMomentContent(id, new DoubanMomentContentDataSource.LoadDoubanMomentContentCallback() {
+                    @Override
+                    public void onContentLoaded(@NonNull DoubanMomentContent content) {
+                        if (mView.isActive()) {
+                            String url = content.getUrl();
+                            if (requestCode == DetailsFragment.REQUEST_SHARE) {
+                                mView.share(url);
+                            } else if (requestCode == DetailsFragment.REQUEST_COPY_LINK){
+                                mView.copyLink(url);
+                            } else if (requestCode == DetailsFragment.REQUEST_OPEN_WITH_BROWSER) {
+                                mView.openWithBrowser(url);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        if (mView.isActive()) {
+                            mView.showMessage(R.string.share_error);
+                        }
+                    }
+                });
+                break;
+            case TYPE_GUOKR_HANDPICK:
+                mGuokrContentRepository.getGuokrHandpickContent(id, new GuokrHandpickContentDataSource.LoadGuokrHandpickContentCallback() {
+                    @Override
+                    public void onContentLoaded(@NonNull GuokrHandpickContent content) {
+                        if (mView.isActive()) {
+                            String url = content.getResult().getUrl();
+                            if (requestCode == DetailsFragment.REQUEST_SHARE) {
+                                mView.share(url);
+                            } else if (requestCode == DetailsFragment.REQUEST_COPY_LINK) {
+                                mView.copyLink(url);
+                            } else if (requestCode == DetailsFragment.REQUEST_OPEN_WITH_BROWSER) {
+                                mView.openWithBrowser(url);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        if (mView.isActive()) {
+                            mView.showMessage(R.string.share_error);
+                        }
+                    }
+                });
+                break;
+            default:
+                break;
+        }
     }
 }

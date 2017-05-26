@@ -28,6 +28,8 @@ public interface GuokrHandpickContract {
 
         void load(boolean forceUpdate, int offset, int limit);
 
+        void outdate(int id);
+
     }
 
 }

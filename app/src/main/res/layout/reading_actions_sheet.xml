@@ -69,22 +69,10 @@
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:id="@+id/text_view_copy_content"
+        android:id="@+id/text_view_share"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="@string/action_copy_text"
-        android:gravity="center_vertical"
-        android:textColor="@color/textColorPrimary"
-        android:drawableStart="@drawable/ic_content_copy_black_24dp"
-        android:drawablePadding="16dp"/>
-
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:id="@+id/text_view_share_as_text"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="@string/action_share_as_text"
+        android:text="@string/action_share"
         android:gravity="center_vertical"
         android:textColor="@color/textColorPrimary"
         android:drawableStart="@drawable/ic_share_white_24dp"

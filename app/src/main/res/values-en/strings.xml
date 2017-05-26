@@ -52,8 +52,7 @@
     <string name="unfavorite">Unfavorite</string>
     <string name="action_copy_link">Copy link</string>
     <string name="action_open_in_browser">Open in browser</string>
-    <string name="action_copy_text">Copy text</string>
-    <string name="action_share_as_text">Share as Text</string>
+    <string name="action_share">Share</string>
 
     <!--navigation view menu-->
     <string name="night_mode">Night mode</string>

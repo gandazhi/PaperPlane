@@ -2,6 +2,7 @@ package com.marktony.zhihudaily.refactor.data.source.repository;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
 import com.marktony.zhihudaily.refactor.data.source.datasource.DoubanMomentNewsDataSource;
@@ -17,6 +18,8 @@ import java.util.Map;
 
 public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
 
+    public static String TAG = "douban";
+    
     @Nullable
     private static DoubanMomentNewsRepository INSTANCE = null;
 
@@ -35,10 +38,14 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
                                        @NonNull DoubanMomentNewsDataSource localDataSource) {
         this.mLocalDataSource = localDataSource;
         this.mRemoteDataSource = remoteDataSource;
+
+        Log.d(TAG, "DoubanMomentNewsRepository: ");
+        
     }
 
     public static DoubanMomentNewsRepository getInstance(@NonNull DoubanMomentNewsDataSource remoteDataSource,
                                                          @NonNull DoubanMomentNewsDataSource localDataSource) {
+        Log.d(TAG, "getInstance: ");
         if (INSTANCE == null) {
             INSTANCE = new DoubanMomentNewsRepository(remoteDataSource, localDataSource);
         }
@@ -47,11 +54,14 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
 
     public static void destroyInstance() {
         INSTANCE = null;
+        Log.d(TAG, "destroyInstance: ");
     }
 
     @Override
     public void getDoubanMomentNews(boolean loadMore, long date, @NonNull LoadDoubanMomentDailyCallback callback) {
 
+        Log.d(TAG, "getDoubanMomentNews: ");
+        
         mLoadMore = loadMore;
 
         if (mCachedItems != null && !mCacheIsDirty && !loadMore) {
@@ -60,8 +70,10 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
         }
 
         if (mCacheIsDirty || loadMore) {
+            Log.d(TAG, "getDoubanMomentNews: getItemsFromRemoteDataSource");
             getItemsFromRemoteDataSource(date, callback);
         } else {
+            Log.d(TAG, "getDoubanMomentNews: mLocalDataSource get");
             mLocalDataSource.getDoubanMomentNews(false, date, new LoadDoubanMomentDailyCallback() {
                 @Override
                 public void onNewsLoaded(@NonNull List<DoubanMomentNews.Posts> list) {
@@ -81,6 +93,8 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
     public void getItem(int id, @NonNull GetNewsItemCallback callback) {
         DoubanMomentNews.Posts cachedItem = getItemWithId(id);
 
+        Log.d(TAG, "getItem: ");
+        
         if (cachedItem != null) {
             callback.onItemLoaded(cachedItem);
             return;
@@ -119,6 +133,9 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
 
     @Override
     public void favoriteItem(int itemId, boolean favorite) {
+
+        Log.d(TAG, "favoriteItem: ");
+        
         mRemoteDataSource.favoriteItem(itemId, favorite);
         mLocalDataSource.favoriteItem(itemId, favorite);
 
@@ -130,6 +147,9 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
 
     @Override
     public void outdateItem(int itemId) {
+
+        Log.d(TAG, "outdateItem: ");
+        
         mRemoteDataSource.outdateItem(itemId);
         mLocalDataSource.outdateItem(itemId);
 
@@ -143,10 +163,15 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
     public void refreshDoubanMomentNews() {
         mCacheIsDirty = true;
         mLoadMore = false;
+
+        Log.d(TAG, "refreshDoubanMomentNews: ");
     }
 
     @Override
     public void saveItem(@NonNull DoubanMomentNews.Posts item) {
+
+        Log.d(TAG, "saveItem: ");
+        
         mLocalDataSource.saveItem(item);
         mRemoteDataSource.saveItem(item);
 
@@ -158,6 +183,9 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
     }
 
     private void getItemsFromRemoteDataSource(long date, LoadDoubanMomentDailyCallback callback) {
+
+        Log.d(TAG, "getItemsFromRemoteDataSource: ");
+        
         mRemoteDataSource.getDoubanMomentNews(false, date, new LoadDoubanMomentDailyCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<DoubanMomentNews.Posts> list) {
@@ -175,6 +203,8 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
 
     private void refreshCache(List<DoubanMomentNews.Posts> list) {
 
+
+        Log.d(TAG, "refreshCache: ");
         if (mCachedItems == null) {
             mCachedItems = new LinkedHashMap<>();
         }
@@ -189,10 +219,12 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
 
     @Nullable
     private DoubanMomentNews.Posts getItemWithId(int id) {
+        Log.d(TAG, "getItemWithId: ");
         return (mCachedItems == null || mCachedItems.isEmpty()) ? null : mCachedItems.get(id);
     }
 
     private void refreshLocalDataSource(List<DoubanMomentNews.Posts> list) {
+        Log.d(TAG, "refreshLocalDataSource: ");
         for (DoubanMomentNews.Posts item : list) {
             mLocalDataSource.saveItem(item);
         }

@@ -59,6 +59,11 @@ public class GuokrHandpickPresenter implements GuokrHandpickContract.Presenter {
     }
 
     @Override
+    public void outdate(int id) {
+        mRepository.outdateItem(id);
+    }
+
+    @Override
     public void start() {
 
     }

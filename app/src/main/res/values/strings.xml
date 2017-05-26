@@ -52,8 +52,7 @@
     <string name="unfavorite">取消收藏</string>
     <string name="action_copy_link">复制链接</string>
     <string name="action_open_in_browser">在浏览器中打开</string>
-    <string name="action_copy_text">复制内容文本</string>
-    <string name="action_share_as_text">作为文本分享</string>
+    <string name="action_share">分享</string>
 
     <!--main menu-->
     <string name="night_mode">夜间模式</string>

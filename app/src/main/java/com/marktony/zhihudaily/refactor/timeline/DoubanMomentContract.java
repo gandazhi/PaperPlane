@@ -29,6 +29,8 @@ public interface DoubanMomentContract {
 
         void load(boolean isLoadMore, boolean forceUpdate, long date);
 
+        void outdate(int id);
+
     }
 
 }

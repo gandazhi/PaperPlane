@@ -34,6 +34,7 @@ public class GuokrHandpickFragment extends Fragment
     private View mEmptyView;
 
     private GuokrHandpickNewsAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     private int mOffset = 0;
 
@@ -72,7 +73,7 @@ public class GuokrHandpickFragment extends Fragment
 
                     // 判断是否滚动到底部并且是向下滑动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
-                        mPresenter.load(false, mOffset++, 20);
+                        loadMore();
                     }
                 }
 
@@ -118,10 +119,15 @@ public class GuokrHandpickFragment extends Fragment
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, list.get(i).getTitle());
                 startActivity(intent);
 
+                mPresenter.outdate(list.get(i).getId());
+
             });
             mRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.updateData(list);
+        }
+        if (mLayoutManager.findLastVisibleItemPosition() == -1) {
+            loadMore();
         }
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
     }
@@ -137,7 +143,13 @@ public class GuokrHandpickFragment extends Fragment
     public void initViews(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mEmptyView = view.findViewById(R.id.empty_view);
     }
+
+    private void loadMore() {
+        mPresenter.load(false, mOffset++, 20);
+    }
+
 }

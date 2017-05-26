@@ -36,6 +36,7 @@ public class DoubanMomentFragment extends Fragment
     private View mEmptyView;
 
     private DoubanMomentNewsAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     private int mYear, mMonth, mDay;
 
@@ -65,7 +66,7 @@ public class DoubanMomentFragment extends Fragment
         mRefreshLayout.setOnRefreshListener(() -> {
             Calendar c = Calendar.getInstance();
             c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-            mPresenter.load(false, false, c.getTimeInMillis());
+            mPresenter.load(false, true, c.getTimeInMillis());
         });
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -84,9 +85,7 @@ public class DoubanMomentFragment extends Fragment
 
                     // 判断是否滚动到底部并且是向下滑动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(mYear, mMonth, --mDay);
-                        mPresenter.load(true, false, c.getTimeInMillis());
+                        loadMore();
                     }
                 }
 
@@ -123,7 +122,8 @@ public class DoubanMomentFragment extends Fragment
     public void initViews(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mEmptyView = view.findViewById(R.id.empty_view);
     }
 
@@ -149,11 +149,22 @@ public class DoubanMomentFragment extends Fragment
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, list.get(i).getTitle());
                 startActivity(intent);
 
+                mPresenter.outdate(list.get(i).getId());
+
             });
             mRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.updateData(list);
         }
+        if (mLayoutManager.findLastVisibleItemPosition() == -1) {
+            loadMore();
+        }
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    private void loadMore() {
+        Calendar c = Calendar.getInstance();
+        c.set(mYear, mMonth, --mDay);
+        mPresenter.load(true, false, c.getTimeInMillis());
     }
 }

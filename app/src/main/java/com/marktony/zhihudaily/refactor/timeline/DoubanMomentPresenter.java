@@ -62,4 +62,9 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void outdate(int id) {
+        mRepository.outdateItem(id);
+    }
 }

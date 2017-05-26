@@ -63,4 +63,9 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void outdate(int id) {
+        mRepository.outdateItem(id);
+    }
 }
