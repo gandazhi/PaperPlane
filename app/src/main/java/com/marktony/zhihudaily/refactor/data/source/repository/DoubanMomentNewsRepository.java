@@ -60,7 +60,7 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
         }
 
         if (mCacheIsDirty || loadMore) {
-            getItemsFromRemoteDataSource(loadMore, date, callback);
+            getItemsFromRemoteDataSource(date, callback);
         } else {
             mLocalDataSource.getDoubanMomentNews(false, date, new LoadDoubanMomentDailyCallback() {
                 @Override
@@ -71,7 +71,7 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
 
                 @Override
                 public void onDataNotAvailable() {
-                    getItemsFromRemoteDataSource(loadMore, date, callback);
+                    getItemsFromRemoteDataSource(date, callback);
                 }
             });
         }
@@ -157,8 +157,8 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
         mCachedItems.put(item.getId(), item);
     }
 
-    private void getItemsFromRemoteDataSource(boolean isLoadMore, long date, LoadDoubanMomentDailyCallback callback) {
-        mRemoteDataSource.getDoubanMomentNews(isLoadMore, date, new LoadDoubanMomentDailyCallback() {
+    private void getItemsFromRemoteDataSource(long date, LoadDoubanMomentDailyCallback callback) {
+        mRemoteDataSource.getDoubanMomentNews(false, date, new LoadDoubanMomentDailyCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<DoubanMomentNews.Posts> list) {
                 refreshCache(list);
@@ -189,10 +189,7 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
 
     @Nullable
     private DoubanMomentNews.Posts getItemWithId(int id) {
-        if (mCachedItems == null || mCachedItems.isEmpty()) {
-            return null;
-        }
-        return mCachedItems.get(id);
+        return (mCachedItems == null || mCachedItems.isEmpty()) ? null : mCachedItems.get(id);
     }
 
     private void refreshLocalDataSource(List<DoubanMomentNews.Posts> list) {

@@ -32,10 +32,10 @@
         android:layout_height="48dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="@string/action_add_to_bookmarks"
-        android:gravity="center_vertical"
         android:drawablePadding="16dp"
-        android:drawableStart="@drawable/ic_star_white_24dp"
+        android:text="@string/favorite"
+        android:gravity="center_vertical"
+        android:drawableStart="@drawable/ic_favorite_black_24dp"
         android:tint="@color/textColorPrimary"
         android:id="@+id/text_view_favorite"
         android:textColor="@color/textColorPrimary"/>
@@ -55,7 +55,7 @@
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:id="@+id/text_view_open_with_browser"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
@@ -82,8 +82,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:id="@+id/text_view_share_as_text"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:text="@string/action_share_as_text"
         android:gravity="center_vertical"
         android:textColor="@color/textColorPrimary"

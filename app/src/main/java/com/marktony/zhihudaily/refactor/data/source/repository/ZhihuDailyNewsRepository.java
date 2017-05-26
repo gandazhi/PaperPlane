@@ -122,13 +122,13 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
     }
 
     @Override
-    public void favoriteItem(int itemId, boolean favorited) {
-        mRemoteDataSource.favoriteItem(itemId, favorited);
-        mLocalDataSource.favoriteItem(itemId, favorited);
+    public void favoriteItem(int itemId, boolean favorite) {
+        mRemoteDataSource.favoriteItem(itemId, favorite);
+        mLocalDataSource.favoriteItem(itemId, favorite);
 
         ZhihuDailyNews.Question cachedItem = getItemWithId(itemId);
         if (cachedItem != null) {
-            cachedItem.setFavorite(favorited);
+            cachedItem.setFavorite(favorite);
         }
     }
 
@@ -154,6 +154,9 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
         mLocalDataSource.saveItem(item);
         mRemoteDataSource.saveItem(item);
 
+        if (mCachedItems == null) {
+            mCachedItems = new LinkedHashMap<>();
+        }
         mCachedItems.put(item.getId(), item);
     }
 
@@ -198,9 +201,6 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
 
     @Nullable
     private ZhihuDailyNews.Question getItemWithId(int id) {
-        if (mCachedItems == null || mCachedItems.isEmpty()) {
-            return null;
-        }
         return (mCachedItems == null || mCachedItems.isEmpty()) ? null : mCachedItems.get(id);
     }
 

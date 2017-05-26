@@ -48,13 +48,17 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
         mRepository.getDoubanMomentNews(isLoadMore, date, new DoubanMomentNewsDataSource.LoadDoubanMomentDailyCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<DoubanMomentNews.Posts> list) {
-                mView.showResult(list);
-                mView.setLoadingIndicator(false);
+                if (mView.isActive()) {
+                    mView.showResult(list);
+                    mView.setLoadingIndicator(false);
+                }
             }
 
             @Override
             public void onDataNotAvailable() {
-                mView.setLoadingIndicator(false);
+                if (mView.isActive()) {
+                    mView.setLoadingIndicator(false);
+                }
             }
         });
     }

@@ -7,8 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,7 +20,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.marktony.zhihudaily.R;
@@ -27,6 +27,7 @@ import com.marktony.zhihudaily.refactor.customtabs.CustomTabsHelper;
 import com.marktony.zhihudaily.refactor.data.ContentType;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentContent;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickContent;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyContent;
 import com.marktony.zhihudaily.refactor.util.InfoConstants;
 
@@ -42,7 +43,8 @@ public class DetailsFragment extends Fragment
     private ImageView mImageView;
     private WebView mWebView;
     private CollapsingToolbarLayout mToolbarLayout;
-    private SwipeRefreshLayout mRefreshLayout;
+    private Toolbar toolbar;
+    private NestedScrollView mScrollView;
 
     private DetailsContract.Presenter mPresenter;
 
@@ -79,8 +81,8 @@ public class DetailsFragment extends Fragment
 
         setTitle(mTitle);
 
-        mRefreshLayout.setOnRefreshListener(() -> {
-
+        toolbar.setOnClickListener(v -> {
+            mScrollView.smoothScrollTo(0, 0);
         });
 
         setHasOptionsMenu(true);
@@ -93,9 +95,10 @@ public class DetailsFragment extends Fragment
         super.onResume();
         mPresenter.start();
         if (mType == ContentType.TYPE_ZHIHU_DAILY) {
-
+            mPresenter.loadZhihuDailyContent(mId);
+        } else {
+            mPresenter.loadDoubanContent(mId);
         }
-        mPresenter.loadDoubanContent(true, mId);
     }
 
     @Override
@@ -122,7 +125,7 @@ public class DetailsFragment extends Fragment
             AppCompatTextView shareAsText = view.findViewById(R.id.text_view_share_as_text);
 
             if (mFavorite) {
-                ((TextView) view.findViewById(R.id.text_view_favorite)).setText(R.string.action_delete_from_bookmarks);
+                favorite.setText(R.string.unfavorite);
             }
 
             // add to bookmarks or delete from bookmarks
@@ -171,16 +174,21 @@ public class DetailsFragment extends Fragment
     @Override
     public void initViews(View view) {
 
+        toolbar = view.findViewById(R.id.toolbar);
+
         DetailsActivity activity = (DetailsActivity) getActivity();
-        activity.setSupportActionBar(view.findViewById(R.id.toolbar));
+        activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
 
         mImageView = view.findViewById(R.id.image_view);
 
-        mRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
-        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        //mRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
+        //mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
         mToolbarLayout = view.findViewById(R.id.toolbar_layout);
+        mScrollView = view.findViewById(R.id.nested_scroll_view);
+
         mWebView = view.findViewById(R.id.web_view);
 
         mWebView.setScrollbarFadingEnabled(true);
@@ -209,13 +217,13 @@ public class DetailsFragment extends Fragment
     }
 
     @Override
-    public void setLoadingIndicator(boolean active) {
-        mRefreshLayout.post(() -> mRefreshLayout.setRefreshing(active));
+    public void showMessage(int stringRes) {
+
     }
 
     @Override
-    public void showMessage(int stringRes) {
-
+    public boolean isActive() {
+        return isAdded() && isResumed();
     }
 
     @Override
@@ -258,6 +266,8 @@ public class DetailsFragment extends Fragment
             mWebView.loadDataWithBaseURL("x-data://base", content.getShareUrl(),"text/html","utf-8",null);
         }
 
+        setCover(content.getImage());
+
     }
 
     @Override
@@ -295,6 +305,11 @@ public class DetailsFragment extends Fragment
         mWebView.loadDataWithBaseURL("x-data://base", result,"text/html","utf-8",null);
     }
 
+    @Override
+    public void showGuokrHandpickContent(@NonNull GuokrHandpickContent content) {
+        String result = content.getResult().getContent();
+    }
+
 
     private void setTitle(@NonNull String title) {
         setCollapsingToolbarLayoutTitle(title);
@@ -321,10 +336,6 @@ public class DetailsFragment extends Fragment
         mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
         mToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBarPlus1);
         mToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarPlus1);
-    }
-
-    private void convertGuokrContent(String content) {
-        return;
     }
 
     private void shareAsText() {

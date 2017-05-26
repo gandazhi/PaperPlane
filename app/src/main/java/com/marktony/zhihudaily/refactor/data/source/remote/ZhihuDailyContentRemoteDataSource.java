@@ -26,7 +26,7 @@ public class ZhihuDailyContentRemoteDataSource implements ZhihuDailyContentDataS
 
     }
 
-    public ZhihuDailyContentRemoteDataSource getInstance() {
+    public static ZhihuDailyContentRemoteDataSource getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new ZhihuDailyContentRemoteDataSource();
         }

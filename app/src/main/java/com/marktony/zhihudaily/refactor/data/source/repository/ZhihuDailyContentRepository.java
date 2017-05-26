@@ -38,6 +38,10 @@ public class ZhihuDailyContentRepository implements ZhihuDailyContentDataSource 
         return INSTANCE;
     }
 
+    public static void destroyInstance() {
+        INSTANCE = null;
+    }
+
     @Override
     public void getZhihuDailyContent(int id, @NonNull LoadZhihuDailyContentCallback callback) {
         if (mContent != null) {
@@ -57,7 +61,20 @@ public class ZhihuDailyContentRepository implements ZhihuDailyContentDataSource 
 
             @Override
             public void onDataNotAvailable() {
-                callback.onDataNotAvailable();
+                mLocalDataSource.getZhihuDailyContent(id, new LoadZhihuDailyContentCallback() {
+                    @Override
+                    public void onContentLoaded(@NonNull ZhihuDailyContent content) {
+                        if (mContent == null) {
+                            mContent = content;
+                        }
+                        callback.onContentLoaded(content);
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        callback.onDataNotAvailable();
+                    }
+                });
             }
         });
     }

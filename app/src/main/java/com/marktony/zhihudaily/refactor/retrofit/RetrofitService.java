@@ -2,6 +2,7 @@ package com.marktony.zhihudaily.refactor.retrofit;
 
 import com.marktony.zhihudaily.refactor.data.DoubanMomentContent;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickContent;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyContent;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
@@ -45,8 +46,11 @@ public interface RetrofitService {
 
     interface GuokrHandpickService {
 
-        @GET("article.json?retrieve_type=by_minisite&channel_key=")
+        @GET("article.json?retrieve_type=by_minisite")
         Call<GuokrHandpickNews> getGuokrHandpick(@Query("offset")int offset, @Query("limit")int limit );
+
+        @GET("article/{id}.json")
+        Call<GuokrHandpickContent> getGuokrContent(@Path("id")int id);
 
     }
 

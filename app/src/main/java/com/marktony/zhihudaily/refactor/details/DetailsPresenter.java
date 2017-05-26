@@ -4,11 +4,16 @@ import android.support.annotation.NonNull;
 
 import com.marktony.zhihudaily.refactor.data.DoubanMomentContent;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickContent;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyContent;
 import com.marktony.zhihudaily.refactor.data.source.datasource.DoubanMomentContentDataSource;
+import com.marktony.zhihudaily.refactor.data.source.datasource.GuokrHandpickContentDataSource;
+import com.marktony.zhihudaily.refactor.data.source.datasource.ZhihuDailyContentDataSource;
 import com.marktony.zhihudaily.refactor.data.source.repository.DoubanMomentContentRepository;
 import com.marktony.zhihudaily.refactor.data.source.datasource.DoubanMomentNewsDataSource;
 import com.marktony.zhihudaily.refactor.data.source.repository.DoubanMomentNewsRepository;
-import com.marktony.zhihudaily.refactor.data.source.repository.ZhihuDailyNewsRepository;
+import com.marktony.zhihudaily.refactor.data.source.repository.GuokrHandpickContentRepository;
+import com.marktony.zhihudaily.refactor.data.source.repository.ZhihuDailyContentRepository;
 
 /**
  * Created by lizhaotailang on 2017/5/24.
@@ -22,6 +27,10 @@ public class DetailsPresenter implements DetailsContract.Presenter {
     private DoubanMomentNewsRepository mDoubanNewsRepository;
     private DoubanMomentContentRepository mDoubanContentRepository;
 
+    private ZhihuDailyContentRepository mZhihuContentRepository;
+
+    private GuokrHandpickContentRepository mGuokrContentRepository;
+
     public DetailsPresenter(@NonNull DetailsContract.View view,
                             @NonNull DoubanMomentNewsRepository doubanNewsRepository,
                             @NonNull DoubanMomentContentRepository doubanContentRepository) {
@@ -32,9 +41,17 @@ public class DetailsPresenter implements DetailsContract.Presenter {
     }
 
     public DetailsPresenter(@NonNull DetailsContract.View view,
-                            @NonNull ZhihuDailyNewsRepository zhihuRepository) {
+                            @NonNull ZhihuDailyContentRepository zhihuContentRepository) {
         this.mView = view;
         mView.setPresenter(this);
+        mZhihuContentRepository = zhihuContentRepository;
+    }
+
+    public DetailsPresenter(@NonNull DetailsContract.View view,
+                           @NonNull GuokrHandpickContentRepository guokrContentRepository) {
+        this.mView = view;
+        this.mView.setPresenter(this);
+        mGuokrContentRepository = guokrContentRepository;
     }
 
     @Override
@@ -53,39 +70,63 @@ public class DetailsPresenter implements DetailsContract.Presenter {
     }
 
     @Override
-    public void loadDoubanContent(boolean forceUpdate, int id) {
-
-        if (!forceUpdate) {
-            mView.setLoadingIndicator(true);
-        }
+    public void loadDoubanContent(int id) {
         mDoubanContentRepository.getDoubanMomentContent(id, new DoubanMomentContentDataSource.LoadDoubanMomentContentCallback() {
             @Override
             public void onContentLoaded(@NonNull DoubanMomentContent content) {
                 mDoubanNewsRepository.getItem(id, new DoubanMomentNewsDataSource.GetNewsItemCallback() {
                     @Override
                     public void onItemLoaded(@NonNull DoubanMomentNews.Posts item) {
-                        mView.showDoubanMomentContent(content, item.getThumbs());
-                        mView.setLoadingIndicator(false);
+                        if (mView.isActive()) {
+                            mView.showDoubanMomentContent(content, item.getThumbs());
+                        }
                     }
 
                     @Override
                     public void onDataNotAvailable() {
-                        mView.setLoadingIndicator(false);
+
                     }
                 });
             }
 
             @Override
             public void onDataNotAvailable() {
-                mView.setLoadingIndicator(false);
+
             }
         });
     }
 
     @Override
-    public void loadZhihuDailyContent(boolean forceUpdate, int id) {
-        if (!forceUpdate) {
-            mView.setLoadingIndicator(true);
-        }
+    public void loadZhihuDailyContent(int id) {
+        mZhihuContentRepository.getZhihuDailyContent(id, new ZhihuDailyContentDataSource.LoadZhihuDailyContentCallback() {
+            @Override
+            public void onContentLoaded(@NonNull ZhihuDailyContent content) {
+                if (mView.isActive()) {
+                    mView.showZhihuDailyContent(content);
+                }
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+
+            }
+        });
+    }
+
+    @Override
+    public void loadGuokrHandpickContent(int id) {
+        mGuokrContentRepository.getGuokrHandpickContent(id, new GuokrHandpickContentDataSource.LoadGuokrHandpickContentCallback() {
+            @Override
+            public void onContentLoaded(@NonNull GuokrHandpickContent content) {
+                if (mView.isActive()) {
+                    mView.showGuokrHandpickContent(content);
+                }
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+
+            }
+        });
     }
 }

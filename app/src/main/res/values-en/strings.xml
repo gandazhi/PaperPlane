@@ -48,8 +48,8 @@
     <string name="check_bookmarks">Bookmarks</string>
 
     <!--bottom sheet list-->
-    <string name="action_add_to_bookmarks">Add to bookmarks</string>
-    <string name="action_delete_from_bookmarks">Delete from bookmarks</string>
+    <string name="favorite">Favorite</string>
+    <string name="unfavorite">Unfavorite</string>
     <string name="action_copy_link">Copy link</string>
     <string name="action_open_in_browser">Open in browser</string>
     <string name="action_copy_text">Copy text</string>

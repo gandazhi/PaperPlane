@@ -19,6 +19,8 @@ public interface DoubanMomentContract {
 
         void setLoadingIndicator(boolean active);
 
+        boolean isActive();
+
         void showResult(@NonNull List<DoubanMomentNews.Posts> list);
 
     }

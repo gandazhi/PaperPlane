@@ -49,13 +49,17 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
         mRepository.getZhihuDailyNews(isLoadMore, date, new ZhihuDailyNewsDataSource.LoadZhihuDailyNewsCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
-                mView.showResult(list);
-                mView.setLoadingIndicator(false);
+                if (mView.isActive()) {
+                    mView.showResult(list);
+                    mView.setLoadingIndicator(false);
+                }
             }
 
             @Override
             public void onDataNotAvailable() {
-                mView.setLoadingIndicator(false);
+                if (mView.isActive()) {
+                    mView.setLoadingIndicator(false);
+                }
             }
         });
     }

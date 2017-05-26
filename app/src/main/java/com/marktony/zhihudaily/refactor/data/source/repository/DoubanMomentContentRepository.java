@@ -38,6 +38,10 @@ public class DoubanMomentContentRepository implements DoubanMomentContentDataSou
         return INSTANCE;
     }
 
+    public static void destroyInstance() {
+        INSTANCE = null;
+    }
+
     @Override
     public void getDoubanMomentContent(int id, @NonNull LoadDoubanMomentContentCallback callback) {
         if (mContent != null) {

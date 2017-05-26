@@ -63,7 +63,9 @@ public class DoubanMomentFragment extends Fragment
         initViews(view);
 
         mRefreshLayout.setOnRefreshListener(() -> {
-            mPresenter.load(false, false, Calendar.getInstance().getTimeInMillis());
+            Calendar c = Calendar.getInstance();
+            c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+            mPresenter.load(false, false, c.getTimeInMillis());
         });
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -76,7 +78,7 @@ public class DoubanMomentFragment extends Fragment
                 LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 // 当不滚动时
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    // 获取最后一个完全显示的itemposition
+                    // 获取最后一个完全显示的item position
                     int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
                     int totalItemCount = manager.getItemCount();
 
@@ -106,7 +108,6 @@ public class DoubanMomentFragment extends Fragment
         super.onResume();
         mPresenter.start();
         Calendar c = Calendar.getInstance();
-        c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
         c.set(mYear, mMonth, mDay);
         mPresenter.load(false, true, c.getTimeInMillis());
     }
@@ -128,9 +129,12 @@ public class DoubanMomentFragment extends Fragment
 
     @Override
     public void setLoadingIndicator(boolean active) {
-        mRefreshLayout.post(() ->
-                mRefreshLayout.setRefreshing(active)
-        );
+        mRefreshLayout.post(() -> mRefreshLayout.setRefreshing(active));
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded() && isResumed();
     }
 
     @Override
