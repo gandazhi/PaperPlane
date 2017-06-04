@@ -1,5 +1,9 @@
 package com.marktony.zhihudaily.refactor.data;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -36,31 +40,41 @@ public class ZhihuDailyNews {
         this.stories = stories;
     }
 
+    // The entity that will be stored by room
+    @Entity(tableName = "zhihu_questions")
     public class Question {
 
+        @ColumnInfo(name = "images")
         @Expose
         @SerializedName("images")
         private List<String> images;
 
+        @ColumnInfo(name = "type")
         @Expose
         @SerializedName("type")
         private int type;
 
+        @PrimaryKey
+        @ColumnInfo(name = "id")
         @Expose
         @SerializedName("id")
         private int id;
 
+        @ColumnInfo(name = "ga_prefix")
         @Expose
         @SerializedName("ga_prefix")
         private String gaPrefix;
 
+        @ColumnInfo(name = "title")
         @Expose
         @SerializedName("title")
         private String title;
 
+        @ColumnInfo(name = "favorite")
         @Expose
         private boolean favorite;
 
+        @ColumnInfo(name = "outdated")
         @Expose
         private boolean outdated;
 

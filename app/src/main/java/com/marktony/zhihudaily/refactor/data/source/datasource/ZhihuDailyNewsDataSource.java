@@ -28,15 +28,13 @@ public interface ZhihuDailyNewsDataSource {
 
     }
 
-    void getZhihuDailyNews(boolean loadMore, long date, @NonNull LoadZhihuDailyNewsCallback callback);
+    void getZhihuDailyNews(boolean forceUpdate, boolean addToCache, long date, @NonNull LoadZhihuDailyNewsCallback callback);
 
     void getItem(int itemId, @NonNull GetNewsItemCallback callback);
 
     void favoriteItem(int itemId, boolean favorite);
 
     void outdateItem(int itemId);
-
-    void refreshZhihuDailyNews();
 
     void saveItem(@NonNull ZhihuDailyNews.Question item);
 

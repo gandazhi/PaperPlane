@@ -27,7 +27,7 @@ public class DoubanMomentNewsLocalDataSource implements DoubanMomentNewsDataSour
     }
 
     @Override
-    public void getDoubanMomentNews(boolean loadMore, long date, @NonNull LoadDoubanMomentDailyCallback callback) {
+    public void getDoubanMomentNews(boolean addToCache, long date, @NonNull LoadDoubanMomentDailyCallback callback) {
 
     }
 
@@ -43,11 +43,6 @@ public class DoubanMomentNewsLocalDataSource implements DoubanMomentNewsDataSour
 
     @Override
     public void outdateItem(int itemId) {
-
-    }
-
-    @Override
-    public void refreshDoubanMomentNews() {
 
     }
 

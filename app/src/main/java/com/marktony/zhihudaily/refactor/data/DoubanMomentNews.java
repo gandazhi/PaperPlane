@@ -1,5 +1,10 @@
 package com.marktony.zhihudaily.refactor.data;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -71,112 +76,145 @@ public class DoubanMomentNews {
         this.total = total;
     }
 
+    @Entity(tableName = "douban_posts")
     public class Posts {
 
+        @ColumnInfo(name = "display_style")
         @Expose
         @SerializedName("display_style")
         private int displayStyle;
 
+        @ColumnInfo(name = "is_editor_choice")
         @Expose
         @SerializedName("is_editor_choice")
         private boolean isEditorChoice;
 
+        @ColumnInfo(name = "published_time")
         @Expose
         @SerializedName("published_time")
         private String publishedTime;
 
+        @ColumnInfo(name = "url")
         @Expose
         @SerializedName("url")
         private String url;
 
+        @ColumnInfo(name = "short_url")
         @Expose
         @SerializedName("short_url")
         private String shortUrl;
 
+        @ColumnInfo(name = "is_liked")
         @Expose
         @SerializedName("is_liked")
         private boolean isLiked;
 
+        @ColumnInfo(name = "author")
+        @Embedded
         @Expose
         @SerializedName("author")
         private Author author;
 
+        @ColumnInfo(name = "column")
         @Expose
         @SerializedName("column")
         private String column;
 
+        @ColumnInfo(name = "app_css")
         @Expose
         @SerializedName("app_css")
         private int appCss;
 
+        @ColumnInfo(name = "abstract")
         @Expose
         @SerializedName("abstract")
         private String abs;
 
+        @ColumnInfo(name = "date")
         @Expose
         @SerializedName("date")
         private String date;
 
+        @ColumnInfo(name = "like_count")
         @Expose
         @SerializedName("like_count")
         private int likeCount;
 
+        @ColumnInfo(name = "comments_count")
         @Expose
         @SerializedName("comments_count")
         private int commentsCount;
 
+        @ColumnInfo(name = "thumbs")
         @Expose
         @SerializedName("thumbs")
         private List<Thumbs> thumbs;
 
+        @ColumnInfo(name = "created_time")
         @Expose
         @SerializedName("created_time")
         private String createdTime;
 
+        @ColumnInfo(name = "title")
         @Expose
         @SerializedName("title")
         private String title;
 
+        @ColumnInfo(name = "share_pic_url")
         @Expose
         @SerializedName("share_pic_url")
         private String sharePicUrl;
 
+        @ColumnInfo(name = "type")
         @Expose
         @SerializedName("type")
         private String type;
 
+        @ColumnInfo(name = "id")
+        @PrimaryKey
         @Expose
         @SerializedName("id")
         private int id;
 
+        @ColumnInfo(name = "favorite")
         @Expose
         private boolean favorite;
 
+        @ColumnInfo(name = "outdated")
         @Expose
         private boolean outdated;
 
         public class Thumbs {
 
+            @ColumnInfo(name = "thumb_medium")
+            @Embedded
             @Expose
             @SerializedName("medium")
             private Medium medium;
 
+            @ColumnInfo(name = "thumb_description")
             @Expose
             @SerializedName("description")
             private String description;
 
+            @ColumnInfo(name = "thumb_large")
+            @Embedded
             @Expose
             @SerializedName("large")
             private Large large;
 
+            @ColumnInfo(name = "thumb_tag_name")
             @Expose
             @SerializedName("tag_name")
             private String tagName;
 
+            @ColumnInfo(name = "thumb_small")
+            @Embedded
             @Expose
             @SerializedName("small")
             private Small small;
 
+            @ColumnInfo(name = "thumb_id")
             @Expose
             @SerializedName("id")
             private int id;
@@ -234,15 +272,15 @@ public class DoubanMomentNews {
         public class Small {
 
             @Expose
-            @SerializedName("url")
+            @SerializedName("small_url")
             private String url;
 
             @Expose
-            @SerializedName("width")
+            @SerializedName("small_width")
             private int width;
 
             @Expose
-            @SerializedName("height")
+            @SerializedName("small_height")
             private int height;
 
             public String getUrl() {
@@ -273,14 +311,17 @@ public class DoubanMomentNews {
 
         public class Medium {
 
+            @ColumnInfo(name = "medium_url")
             @Expose
             @SerializedName("url")
             private String url;
 
+            @ColumnInfo(name = "medium_width")
             @Expose
             @SerializedName("width")
             private int width;
 
+            @ColumnInfo(name = "medium_height")
             @Expose
             @SerializedName("height")
             private int height;
@@ -313,14 +354,17 @@ public class DoubanMomentNews {
 
         public class Large {
 
+            @ColumnInfo(name = "large_url")
             @Expose
             @SerializedName("url")
             private String url;
 
+            @ColumnInfo(name = "large_width")
             @Expose
             @SerializedName("width")
             private int width;
 
+            @ColumnInfo(name = "large_height")
             @Expose
             @SerializedName("height")
             private int height;
@@ -530,46 +574,57 @@ public class DoubanMomentNews {
 
     private class Author {
 
+        @ColumnInfo(name = "is_followed")
         @Expose
         @SerializedName("is_followed")
         private boolean isFollowed;
 
+        @ColumnInfo(name = "uid")
         @Expose
         @SerializedName("uid")
         private String uid;
 
+        @ColumnInfo(name = "author_url")
         @Expose
         @SerializedName("url")
         private String url;
 
+        @ColumnInfo(name = "author_avatar")
         @Expose
         @SerializedName("avatar")
         private String avatar;
 
+        @ColumnInfo(name = "author_name")
         @Expose
         @SerializedName("name")
         private String name;
 
+        @ColumnInfo(name = "author_is_special_user")
         @Expose
         @SerializedName("is_special_user")
         private boolean isSpecialUser;
 
+        @ColumnInfo(name = "author_n_posts")
         @Expose
         @SerializedName("n_posts")
         private int nPosts;
 
+        @ColumnInfo(name = "author_alt")
         @Expose
         @SerializedName("alt")
         private String alt;
 
+        @ColumnInfo(name = "author_large_avatar")
         @Expose
         @SerializedName("large_avatar")
         private String largeAvatar;
 
+        @ColumnInfo(name = "author_id")
         @Expose
         @SerializedName("id")
         private String id;
 
+        @ColumnInfo(name = "author_is_auth_author")
         @Expose
         @SerializedName("is_auth_author")
         private boolean isAuthAuthor;

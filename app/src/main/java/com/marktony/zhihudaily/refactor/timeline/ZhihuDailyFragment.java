@@ -16,6 +16,7 @@ import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.data.ContentType;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
 import com.marktony.zhihudaily.refactor.details.DetailsActivity;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
 import java.util.List;
@@ -37,9 +38,10 @@ public class ZhihuDailyFragment extends Fragment
     private View mEmptyView;
 
     private ZhihuDailyNewsAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
 
     private int mYear, mMonth, mDay;
+
+    private boolean mIsFirstLoad = true;
 
     public ZhihuDailyFragment() {
         // An empty constructor is needed as a fragment.
@@ -69,7 +71,8 @@ public class ZhihuDailyFragment extends Fragment
         mRefreshLayout.setOnRefreshListener(() -> {
             Calendar c = Calendar.getInstance();
             c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-            mPresenter.loadNews(false, false, c.getTimeInMillis());
+            c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+            mPresenter.loadNews(true, true, c.getTimeInMillis());
         });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -111,7 +114,13 @@ public class ZhihuDailyFragment extends Fragment
         Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
         c.set(mYear, mMonth, mDay);
-        mPresenter.loadNews(false, true, c.getTimeInMillis());
+        if (mIsFirstLoad) {
+            mPresenter.loadNews(true, true, c.getTimeInMillis());
+            mIsFirstLoad = false;
+        } else {
+            mPresenter.loadNews(false, true, c.getTimeInMillis());
+        }
+
     }
 
     @Override
@@ -125,8 +134,7 @@ public class ZhihuDailyFragment extends Fragment
     public void initViews(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mEmptyView = view.findViewById(R.id.empty_view);
     }
 
@@ -159,16 +167,37 @@ public class ZhihuDailyFragment extends Fragment
         } else {
             mAdapter.updateData(list);
         }
-        if (mLayoutManager.findLastVisibleItemPosition() == -1) {
-            loadMore();
-        }
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
     }
 
     private void loadMore() {
         Calendar c = Calendar.getInstance();
         c.set(mYear, mMonth, --mDay);
-        mPresenter.loadNews(true, false, c.getTimeInMillis());
+        mPresenter.loadNews(true, true, c.getTimeInMillis());
+    }
+
+    public void showDatePickerDialog() {
+        Calendar c = Calendar.getInstance();
+        c.set(mYear, mMonth, mDay);
+        DatePickerDialog dialog = DatePickerDialog.newInstance((datePickerDialog, year, monthOfYear, dayOfMonth) -> {
+            mYear = year;
+            mMonth = monthOfYear;
+            mDay = dayOfMonth;
+            c.set(mYear, monthOfYear, mDay);
+
+            mPresenter.loadNews(true, false, c.getTimeInMillis());
+
+        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+
+        dialog.setMaxDate(Calendar.getInstance());
+
+        Calendar minDate = Calendar.getInstance();
+        minDate.set(2013, 5, 20);
+        dialog.setMinDate(minDate);
+        dialog.vibrate(false);
+
+        dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
+
     }
 
 }

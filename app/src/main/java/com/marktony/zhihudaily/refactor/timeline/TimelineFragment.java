@@ -29,6 +29,7 @@ import com.marktony.zhihudaily.refactor.data.source.remote.ZhihuDailyNewsRemoteD
 public class TimelineFragment extends Fragment {
 
     private FloatingActionButton mFab;
+    private TabLayout mTabLayout;
 
     private ZhihuDailyFragment mZhihuFragment;
     private DoubanMomentFragment mDoubanFragment;
@@ -72,8 +73,33 @@ public class TimelineFragment extends Fragment {
 
         initViews(view);
 
-        mFab.setOnClickListener(v -> {
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 2) {
+                    mFab.hide();
+                } else {
+                    mFab.show();
+                }
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        mFab.setOnClickListener(v -> {
+            if (mTabLayout.getSelectedTabPosition() == 0) {
+                mZhihuFragment.showDatePickerDialog();
+            } else {
+                mDoubanFragment.showDatePickerDialog();
+            }
         });
 
         return view;
@@ -104,7 +130,7 @@ public class TimelineFragment extends Fragment {
                 mGuokrFragment));
         mViewPager.setOffscreenPageLimit(3);
 
-        TabLayout mTabLayout = view.findViewById(R.id.tab_layout);
+        mTabLayout = view.findViewById(R.id.tab_layout);
         mTabLayout.setupWithViewPager(mViewPager);
         mFab = view.findViewById(R.id.fab);
     }

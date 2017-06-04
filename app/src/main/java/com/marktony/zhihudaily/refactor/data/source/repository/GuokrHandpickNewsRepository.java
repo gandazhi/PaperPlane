@@ -28,9 +28,6 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
 
     private Map<Integer, GuokrHandpickNews.Result> mCachedItems;
 
-    private boolean mCacheIsDirty = false;
-    private int mOffset = 0;
-
     private GuokrHandpickNewsRepository(@NonNull GuokrHandpickDataSource remoteDataSource,
                                         @NonNull GuokrHandpickDataSource localDataSource) {
         mLocalDataSource = localDataSource;
@@ -50,31 +47,37 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
     }
 
     @Override
-    public void getGuokrHandpickNews(int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback) {
+    public void getGuokrHandpickNews(boolean addToCache, int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback) {
 
-        mOffset = offset;
-
-        if (mCachedItems != null && !mCacheIsDirty) {
+        if (mCachedItems != null && !addToCache) {
             callback.onNewsLoad(new ArrayList<>(mCachedItems.values()));
             return;
         }
 
-        if (mCacheIsDirty) {
-            getItemsFromRemoteDataSource(offset, limit, callback);
-        } else {
-            mLocalDataSource.getGuokrHandpickNews(offset, limit, new LoadGuokrHandpickNewsCallback() {
-                @Override
-                public void onNewsLoad(@NonNull List<GuokrHandpickNews.Result> list) {
-                    refreshCache(list);
-                    callback.onNewsLoad(new ArrayList<>(mCachedItems.values()));
-                }
+        mRemoteDataSource.getGuokrHandpickNews(addToCache, offset, limit, new LoadGuokrHandpickNewsCallback() {
+            @Override
+            public void onNewsLoad(@NonNull List<GuokrHandpickNews.Result> list) {
+                refreshCache(addToCache, list);
+                refreshLocalDataSource(list);
+                callback.onNewsLoad(new ArrayList<>(mCachedItems.values()));
+            }
 
-                @Override
-                public void onDataNotAvailable() {
-                    getItemsFromRemoteDataSource(offset, limit, callback);
-                }
-            });
-        }
+            @Override
+            public void onDataNotAvailable() {
+                mLocalDataSource.getGuokrHandpickNews(addToCache, offset, limit, new LoadGuokrHandpickNewsCallback() {
+                    @Override
+                    public void onNewsLoad(@NonNull List<GuokrHandpickNews.Result> list) {
+                        refreshCache(addToCache, list);
+                        callback.onNewsLoad(new ArrayList<>(mCachedItems.values()));
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        callback.onDataNotAvailable();
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -140,33 +143,11 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
     }
 
     @Override
-    public void refreshGuokrHandpickNews() {
-        mCacheIsDirty = true;
-        mOffset = 0;
-    }
-
-    @Override
     public void saveItem(@NonNull GuokrHandpickNews.Result item) {
         mRemoteDataSource.saveItem(item);
         mLocalDataSource.saveItem(item);
 
         mCachedItems.put(item.getId(), item);
-    }
-
-    private void getItemsFromRemoteDataSource(int offset, int limit, LoadGuokrHandpickNewsCallback callback) {
-        mRemoteDataSource.getGuokrHandpickNews(offset, limit, new LoadGuokrHandpickNewsCallback() {
-            @Override
-            public void onNewsLoad(@NonNull List<GuokrHandpickNews.Result> list) {
-                refreshCache(list);
-                refreshLocalDataSource(list);
-                callback.onNewsLoad(new ArrayList<>(mCachedItems.values()));
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                callback.onDataNotAvailable();
-            }
-        });
     }
 
     private void refreshLocalDataSource(List<GuokrHandpickNews.Result> list) {
@@ -175,11 +156,11 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
         }
     }
 
-    private void refreshCache(List<GuokrHandpickNews.Result> list) {
+    private void refreshCache(boolean addToCache, List<GuokrHandpickNews.Result> list) {
         if (mCachedItems == null) {
             mCachedItems = new LinkedHashMap<>();
         }
-        if (mOffset == 0) {
+        if (!addToCache) {
             mCachedItems.clear();
         }
         for (GuokrHandpickNews.Result item : list) {

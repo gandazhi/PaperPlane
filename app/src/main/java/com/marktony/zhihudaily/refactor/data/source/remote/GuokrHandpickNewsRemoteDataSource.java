@@ -34,7 +34,7 @@ public class GuokrHandpickNewsRemoteDataSource implements GuokrHandpickDataSourc
     }
 
     @Override
-    public void getGuokrHandpickNews(int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback) {
+    public void getGuokrHandpickNews(boolean addToCache, int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.GUOKR_HANDPICK_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -68,11 +68,6 @@ public class GuokrHandpickNewsRemoteDataSource implements GuokrHandpickDataSourc
 
     @Override
     public void outdateItem(int itemId) {
-
-    }
-
-    @Override
-    public void refreshGuokrHandpickNews() {
 
     }
 

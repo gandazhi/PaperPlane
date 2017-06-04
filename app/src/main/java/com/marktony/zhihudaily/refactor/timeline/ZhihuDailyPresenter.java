@@ -20,8 +20,6 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
     @NonNull
     private final ZhihuDailyNewsRepository mRepository;
 
-    private boolean mFirstLoad = true;
-
     public ZhihuDailyPresenter(@NonNull ZhihuDailyContract.View view,
                                @NonNull ZhihuDailyNewsRepository repository) {
         this.mView = view;
@@ -35,18 +33,13 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
     }
 
     @Override
-    public void loadNews(boolean isLoadMore, boolean forceUpdate, long date) {
-
-        if (mFirstLoad) {
-            mView.setLoadingIndicator(true);
-            mFirstLoad = false;
-        }
+    public void loadNews(boolean forceUpdate, boolean addToCache, long date) {
 
         if (forceUpdate) {
-            mRepository.refreshZhihuDailyNews();
+            mView.setLoadingIndicator(true);
         }
 
-        mRepository.getZhihuDailyNews(isLoadMore, date, new ZhihuDailyNewsDataSource.LoadZhihuDailyNewsCallback() {
+        mRepository.getZhihuDailyNews(forceUpdate, addToCache, date, new ZhihuDailyNewsDataSource.LoadZhihuDailyNewsCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
                 if (mView.isActive()) {

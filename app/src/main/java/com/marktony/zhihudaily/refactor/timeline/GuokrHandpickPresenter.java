@@ -20,8 +20,6 @@ public class GuokrHandpickPresenter implements GuokrHandpickContract.Presenter {
     @NonNull
     private final GuokrHandpickNewsRepository mRepository;
 
-    private boolean mFirstLoad = true;
-
     public GuokrHandpickPresenter(@NonNull GuokrHandpickContract.View  view,
                                   @NonNull GuokrHandpickNewsRepository repository) {
         this.mView = view;
@@ -30,17 +28,9 @@ public class GuokrHandpickPresenter implements GuokrHandpickContract.Presenter {
     }
 
     @Override
-    public void load(boolean forceUpdate, int offset, int limit) {
-        if (mFirstLoad) {
-            mView.setLoadingIndicator(true);
-            mFirstLoad = false;
-        }
+    public void load(boolean addToCache, int offset, int limit) {
 
-        if (forceUpdate) {
-            mRepository.refreshGuokrHandpickNews();
-        }
-
-        mRepository.getGuokrHandpickNews(offset, limit, new GuokrHandpickDataSource.LoadGuokrHandpickNewsCallback() {
+        mRepository.getGuokrHandpickNews(addToCache, offset, limit, new GuokrHandpickDataSource.LoadGuokrHandpickNewsCallback() {
             @Override
             public void onNewsLoad(@NonNull List<GuokrHandpickNews.Result> list) {
                 if (mView.isActive()) {

@@ -31,7 +31,7 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
     }
 
     @Override
-    public void getZhihuDailyNews(boolean loadMore, long date, @NonNull LoadZhihuDailyNewsCallback callback) {
+    public void getZhihuDailyNews(boolean forceUpdate, boolean addToCache, long date, @NonNull LoadZhihuDailyNewsCallback callback) {
 
     }
 
@@ -47,11 +47,6 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
 
     @Override
     public void outdateItem(int itemId) {
-
-    }
-
-    @Override
-    public void refreshZhihuDailyNews() {
 
     }
 

@@ -36,9 +36,10 @@ public class DoubanMomentFragment extends Fragment
     private View mEmptyView;
 
     private DoubanMomentNewsAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
 
     private int mYear, mMonth, mDay;
+
+    private boolean mIsFirstLoad = true;
 
     public DoubanMomentFragment() {
         // Requires default empty constructor.
@@ -66,7 +67,7 @@ public class DoubanMomentFragment extends Fragment
         mRefreshLayout.setOnRefreshListener(() -> {
             Calendar c = Calendar.getInstance();
             c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-            mPresenter.load(false, true, c.getTimeInMillis());
+            mPresenter.load(true, c.getTimeInMillis());
         });
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -108,7 +109,13 @@ public class DoubanMomentFragment extends Fragment
         mPresenter.start();
         Calendar c = Calendar.getInstance();
         c.set(mYear, mMonth, mDay);
-        mPresenter.load(false, true, c.getTimeInMillis());
+        if (mIsFirstLoad) {
+            setLoadingIndicator(true);
+            mPresenter.load(true, c.getTimeInMillis());
+            mIsFirstLoad = false;
+        } else {
+            mPresenter.load(false, c.getTimeInMillis());
+        }
     }
 
     @Override
@@ -122,8 +129,7 @@ public class DoubanMomentFragment extends Fragment
     public void initViews(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mEmptyView = view.findViewById(R.id.empty_view);
     }
 
@@ -156,15 +162,17 @@ public class DoubanMomentFragment extends Fragment
         } else {
             mAdapter.updateData(list);
         }
-        if (mLayoutManager.findLastVisibleItemPosition() == -1) {
-            loadMore();
-        }
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
     }
 
     private void loadMore() {
         Calendar c = Calendar.getInstance();
         c.set(mYear, mMonth, --mDay);
-        mPresenter.load(true, false, c.getTimeInMillis());
+        mPresenter.load(true, c.getTimeInMillis());
     }
+
+    public void showDatePickerDialog() {
+
+    }
+
 }

@@ -1,5 +1,10 @@
 package com.marktony.zhihudaily.refactor.data;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -83,131 +88,169 @@ public class GuokrHandpickNews {
         this.result = result;
     }
 
+    @Entity
     public class Result {
 
+        @ColumnInfo(name = "image")
         @Expose
         @SerializedName("image")
         private String image;
 
+        @ColumnInfo(name = "is_replyable")
         @Expose
         @SerializedName("is_replyable")
         private boolean isReplyable;
 
+        @ColumnInfo(name = "channels")
         @Expose
         @SerializedName("channels")
         private List<Channel> channels;
 
+        @ColumnInfo(name = "channel_keys")
         @Expose
         @SerializedName("channel_keys")
         private List<String> channelKeys;
 
+        @ColumnInfo(name = "preface")
         @Expose
         @SerializedName("preface")
         private String preface;
 
+        @PrimaryKey
+        @ColumnInfo(name = "id")
         @Expose
         @SerializedName("id")
         private int id;
 
+        @ColumnInfo(name = "subject")
+        @Embedded
         @Expose
         @SerializedName("subject")
         private Channel subject;
 
+        @ColumnInfo(name = "copyright")
         @Expose
         @SerializedName("copyright")
         private String copyright;
 
+        @ColumnInfo(name = "author")
+        @Embedded
         @Expose
         @SerializedName("author")
         private Author author;
 
+        @ColumnInfo(name = "image_description")
         @Expose
         @SerializedName("image_description")
         private String imageDescription;
 
+        @ColumnInfo(name = "is_show_summary")
         @Expose
         @SerializedName("is_show_summary")
         private boolean isShowSummary;
 
+        @ColumnInfo(name = "minisite_key")
         @Expose
         @SerializedName("minisite_key")
         private String minisiteKey;
 
+        @ColumnInfo(name = "image_info")
+        @Embedded
         @Expose
         @SerializedName("image_info")
         private ImageInfo imageInfo;
 
+        @ColumnInfo(name = "subject_key")
         @Expose
         @SerializedName("subject_key")
         private String subjectKey;
 
+        @ColumnInfo(name = "minisite")
+        @Embedded
         @Expose
         @SerializedName("minisite")
         private Minisite minisite;
 
+        @ColumnInfo(name = "tags")
         @Expose
         @SerializedName("tags")
         private List<String> tags;
 
+        @ColumnInfo(name = "date_published")
         @Expose
         @SerializedName("date_published")
         private String datePublished;
 
+        @ColumnInfo(name = "avatar")
         @Expose
         @SerializedName("avatar")
         private List<Author> authors;
 
+        @ColumnInfo(name = "replies_count")
         @Expose
         @SerializedName("replies_count")
         private int repliesCount;
 
+        @ColumnInfo(name = "is_author_external")
         @Expose
         @SerializedName("is_author_external")
         private boolean isAuthorExternal;
 
+        @ColumnInfo(name = "recommends_count")
         @Expose
         @SerializedName("recommends_count")
         private int recommendsCount;
 
+        @ColumnInfo(name = "title_hide")
         @Expose
         @SerializedName("title_hide")
         private String titleHide;
 
+        @ColumnInfo(name = "date_modified")
         @Expose
         @SerializedName("date_modified")
         private String dateModified;
 
+        @ColumnInfo(name = "url")
         @Expose
         @SerializedName("url")
         private String url;
 
+        @ColumnInfo(name = "title")
         @Expose
         @SerializedName("title")
         private String title;
 
+        @ColumnInfo(name = "small_image")
         @Expose
         @SerializedName("small_image")
         private String smallImage;
 
+        @ColumnInfo(name = "summary")
         @Expose
         @SerializedName("summary")
         private String summary;
 
+        @ColumnInfo(name = "ukey_author")
         @Expose
         @SerializedName("ukey_author")
         private String ukeyAuthor;
 
+        @ColumnInfo(name = "date_created")
         @Expose
         @SerializedName("date_created")
         private String dateCreated;
 
+        @ColumnInfo(name = "resource_url")
         @Expose
         @SerializedName("resource_url")
         private String resourceUrl;
 
+        @ColumnInfo(name = "favorite")
         @Expose
         private boolean favorite;
 
+        @ColumnInfo(name = "outdated")
         @Expose
         private boolean outdated;
 
@@ -469,22 +512,27 @@ public class GuokrHandpickNews {
 
         public class Channel {
 
+            @ColumnInfo(name = "channel_url")
             @Expose
             @SerializedName("url")
             private String url;
 
+            @ColumnInfo(name = "channel_date_created")
             @Expose
             @SerializedName("date_created")
             private String dateCreated;
 
+            @ColumnInfo(name = "channel_name")
             @Expose
             @SerializedName("name")
             private String name;
 
+            @ColumnInfo(name = "channel_key")
             @Expose
             @SerializedName("key")
             private String key;
 
+            @ColumnInfo(name = "channel_articles_count")
             @Expose
             @SerializedName("articles_count")
             private int articlesCount;
@@ -532,50 +580,63 @@ public class GuokrHandpickNews {
 
         public class Author {
 
+            @ColumnInfo(name = "author_ukey")
             @Expose
             @SerializedName("ukey")
             private String ukey;
 
+            @ColumnInfo(name = "author_is_title_authorized")
             @Expose
             @SerializedName("is_title_authorized")
             private String isTitleAuthorized;
 
+            @ColumnInfo(name = "author_nickname")
             @Expose
             @SerializedName("nickname")
             private String nickname;
 
+            @ColumnInfo(name = "author_master_category")
             @Expose
             @SerializedName("master_category")
             private String masterCategory;
 
+            @ColumnInfo(name = "author_amended_reliability")
             @Expose
             @SerializedName("amended_reliability")
             private String amendedReliability;
 
+            @ColumnInfo(name = "author_is_exists")
             @Expose
             @SerializedName("is_exists")
             private boolean isExists;
 
+            @ColumnInfo(name = "author_title")
             @Expose
             @SerializedName("title")
             private String title;
 
+            @ColumnInfo(name = "author_url")
             @Expose
             @SerializedName("url")
             private String url;
 
+            @ColumnInfo(name = "author_gender")
             @Expose
             @SerializedName("gender")
             private String gender;
 
+            @ColumnInfo(name = "author_followers_count")
             @Expose
             @SerializedName("followers_count")
             private int followersCount;
 
+            @ColumnInfo(name = "author_avatar")
+            @Embedded
             @Expose
             @SerializedName("avatar")
             private Avatar avatar;
 
+            @ColumnInfo(name = "author_resource_url")
             @Expose
             @SerializedName("resource_url")
             private String resourceUrl;
@@ -678,14 +739,17 @@ public class GuokrHandpickNews {
 
             public class Avatar {
 
+                @ColumnInfo(name = "avatar_large")
                 @Expose
                 @SerializedName("large")
                 private String large;
 
+                @ColumnInfo(name = "avatar_small")
                 @Expose
                 @SerializedName("small")
                 private String small;
 
+                @ColumnInfo(name = "avatar_normal")
                 @Expose
                 @SerializedName("normal")
                 private String normal;
@@ -719,14 +783,17 @@ public class GuokrHandpickNews {
 
         public class ImageInfo {
 
+            @ColumnInfo(name = "image_info_url")
             @Expose
             @SerializedName("url")
             private String url;
 
+            @ColumnInfo(name = "image_info_width")
             @Expose
             @SerializedName("width")
             private int width;
 
+            @ColumnInfo(name = "image_info_height")
             @Expose
             @SerializedName("height")
             private int height;
@@ -758,26 +825,32 @@ public class GuokrHandpickNews {
 
         public class Minisite {
 
+            @ColumnInfo(name = "minisite_name")
             @Expose
             @SerializedName("name")
             private String name;
 
+            @ColumnInfo(name = "minisite_url")
             @Expose
             @SerializedName("url")
             private String url;
 
+            @ColumnInfo(name = "minisite_introduction")
             @Expose
             @SerializedName("introduction")
             private String introduction;
 
+            @ColumnInfo(name = "minisite_key")
             @Expose
             @SerializedName("key")
             private String key;
 
+            @ColumnInfo(name = "minisite_date_created")
             @Expose
             @SerializedName("date_created")
             private String dateCreated;
 
+            @ColumnInfo(name = "minisite_icon")
             @Expose
             @SerializedName("icon")
             private String icon;

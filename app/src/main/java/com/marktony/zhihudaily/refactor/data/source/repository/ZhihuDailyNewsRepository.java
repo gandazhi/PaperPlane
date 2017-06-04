@@ -28,9 +28,6 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
 
     private Map<Integer, ZhihuDailyNews.Question> mCachedItems;
 
-    private boolean mCacheIsDirty = false;
-    private boolean mLoadMore = false;
-
     private ZhihuDailyNewsRepository(@NonNull ZhihuDailyNewsDataSource remoteDataSource,
                                      @NonNull ZhihuDailyNewsDataSource localDataSource) {
         this.mLocalDataSource = localDataSource;
@@ -50,34 +47,38 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
     }
 
     @Override
-    public void getZhihuDailyNews(boolean loadMore, long date, @NonNull LoadZhihuDailyNewsCallback callback) {
+    public void getZhihuDailyNews(boolean forceUpdate, boolean addToCache, long date, @NonNull LoadZhihuDailyNewsCallback callback) {
 
-        // Update the flag of loading more or not.
-        mLoadMore = loadMore;
-
-        if (mCachedItems != null && !mCacheIsDirty && !loadMore) {
+        if (mCachedItems != null && !forceUpdate) {
             callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
             return;
         }
 
-        if (mCacheIsDirty || loadMore) {
-            getItemsFromRemoteDataSource(date, callback);
-        } else {
-            // The value of parameter isLoadMore will be ignored
-            // when it comes to the code of remote data source.
-            mLocalDataSource.getZhihuDailyNews(false, date, new LoadZhihuDailyNewsCallback() {
-                @Override
-                public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
-                    refreshCache(list);
-                    callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
-                }
+        // Get data by accessing internet first.
+        mRemoteDataSource.getZhihuDailyNews(false, addToCache, date, new LoadZhihuDailyNewsCallback() {
+            @Override
+            public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
+                refreshCache(addToCache, list);
+                refreshLocalDataSource(list);
+                callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
+            }
 
-                @Override
-                public void onDataNotAvailable() {
-                    getItemsFromRemoteDataSource(date, callback);
-                }
-            });
-        }
+            @Override
+            public void onDataNotAvailable() {
+                mLocalDataSource.getZhihuDailyNews(false, false, date, new LoadZhihuDailyNewsCallback() {
+                    @Override
+                    public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
+                        refreshCache(addToCache, list);
+                        callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        callback.onDataNotAvailable();
+                    }
+                });
+            }
+        });
 
     }
 
@@ -144,12 +145,6 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
     }
 
     @Override
-    public void refreshZhihuDailyNews() {
-        mCacheIsDirty = true;
-        mLoadMore = false;
-    }
-
-    @Override
     public void saveItem(@NonNull ZhihuDailyNews.Question item) {
         mLocalDataSource.saveItem(item);
         mRemoteDataSource.saveItem(item);
@@ -160,33 +155,13 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
         mCachedItems.put(item.getId(), item);
     }
 
-    private void getItemsFromRemoteDataSource(long date, @NonNull LoadZhihuDailyNewsCallback callback) {
-
-        // The parameter isLoadMore will be ignored
-        // when it comes to the remote data source.
-        mRemoteDataSource.getZhihuDailyNews(false, date, new LoadZhihuDailyNewsCallback() {
-            @Override
-            public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
-                refreshCache(list);
-                refreshLocalDataSource(list);
-                callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                callback.onDataNotAvailable();
-            }
-        });
-    }
-
-    private void refreshCache(List<ZhihuDailyNews.Question> list) {
+    private void refreshCache(boolean addToCache, List<ZhihuDailyNews.Question> list) {
 
         if (mCachedItems == null) {
             mCachedItems = new LinkedHashMap<>();
         }
-        if (!mLoadMore) {
+        if (!addToCache) {
             mCachedItems.clear();
-            mCacheIsDirty = false;
         }
         for (ZhihuDailyNews.Question item : list) {
             mCachedItems.put(item.getId(), item);

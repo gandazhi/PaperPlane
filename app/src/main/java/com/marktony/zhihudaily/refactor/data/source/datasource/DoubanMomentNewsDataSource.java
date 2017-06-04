@@ -28,15 +28,13 @@ public interface DoubanMomentNewsDataSource {
 
     }
 
-    void getDoubanMomentNews(boolean loadMore, long date, @NonNull LoadDoubanMomentDailyCallback callback);
+    void getDoubanMomentNews(boolean addToCache, long date, @NonNull LoadDoubanMomentDailyCallback callback);
 
     void getItem(int id, @NonNull GetNewsItemCallback callback);
 
     void favoriteItem(int itemId, boolean favorite);
 
     void outdateItem(int itemId);
-
-    void refreshDoubanMomentNews();
 
     void saveItem(@NonNull DoubanMomentNews.Posts item);
 

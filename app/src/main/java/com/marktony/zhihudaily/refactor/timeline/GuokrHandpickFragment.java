@@ -28,15 +28,16 @@ public class GuokrHandpickFragment extends Fragment
 
     private GuokrHandpickContract.Presenter mPresenter;
 
-    // View reference.
+    // View references.
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mRefreshLayout;
     private View mEmptyView;
 
     private GuokrHandpickNewsAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
 
     private int mOffset = 0;
+
+    private boolean mIsFirstLoad = true;
 
     public GuokrHandpickFragment() {
         // Requires an empty constructor.
@@ -94,7 +95,13 @@ public class GuokrHandpickFragment extends Fragment
     public void onResume() {
         super.onResume();
         mPresenter.start();
-        mPresenter.load(true, mOffset, 20);
+        if (mIsFirstLoad) {
+            setLoadingIndicator(true);
+            mPresenter.load(true, mOffset, 20);
+            mIsFirstLoad = false;
+        } else {
+            mPresenter.load(false, mOffset, 20);
+        }
     }
 
     @Override
@@ -109,6 +116,7 @@ public class GuokrHandpickFragment extends Fragment
 
     @Override
     public void showResult(@NonNull List<GuokrHandpickNews.Result> list) {
+        mOffset = list.size();
         if (mAdapter == null) {
             mAdapter = new GuokrHandpickNewsAdapter(list, getContext());
             mAdapter.setItemClickListener((v, i) -> {
@@ -126,9 +134,6 @@ public class GuokrHandpickFragment extends Fragment
         } else {
             mAdapter.updateData(list);
         }
-        if (mLayoutManager.findLastVisibleItemPosition() == -1) {
-            loadMore();
-        }
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
     }
 
@@ -143,13 +148,12 @@ public class GuokrHandpickFragment extends Fragment
     public void initViews(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mEmptyView = view.findViewById(R.id.empty_view);
     }
 
     private void loadMore() {
-        mPresenter.load(false, mOffset++, 20);
+        mPresenter.load(true, mOffset, 20);
     }
 
 }

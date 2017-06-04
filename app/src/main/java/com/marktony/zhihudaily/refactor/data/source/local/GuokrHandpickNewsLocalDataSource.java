@@ -27,7 +27,7 @@ public class GuokrHandpickNewsLocalDataSource implements GuokrHandpickDataSource
     }
 
     @Override
-    public void getGuokrHandpickNews(int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback) {
+    public void getGuokrHandpickNews(boolean addToCache, int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback) {
 
     }
 
@@ -43,11 +43,6 @@ public class GuokrHandpickNewsLocalDataSource implements GuokrHandpickDataSource
 
     @Override
     public void outdateItem(int itemId) {
-
-    }
-
-    @Override
-    public void refreshGuokrHandpickNews() {
 
     }
 
