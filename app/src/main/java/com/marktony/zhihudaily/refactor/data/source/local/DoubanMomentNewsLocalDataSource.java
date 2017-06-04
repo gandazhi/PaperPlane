@@ -27,7 +27,7 @@ public class DoubanMomentNewsLocalDataSource implements DoubanMomentNewsDataSour
     }
 
     @Override
-    public void getDoubanMomentNews(boolean addToCache, long date, @NonNull LoadDoubanMomentDailyCallback callback) {
+    public void getDoubanMomentNews(boolean forceUpdate, boolean clearCache, long date, @NonNull LoadDoubanMomentDailyCallback callback) {
 
     }
 

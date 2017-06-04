@@ -32,7 +32,7 @@ public class ZhihuDailyNewsRemoteDataSource implements ZhihuDailyNewsDataSource 
 
     // The parameter forceUpdate and addToCache are ignored.
     @Override
-    public void getZhihuDailyNews(boolean forceUpdate, boolean addToCache, long date, @NonNull LoadZhihuDailyNewsCallback callback) {
+    public void getZhihuDailyNews(boolean forceUpdate, boolean clearCache, long date, @NonNull LoadZhihuDailyNewsCallback callback) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.ZHIHU_DAILY_BASE)

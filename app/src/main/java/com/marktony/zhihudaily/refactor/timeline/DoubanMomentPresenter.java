@@ -33,9 +33,12 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
     }
 
     @Override
-    public void load(boolean addToCache, long date) {
+    public void load(boolean forceUpdate, boolean clearCache, long date) {
 
-        mRepository.getDoubanMomentNews(addToCache, date, new DoubanMomentNewsDataSource.LoadDoubanMomentDailyCallback() {
+        if (forceUpdate) {
+            mView.setLoadingIndicator(true);
+        }
+        mRepository.getDoubanMomentNews(forceUpdate, clearCache, date, new DoubanMomentNewsDataSource.LoadDoubanMomentDailyCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<DoubanMomentNews.Posts> list) {
                 if (mView.isActive()) {

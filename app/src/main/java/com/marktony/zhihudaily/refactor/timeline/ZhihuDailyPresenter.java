@@ -33,13 +33,13 @@ public class ZhihuDailyPresenter implements ZhihuDailyContract.Presenter {
     }
 
     @Override
-    public void loadNews(boolean forceUpdate, boolean addToCache, long date) {
+    public void loadNews(boolean forceUpdate, boolean clearCache, long date) {
 
         if (forceUpdate) {
             mView.setLoadingIndicator(true);
         }
 
-        mRepository.getZhihuDailyNews(forceUpdate, addToCache, date, new ZhihuDailyNewsDataSource.LoadZhihuDailyNewsCallback() {
+        mRepository.getZhihuDailyNews(forceUpdate, clearCache, date, new ZhihuDailyNewsDataSource.LoadZhihuDailyNewsCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
                 if (mView.isActive()) {

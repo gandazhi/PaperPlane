@@ -28,9 +28,12 @@ public class GuokrHandpickPresenter implements GuokrHandpickContract.Presenter {
     }
 
     @Override
-    public void load(boolean addToCache, int offset, int limit) {
+    public void load(boolean forceUpdate, boolean clearCache, int offset, int limit) {
 
-        mRepository.getGuokrHandpickNews(addToCache, offset, limit, new GuokrHandpickDataSource.LoadGuokrHandpickNewsCallback() {
+        if (forceUpdate) {
+            mView.setLoadingIndicator(true);
+        }
+        mRepository.getGuokrHandpickNews(forceUpdate, clearCache, offset, limit, new GuokrHandpickDataSource.LoadGuokrHandpickNewsCallback() {
             @Override
             public void onNewsLoad(@NonNull List<GuokrHandpickNews.Result> list) {
                 if (mView.isActive()) {

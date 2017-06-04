@@ -27,7 +27,7 @@ public interface DoubanMomentContract {
 
     interface Presenter extends BasePresenter {
 
-        void load(boolean addToCache, long date);
+        void load(boolean forceUpdate, boolean clearCache, long date);
 
         void outdate(int id);
 

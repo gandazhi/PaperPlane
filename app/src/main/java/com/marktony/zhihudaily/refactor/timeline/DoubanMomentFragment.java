@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.data.ContentType;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
 import com.marktony.zhihudaily.refactor.details.DetailsActivity;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
 import java.util.List;
@@ -34,6 +36,7 @@ public class DoubanMomentFragment extends Fragment
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mRefreshLayout;
     private View mEmptyView;
+    private FloatingActionButton fab;
 
     private DoubanMomentNewsAdapter mAdapter;
 
@@ -67,7 +70,7 @@ public class DoubanMomentFragment extends Fragment
         mRefreshLayout.setOnRefreshListener(() -> {
             Calendar c = Calendar.getInstance();
             c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-            mPresenter.load(true, c.getTimeInMillis());
+            mPresenter.load(true, true, c.getTimeInMillis());
         });
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -97,6 +100,11 @@ public class DoubanMomentFragment extends Fragment
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 isSlidingToLast = dy > 0;
+                if (dy >0 ) {
+                    fab.hide();
+                } else {
+                    fab.show();
+                }
             }
         });
 
@@ -110,11 +118,10 @@ public class DoubanMomentFragment extends Fragment
         Calendar c = Calendar.getInstance();
         c.set(mYear, mMonth, mDay);
         if (mIsFirstLoad) {
-            setLoadingIndicator(true);
-            mPresenter.load(true, c.getTimeInMillis());
+            mPresenter.load(true, false, c.getTimeInMillis());
             mIsFirstLoad = false;
         } else {
-            mPresenter.load(false, c.getTimeInMillis());
+            mPresenter.load(false, false, c.getTimeInMillis());
         }
     }
 
@@ -131,6 +138,7 @@ public class DoubanMomentFragment extends Fragment
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mEmptyView = view.findViewById(R.id.empty_view);
+        fab = getActivity().findViewById(R.id.fab);
     }
 
     @Override
@@ -168,10 +176,28 @@ public class DoubanMomentFragment extends Fragment
     private void loadMore() {
         Calendar c = Calendar.getInstance();
         c.set(mYear, mMonth, --mDay);
-        mPresenter.load(true, c.getTimeInMillis());
+        mPresenter.load(true, false, c.getTimeInMillis());
     }
 
     public void showDatePickerDialog() {
+        DatePickerDialog dialog = DatePickerDialog.newInstance((datePickerDialog, year, monthOfYear, dayOfMonth) -> {
+            mYear = year;
+            mMonth = monthOfYear;
+            mDay = dayOfMonth;
+            Calendar c = Calendar.getInstance();
+            c.set(mYear, mMonth, mDay);
+            mPresenter.load(true, true, c.getTimeInMillis());
+
+        }, mYear, mMonth, mDay);
+
+        dialog.setMaxDate(Calendar.getInstance());
+
+        Calendar minDate = Calendar.getInstance();
+        minDate.set(2014, 5, 12);
+        dialog.setMinDate(minDate);
+
+        dialog.vibrate(false);
+        dialog.show(getActivity().getFragmentManager(), DoubanMomentFragment.class.getSimpleName());
 
     }
 

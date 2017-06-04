@@ -47,7 +47,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
     }
 
     @Override
-    public void getZhihuDailyNews(boolean forceUpdate, boolean addToCache, long date, @NonNull LoadZhihuDailyNewsCallback callback) {
+    public void getZhihuDailyNews(boolean forceUpdate, boolean clearCache, long date, @NonNull LoadZhihuDailyNewsCallback callback) {
 
         if (mCachedItems != null && !forceUpdate) {
             callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
@@ -55,10 +55,10 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
         }
 
         // Get data by accessing internet first.
-        mRemoteDataSource.getZhihuDailyNews(false, addToCache, date, new LoadZhihuDailyNewsCallback() {
+        mRemoteDataSource.getZhihuDailyNews(false, clearCache, date, new LoadZhihuDailyNewsCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
-                refreshCache(addToCache, list);
+                refreshCache(clearCache, list);
                 refreshLocalDataSource(list);
                 callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
             }
@@ -68,7 +68,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
                 mLocalDataSource.getZhihuDailyNews(false, false, date, new LoadZhihuDailyNewsCallback() {
                     @Override
                     public void onNewsLoaded(@NonNull List<ZhihuDailyNews.Question> list) {
-                        refreshCache(addToCache, list);
+                        refreshCache(clearCache, list);
                         callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
                     }
 
@@ -155,12 +155,12 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
         mCachedItems.put(item.getId(), item);
     }
 
-    private void refreshCache(boolean addToCache, List<ZhihuDailyNews.Question> list) {
+    private void refreshCache(boolean clearCache, List<ZhihuDailyNews.Question> list) {
 
         if (mCachedItems == null) {
             mCachedItems = new LinkedHashMap<>();
         }
-        if (!addToCache) {
+        if (clearCache) {
             mCachedItems.clear();
         }
         for (ZhihuDailyNews.Question item : list) {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,6 +37,7 @@ public class ZhihuDailyFragment extends Fragment
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mRefreshLayout;
     private View mEmptyView;
+    private FloatingActionButton fab;
 
     private ZhihuDailyNewsAdapter mAdapter;
 
@@ -71,7 +73,6 @@ public class ZhihuDailyFragment extends Fragment
         mRefreshLayout.setOnRefreshListener(() -> {
             Calendar c = Calendar.getInstance();
             c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
-            c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
             mPresenter.loadNews(true, true, c.getTimeInMillis());
         });
 
@@ -101,6 +102,13 @@ public class ZhihuDailyFragment extends Fragment
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 isSlidingToLast = dy > 0;
+
+                // Show or hide fab
+                if (dy > 0) {
+                    fab.hide();
+                } else {
+                    fab.show();
+                }
             }
         });
 
@@ -115,10 +123,10 @@ public class ZhihuDailyFragment extends Fragment
         c.setTimeZone(TimeZone.getTimeZone("GMT+08"));
         c.set(mYear, mMonth, mDay);
         if (mIsFirstLoad) {
-            mPresenter.loadNews(true, true, c.getTimeInMillis());
+            mPresenter.loadNews(true, false, c.getTimeInMillis());
             mIsFirstLoad = false;
         } else {
-            mPresenter.loadNews(false, true, c.getTimeInMillis());
+            mPresenter.loadNews(false, false, c.getTimeInMillis());
         }
 
     }
@@ -136,6 +144,7 @@ public class ZhihuDailyFragment extends Fragment
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mEmptyView = view.findViewById(R.id.empty_view);
+        fab = getActivity().findViewById(R.id.fab);
     }
 
     @Override
@@ -173,7 +182,7 @@ public class ZhihuDailyFragment extends Fragment
     private void loadMore() {
         Calendar c = Calendar.getInstance();
         c.set(mYear, mMonth, --mDay);
-        mPresenter.loadNews(true, true, c.getTimeInMillis());
+        mPresenter.loadNews(true, false, c.getTimeInMillis());
     }
 
     public void showDatePickerDialog() {
@@ -185,7 +194,7 @@ public class ZhihuDailyFragment extends Fragment
             mDay = dayOfMonth;
             c.set(mYear, monthOfYear, mDay);
 
-            mPresenter.loadNews(true, false, c.getTimeInMillis());
+            mPresenter.loadNews(true, true, c.getTimeInMillis());
 
         }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
@@ -196,7 +205,7 @@ public class ZhihuDailyFragment extends Fragment
         dialog.setMinDate(minDate);
         dialog.vibrate(false);
 
-        dialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
+        dialog.show(getActivity().getFragmentManager(), ZhihuDailyFragment.class.getSimpleName());
 
     }
 

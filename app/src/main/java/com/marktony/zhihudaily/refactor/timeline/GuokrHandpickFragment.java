@@ -55,7 +55,7 @@ public class GuokrHandpickFragment extends Fragment
         initViews(view);
 
         mRefreshLayout.setOnRefreshListener(() -> {
-            mPresenter.load(true, 0, 20);
+            mPresenter.load(true, true, 0, 20);
             mOffset = 0;
         });
 
@@ -96,11 +96,10 @@ public class GuokrHandpickFragment extends Fragment
         super.onResume();
         mPresenter.start();
         if (mIsFirstLoad) {
-            setLoadingIndicator(true);
-            mPresenter.load(true, mOffset, 20);
+            mPresenter.load(true, false, mOffset, 20);
             mIsFirstLoad = false;
         } else {
-            mPresenter.load(false, mOffset, 20);
+            mPresenter.load(false, false, mOffset, 20);
         }
     }
 
@@ -153,7 +152,7 @@ public class GuokrHandpickFragment extends Fragment
     }
 
     private void loadMore() {
-        mPresenter.load(true, mOffset, 20);
+        mPresenter.load(true, false, mOffset, 20);
     }
 
 }

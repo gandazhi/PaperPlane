@@ -28,7 +28,7 @@ public interface GuokrHandpickDataSource {
 
     }
 
-    void getGuokrHandpickNews(boolean addToCache, int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback);
+    void getGuokrHandpickNews(boolean forceUpdate, boolean clearCache, int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback);
 
     void getItem(int itemId, @NonNull GetNewsItemCallback callback);
 

@@ -47,27 +47,27 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
     }
 
     @Override
-    public void getGuokrHandpickNews(boolean addToCache, int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback) {
+    public void getGuokrHandpickNews(boolean forceUpdate, boolean clearCache, int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback) {
 
-        if (mCachedItems != null && !addToCache) {
+        if (mCachedItems != null && !forceUpdate) {
             callback.onNewsLoad(new ArrayList<>(mCachedItems.values()));
             return;
         }
 
-        mRemoteDataSource.getGuokrHandpickNews(addToCache, offset, limit, new LoadGuokrHandpickNewsCallback() {
+        mRemoteDataSource.getGuokrHandpickNews(false, clearCache, offset, limit, new LoadGuokrHandpickNewsCallback() {
             @Override
             public void onNewsLoad(@NonNull List<GuokrHandpickNews.Result> list) {
-                refreshCache(addToCache, list);
+                refreshCache(clearCache, list);
                 refreshLocalDataSource(list);
                 callback.onNewsLoad(new ArrayList<>(mCachedItems.values()));
             }
 
             @Override
             public void onDataNotAvailable() {
-                mLocalDataSource.getGuokrHandpickNews(addToCache, offset, limit, new LoadGuokrHandpickNewsCallback() {
+                mLocalDataSource.getGuokrHandpickNews(false, clearCache, offset, limit, new LoadGuokrHandpickNewsCallback() {
                     @Override
                     public void onNewsLoad(@NonNull List<GuokrHandpickNews.Result> list) {
-                        refreshCache(addToCache, list);
+                        refreshCache(clearCache, list);
                         callback.onNewsLoad(new ArrayList<>(mCachedItems.values()));
                     }
 
@@ -156,11 +156,11 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
         }
     }
 
-    private void refreshCache(boolean addToCache, List<GuokrHandpickNews.Result> list) {
+    private void refreshCache(boolean clearCache, List<GuokrHandpickNews.Result> list) {
         if (mCachedItems == null) {
             mCachedItems = new LinkedHashMap<>();
         }
-        if (!addToCache) {
+        if (clearCache) {
             mCachedItems.clear();
         }
         for (GuokrHandpickNews.Result item : list) {

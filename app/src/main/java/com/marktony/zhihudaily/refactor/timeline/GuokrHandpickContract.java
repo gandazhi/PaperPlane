@@ -26,7 +26,7 @@ public interface GuokrHandpickContract {
 
     interface Presenter extends BasePresenter {
 
-        void load(boolean addToCache, int offset, int limit);
+        void load(boolean forceUpdate, boolean clearCache, int offset, int limit);
 
         void outdate(int id);
 

@@ -31,7 +31,7 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
     }
 
     @Override
-    public void getZhihuDailyNews(boolean forceUpdate, boolean addToCache, long date, @NonNull LoadZhihuDailyNewsCallback callback) {
+    public void getZhihuDailyNews(boolean forceUpdate, boolean clearCache, long date, @NonNull LoadZhihuDailyNewsCallback callback) {
 
     }
 

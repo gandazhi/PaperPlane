@@ -146,44 +146,12 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.main, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_feel_lucky) {
-            feelLucky();
-        }
-        return true;
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         FragmentManager manager = getChildFragmentManager();
         manager.putFragment(outState, "zhihu", zhihuDailyFragment);
         manager.putFragment(outState, "guokr", guokrFragment);
         manager.putFragment(outState, "douban", doubanMomentFragment);
-    }
-
-    public void feelLucky() {
-        Random random = new Random();
-        int type = random.nextInt(3);
-        switch (type) {
-            case 0:
-                zhihuDailyPresenter.feelLucky();
-                break;
-            case 1:
-                guokrPresenter.feelLucky();
-                break;
-            default:
-                doubanMomentPresenter.feelLucky();
-                break;
-        }
     }
 
     public MainPagerAdapter getAdapter() {

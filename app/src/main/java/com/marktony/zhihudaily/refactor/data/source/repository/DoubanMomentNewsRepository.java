@@ -47,27 +47,27 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
     }
 
     @Override
-    public void getDoubanMomentNews(boolean addToCache, long date, @NonNull LoadDoubanMomentDailyCallback callback) {
+    public void getDoubanMomentNews(boolean forceUpdate, boolean clearCache, long date, @NonNull LoadDoubanMomentDailyCallback callback) {
 
-        if (mCachedItems != null && !addToCache) {
+        if (mCachedItems != null && !forceUpdate) {
             callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
             return;
         }
 
-        mRemoteDataSource.getDoubanMomentNews(addToCache, date, new LoadDoubanMomentDailyCallback() {
+        mRemoteDataSource.getDoubanMomentNews(false, clearCache, date, new LoadDoubanMomentDailyCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<DoubanMomentNews.Posts> list) {
-                refreshCache(addToCache, list);
+                refreshCache(clearCache, list);
                 refreshLocalDataSource(list);
                 callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
             }
 
             @Override
             public void onDataNotAvailable() {
-                mLocalDataSource.getDoubanMomentNews(addToCache, date, new LoadDoubanMomentDailyCallback() {
+                mLocalDataSource.getDoubanMomentNews(false, clearCache, date, new LoadDoubanMomentDailyCallback() {
                     @Override
                     public void onNewsLoaded(@NonNull List<DoubanMomentNews.Posts> list) {
-                        refreshCache(addToCache, list);
+                        refreshCache(clearCache, list);
                         callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
                     }
 
@@ -158,12 +158,12 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
         mCachedItems.put(item.getId(), item);
     }
 
-    private void refreshCache(boolean addToCache, List<DoubanMomentNews.Posts> list) {
+    private void refreshCache(boolean clearCache, List<DoubanMomentNews.Posts> list) {
 
         if (mCachedItems == null) {
             mCachedItems = new LinkedHashMap<>();
         }
-        if (!addToCache) {
+        if (clearCache) {
             mCachedItems.clear();
         }
         for (DoubanMomentNews.Posts item : list) {

@@ -27,7 +27,7 @@ public class GuokrHandpickNewsLocalDataSource implements GuokrHandpickDataSource
     }
 
     @Override
-    public void getGuokrHandpickNews(boolean addToCache, int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback) {
+    public void getGuokrHandpickNews(boolean forceUpdate, boolean clearCache, int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback) {
 
     }
 
