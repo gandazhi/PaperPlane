@@ -15,32 +15,19 @@
   ~ limitations under the License.
   -->
 
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="96dp"
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:focusable="true"
-    android:clickable="true"
+    android:layout_height="@dimen/item_height"
+    android:id="@+id/text_view_title"
+    android:fontFamily="@font/product_family"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="1dp"
-    app:cardPreventCornerOverlap="true"
-    android:stateListAnimator="@drawable/lift_on_touch"
-    android:layout_marginTop="8dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/text_view_title"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:gravity="center_vertical"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:textSize="18sp" />
-
-</android.support.v7.widget.CardView>
+    android:textColor="@color/textColorPrimary"
+    android:paddingTop="@dimen/primary_margin"
+    android:paddingBottom="@dimen/primary_margin"
+    android:paddingLeft="@dimen/primary_margin"
+    android:paddingRight="@dimen/primary_margin"
+    android:gravity="center_vertical"
+    android:maxLines="2"
+    android:ellipsize="end"
+    android:textSize="@dimen/body_text_size" />

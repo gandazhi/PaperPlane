@@ -24,6 +24,6 @@
         android:focusable="true"
         android:clickable="true"
         app:elevation="8dp"
-        app:menu="@menu/bottom_navigation"/>
+        app:menu="@menu/bottom_navigation" />
 
 </LinearLayout>

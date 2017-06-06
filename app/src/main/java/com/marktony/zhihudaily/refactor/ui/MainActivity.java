@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.refactor.favorites.FavoritesFragment;
 import com.marktony.zhihudaily.refactor.timeline.TimelineFragment;
 
 /**
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TimelineFragment mTimelineFragment;
     private InfoFragment mInfoFragment;
+    private FavoritesFragment mFavoritesFragment;
 
     private BottomNavigationView mBottomNavigationView;
 
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     showFragment(mTimelineFragment);
                     break;
                 case R.id.nav_favorites:
-                    showFragment(mInfoFragment);
+                    showFragment(mFavoritesFragment);
                     break;
                 case R.id.nav_info:
                     showFragment(mInfoFragment);
@@ -57,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
                     showFragment(mTimelineFragment);
                 break;
 
-                case R.id.nav_info:
-                    showFragment(mInfoFragment);
+                case R.id.nav_favorites:
+                    showFragment(mFavoritesFragment);
                     break;
 
-                case R.id.nav_favorites:
+                case R.id.nav_info:
                     showFragment(mInfoFragment);
                     break;
 
@@ -89,16 +91,21 @@ public class MainActivity extends AppCompatActivity {
         if (mInfoFragment.isAdded()) {
             fm.putFragment(outState, InfoFragment.class.getSimpleName(), mInfoFragment);
         }
+        if (mFavoritesFragment.isAdded()) {
+            fm.putFragment(outState, FavoritesFragment.class.getSimpleName(), mFavoritesFragment);
+        }
     }
 
     private void initFragments(Bundle savedInstanceState) {
         FragmentManager fm = getSupportFragmentManager();
         if (savedInstanceState == null) {
-            mTimelineFragment = new TimelineFragment();
-            mInfoFragment = new InfoFragment();
+            mTimelineFragment = TimelineFragment.newInstance();
+            mInfoFragment = InfoFragment.newInstance();
+            mFavoritesFragment = FavoritesFragment.newInstance();
         } else {
             mTimelineFragment = (TimelineFragment) fm.getFragment(savedInstanceState, TimelineFragment.class.getSimpleName());
             mInfoFragment = (InfoFragment) fm.getFragment(savedInstanceState, InfoFragment.class.getSimpleName());
+            mFavoritesFragment = (FavoritesFragment) fm.getFragment(savedInstanceState, FavoritesFragment.class.getSimpleName());
         }
     }
 
@@ -110,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
             }
             fm.beginTransaction().show(mTimelineFragment).commit();
             hideFragments(fm, mInfoFragment);
+            hideFragments(fm, mFavoritesFragment);
 
         } else if (fragment instanceof InfoFragment) {
             if (!mInfoFragment.isAdded()) {
@@ -117,7 +125,15 @@ public class MainActivity extends AppCompatActivity {
             }
             fm.beginTransaction().show(mInfoFragment).commit();
             hideFragments(fm, mTimelineFragment);
+            hideFragments(fm, mFavoritesFragment);
 
+        } else if (fragment instanceof FavoritesFragment) {
+            if (!mFavoritesFragment.isAdded()) {
+                fm.beginTransaction().add(R.id.container, mFavoritesFragment, FavoritesFragment.class.getSimpleName()).commit();
+            }
+            fm.beginTransaction().show(mInfoFragment).commit();
+            hideFragments(fm, mTimelineFragment);
+            hideFragments(fm, mInfoFragment);
         }
     }
 

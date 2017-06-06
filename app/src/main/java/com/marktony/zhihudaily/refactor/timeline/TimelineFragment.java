@@ -39,6 +39,10 @@ public class TimelineFragment extends Fragment {
         // Requires the empty constructor
     }
 
+    public static TimelineFragment newInstance() {
+        return new TimelineFragment();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

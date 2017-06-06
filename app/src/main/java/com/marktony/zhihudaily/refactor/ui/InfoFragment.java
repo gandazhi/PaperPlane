@@ -15,6 +15,14 @@ import com.marktony.zhihudaily.R;
 
 public class InfoFragment extends Fragment {
 
+    public InfoFragment() {
+
+    }
+
+    public static InfoFragment newInstance() {
+        return new InfoFragment();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
