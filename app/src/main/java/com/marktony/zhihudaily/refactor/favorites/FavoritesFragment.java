@@ -1,5 +1,6 @@
 package com.marktony.zhihudaily.refactor.favorites;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.refactor.data.ContentType;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
+import com.marktony.zhihudaily.refactor.details.DetailsActivity;
+
+import java.util.List;
 
 /**
  * Created by lizhaotailang on 2017/6/6.
@@ -23,6 +31,8 @@ public class FavoritesFragment extends Fragment
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mRefreshLayout;
     private View mEmptyView;
+
+    private FavoritesAdapter mAdapter;
 
     public FavoritesFragment() {
         // Empty constructor is needed as a fragment
@@ -65,5 +75,51 @@ public class FavoritesFragment extends Fragment
     @Override
     public void setLoadingIndicator(boolean active) {
         mRefreshLayout.post(() -> mRefreshLayout.setRefreshing(active));
+    }
+
+    @Override
+    public void showFavorites(List<ZhihuDailyNews.Question> zhihuList,
+                              List<DoubanMomentNews.Posts> doubanList,
+                              List<GuokrHandpickNews.Result> guokrList) {
+        if (zhihuList == null || doubanList == null || guokrList == null) {
+            return;
+        }
+
+        if (mAdapter == null) {
+            mAdapter = new FavoritesAdapter(getContext(), zhihuList, doubanList, guokrList);
+            mAdapter.setOnItemClickListener((view, position) -> {
+                int viewType = mAdapter.getItemViewType(position);
+
+                if (viewType == FavoritesAdapter.ItemWrapper.TYPE_ZHIHU) {
+
+                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, zhihuList.get(mAdapter.getOriginalIndex(position)).getId());
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_ZHIHU_DAILY);
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, zhihuList.get(mAdapter.getOriginalIndex(position)).getTitle());
+                    startActivity(intent);
+
+                } else if (viewType == FavoritesAdapter.ItemWrapper.TYPE_DOUBAN
+                        || viewType == FavoritesAdapter.ItemWrapper.TYPE_DOUBAN_NO_IMG) {
+
+                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, doubanList.get(mAdapter.getOriginalIndex(position)).getId());
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_DOUBAN_MOMENT);
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, doubanList.get(mAdapter.getOriginalIndex(position)).getTitle());
+                    startActivity(intent);
+
+                } else if (viewType == FavoritesAdapter.ItemWrapper.TYPE_GUOKR) {
+
+                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, guokrList.get(mAdapter.getOriginalIndex(position)).getId());
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_GUOKR_HANDPICK);
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, guokrList.get(mAdapter.getOriginalIndex(position)).getTitle());
+                    startActivity(intent);
+
+                }
+            });
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.updateData(zhihuList, doubanList, guokrList);
+        }
     }
 }

@@ -32,22 +32,22 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private final LayoutInflater mLayoutInflater;
 
     @NonNull
-    private final List<ZhihuDailyNews> mZhihuList;
+    private final List<ZhihuDailyNews.Question> mZhihuList;
 
     @NonNull
-    private final List<DoubanMomentNews> mDoubanList;
+    private final List<DoubanMomentNews.Posts> mDoubanList;
 
     @NonNull
-    private final List<GuokrHandpickNews> mGuokrList;
+    private final List<GuokrHandpickNews.Result> mGuokrList;
 
     private final List<ItemWrapper> mWrapperList;
 
     private OnRecyclerViewItemOnClickListener mListener;
 
     public FavoritesAdapter(@NonNull Context context,
-                            @NonNull List<ZhihuDailyNews> zhihuDailyNewsList,
-                            @NonNull List<DoubanMomentNews> doubanMomentNewsList,
-                            @NonNull List<GuokrHandpickNews> guokrHandpickNewsList) {
+                            @NonNull List<ZhihuDailyNews.Question> zhihuDailyNewsList,
+                            @NonNull List<DoubanMomentNews.Posts> doubanMomentNewsList,
+                            @NonNull List<GuokrHandpickNews.Result> guokrHandpickNewsList) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mZhihuList = zhihuDailyNewsList;
@@ -72,9 +72,15 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         } else {
             for (int i = 0; i < mDoubanList.size(); i++) {
-                ItemWrapper iw = new ItemWrapper(ItemWrapper.TYPE_DOUBAN);
-                iw.index = i;
-                mWrapperList.add(iw);
+                if (mDoubanList.get(i).getThumbs().isEmpty()) {
+                    ItemWrapper iw = new ItemWrapper(ItemWrapper.TYPE_DOUBAN_NO_IMG);
+                    iw.index = i;
+                    mWrapperList.add(iw);
+                } else {
+                    ItemWrapper iw = new ItemWrapper(ItemWrapper.TYPE_DOUBAN);
+                    iw.index = i;
+                    mWrapperList.add(iw);
+                }
             }
         }
 
@@ -104,9 +110,13 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 viewHolder = new ZhihuItemViewHolder(mLayoutInflater.inflate(R.layout.home_list_item_layout, viewGroup, false), mListener);
                 break;
             case ItemWrapper.TYPE_DOUBAN:
-
+                viewHolder = new DoubanItemHolder(mLayoutInflater.inflate(R.layout.home_list_item_layout, viewGroup, false), mListener);
+                break;
+            case ItemWrapper.TYPE_DOUBAN_NO_IMG:
+                viewHolder = new DoubanNoImageHolder(mLayoutInflater.inflate(R.layout.home_list_item_without_image, viewGroup, false), mListener);
                 break;
             case ItemWrapper.TYPE_GUOKR:
+                viewHolder = new GuokrViewHolder(mLayoutInflater.inflate(R.layout.home_list_item_layout, viewGroup, false), mListener);
                 break;
             default:
                 break;
@@ -131,6 +141,60 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void setOnItemClickListener(OnRecyclerViewItemOnClickListener listener) {
         this.mListener = listener;
+    }
+
+    public int getOriginalIndex(int position) {
+        return mWrapperList.get(position).index;
+    }
+
+    public void updateData(List<ZhihuDailyNews.Question> zhihuDailyNewsList,
+                           List<DoubanMomentNews.Posts> doubanMomentNewsList,
+                           List<GuokrHandpickNews.Result> guokrHandpickNewsList) {
+        mZhihuList.clear();
+        mDoubanList.clear();
+        mGuokrList.clear();
+        mWrapperList.clear();
+
+        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
+        if (mZhihuList.isEmpty()) {
+            mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
+        } else {
+            for (int i = 0; i < mZhihuList.size(); i++) {
+                ItemWrapper iw = new ItemWrapper(ItemWrapper.TYPE_ZHIHU);
+                iw.index = i;
+                mWrapperList.add(iw);
+            }
+        }
+
+        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
+        if (mDoubanList.isEmpty()) {
+            mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
+        } else {
+            for (int i = 0; i < mDoubanList.size(); i++) {
+                if (mDoubanList.get(i).getThumbs().isEmpty()) {
+                    ItemWrapper iw = new ItemWrapper(ItemWrapper.TYPE_DOUBAN_NO_IMG);
+                    iw.index = i;
+                    mWrapperList.add(iw);
+                } else {
+                    ItemWrapper iw = new ItemWrapper(ItemWrapper.TYPE_DOUBAN);
+                    iw.index = i;
+                    mWrapperList.add(iw);
+                }
+            }
+        }
+
+        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
+        if (mGuokrList.isEmpty()) {
+            mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
+        } else {
+            for (int i = 0; i < mGuokrList.size(); i++) {
+                ItemWrapper iw = new ItemWrapper(ItemWrapper.TYPE_GUOKR);
+                iw.index = i;
+                mWrapperList.add(iw);
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
     public class ZhihuItemViewHolder extends RecyclerView.ViewHolder
@@ -181,7 +245,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    public class DoubanNoImageHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class DoubanNoImageHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textView;
 
@@ -253,6 +317,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public final static int TYPE_GUOKR = 0x02;
         public final static int TYPE_CATEGORY = 0x03;
         public final static int TYPE_EMPTY = 0x04;
+        public final static int TYPE_DOUBAN_NO_IMG = 0x05;
 
         public int viewType;
         public int index;

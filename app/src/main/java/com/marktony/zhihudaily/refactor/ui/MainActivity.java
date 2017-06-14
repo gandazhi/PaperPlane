@@ -88,11 +88,11 @@ public class MainActivity extends AppCompatActivity {
         if (mTimelineFragment.isAdded()) {
             fm.putFragment(outState, TimelineFragment.class.getSimpleName(), mTimelineFragment);
         }
-        if (mInfoFragment.isAdded()) {
-            fm.putFragment(outState, InfoFragment.class.getSimpleName(), mInfoFragment);
-        }
         if (mFavoritesFragment.isAdded()) {
             fm.putFragment(outState, FavoritesFragment.class.getSimpleName(), mFavoritesFragment);
+        }
+        if (mInfoFragment.isAdded()) {
+            fm.putFragment(outState, InfoFragment.class.getSimpleName(), mInfoFragment);
         }
     }
 
@@ -137,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void hideFragments(FragmentManager fm, Fragment... framgents) {
-        for (Fragment f : framgents) {
+    private void hideFragments(FragmentManager fm, Fragment... fragments) {
+        for (Fragment f : fragments) {
             fm.beginTransaction().hide(f).commit();
         }
     }
