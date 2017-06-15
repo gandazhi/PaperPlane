@@ -156,10 +156,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         mWrapperList.clear();
 
         mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
-        if (mZhihuList.isEmpty()) {
+        if (zhihuDailyNewsList.isEmpty()) {
             mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         } else {
-            for (int i = 0; i < mZhihuList.size(); i++) {
+            for (int i = 0; i < zhihuDailyNewsList.size(); i++) {
                 ItemWrapper iw = new ItemWrapper(ItemWrapper.TYPE_ZHIHU);
                 iw.index = i;
                 mWrapperList.add(iw);
@@ -167,11 +167,11 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
-        if (mDoubanList.isEmpty()) {
+        if (doubanMomentNewsList.isEmpty()) {
             mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         } else {
-            for (int i = 0; i < mDoubanList.size(); i++) {
-                if (mDoubanList.get(i).getThumbs().isEmpty()) {
+            for (int i = 0; i < doubanMomentNewsList.size(); i++) {
+                if (doubanMomentNewsList.get(i).getThumbs().isEmpty()) {
                     ItemWrapper iw = new ItemWrapper(ItemWrapper.TYPE_DOUBAN_NO_IMG);
                     iw.index = i;
                     mWrapperList.add(iw);
@@ -184,10 +184,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
-        if (mGuokrList.isEmpty()) {
+        if (guokrHandpickNewsList.isEmpty()) {
             mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         } else {
-            for (int i = 0; i < mGuokrList.size(); i++) {
+            for (int i = 0; i < guokrHandpickNewsList.size(); i++) {
                 ItemWrapper iw = new ItemWrapper(ItemWrapper.TYPE_GUOKR);
                 iw.index = i;
                 mWrapperList.add(iw);

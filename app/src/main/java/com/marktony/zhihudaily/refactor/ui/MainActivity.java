@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.favorites.FavoritesFragment;
+import com.marktony.zhihudaily.refactor.favorites.FavoritesPresenter;
 import com.marktony.zhihudaily.refactor.timeline.TimelineFragment;
 
 /**
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private TimelineFragment mTimelineFragment;
     private InfoFragment mInfoFragment;
     private FavoritesFragment mFavoritesFragment;
+
+    private FavoritesPresenter mFavoritesPresenter;
 
     private BottomNavigationView mBottomNavigationView;
 
@@ -131,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             if (!mFavoritesFragment.isAdded()) {
                 fm.beginTransaction().add(R.id.container, mFavoritesFragment, FavoritesFragment.class.getSimpleName()).commit();
             }
-            fm.beginTransaction().show(mInfoFragment).commit();
+            fm.beginTransaction().show(mFavoritesFragment).commit();
             hideFragments(fm, mTimelineFragment);
             hideFragments(fm, mInfoFragment);
         }

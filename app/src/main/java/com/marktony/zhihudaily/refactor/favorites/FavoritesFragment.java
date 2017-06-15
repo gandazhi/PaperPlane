@@ -49,7 +49,17 @@ public class FavoritesFragment extends Fragment
 
         initViews(view);
 
+        mRefreshLayout.setOnRefreshListener(() -> {
+
+        });
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
     }
 
     @Override
@@ -82,6 +92,7 @@ public class FavoritesFragment extends Fragment
                               List<DoubanMomentNews.Posts> doubanList,
                               List<GuokrHandpickNews.Result> guokrList) {
         if (zhihuList == null || doubanList == null || guokrList == null) {
+            mEmptyView.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -121,5 +132,6 @@ public class FavoritesFragment extends Fragment
         } else {
             mAdapter.updateData(zhihuList, doubanList, guokrList);
         }
+        mEmptyView.setVisibility((zhihuList.isEmpty() && doubanList.isEmpty() && guokrList.isEmpty()) ? View.VISIBLE : View.GONE);
     }
 }
