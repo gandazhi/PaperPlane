@@ -41,7 +41,7 @@ public class ZhihuDailyNews {
     }
 
     // The entity that will be stored by room
-    @Entity(tableName = "zhihu_questions")
+    @Entity(tableName = "zhihu_daily_news")
     public class Question {
 
         @ColumnInfo(name = "images")
@@ -130,8 +130,8 @@ public class ZhihuDailyNews {
             return outdated;
         }
 
-        public void setOutdated(boolean outdated) {
-            this.outdated = outdated;
+        public void setOutdated(boolean outdate) {
+            this.outdated = outdate;
         }
     }
 

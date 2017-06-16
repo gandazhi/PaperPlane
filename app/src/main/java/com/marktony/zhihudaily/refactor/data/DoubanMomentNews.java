@@ -76,7 +76,7 @@ public class DoubanMomentNews {
         this.total = total;
     }
 
-    @Entity(tableName = "douban_posts")
+    @Entity(tableName = "douban_moment_news")
     public class Posts {
 
         @ColumnInfo(name = "display_style")
@@ -271,16 +271,19 @@ public class DoubanMomentNews {
 
         public class Small {
 
+            @ColumnInfo(name = "small_url")
             @Expose
-            @SerializedName("small_url")
+            @SerializedName("url")
             private String url;
 
+            @ColumnInfo(name = "small_width")
             @Expose
-            @SerializedName("small_width")
+            @SerializedName("width")
             private int width;
 
+            @ColumnInfo(name = "small_height")
             @Expose
-            @SerializedName("small_height")
+            @SerializedName("height")
             private int height;
 
             public String getUrl() {

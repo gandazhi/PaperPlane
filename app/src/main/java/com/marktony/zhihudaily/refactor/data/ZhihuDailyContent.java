@@ -1,5 +1,10 @@
 package com.marktony.zhihudaily.refactor.data;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,54 +14,68 @@ import java.util.List;
  * Created by lizhaotailang on 2017/5/20.
  */
 
+@Entity(tableName = "zhihu_daily_content")
 public class ZhihuDailyContent {
 
+    @ColumnInfo(name = "body")
     @Expose
     @SerializedName("body")
     private String body;
 
+    @ColumnInfo(name = "image_source")
     @Expose
     @SerializedName("image_source")
     private String imageSource;
 
+    @ColumnInfo(name = "title")
     @Expose
     @SerializedName("title")
     private String title;
 
+    @ColumnInfo(name = "image")
     @Expose
     @SerializedName("image")
     private String image;
 
+    @ColumnInfo(name = "share_url")
     @Expose
     @SerializedName("share_url")
     private String shareUrl;
 
+    @ColumnInfo(name = "js")
     @Expose
-    @SerializedName("is")
+    @SerializedName("js")
     private List<String> js;
 
+    @Ignore // This field will be ignored.
     @Expose
     @SerializedName("ga_prefix")
     private String gaPrefix;
 
+    @ColumnInfo(name = "images")
     @Expose
     @SerializedName("images")
     private List<String> images;
 
+    @ColumnInfo(name = "type")
     @Expose
     @SerializedName("type")
     private int type;
 
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     @Expose
     @SerializedName("id")
     private int id;
 
+    @ColumnInfo(name = "css")
     @Expose
     @SerializedName("css")
     private List<String> css;
 
+    @ColumnInfo(name = "favorite")
     @Expose
-    private boolean favorited;
+    private boolean favorite;
 
     public String getBody() {
         return body;
@@ -146,11 +165,11 @@ public class ZhihuDailyContent {
         this.css = css;
     }
 
-    public boolean isFavorited() {
-        return favorited;
+    public boolean isFavorite() {
+        return favorite;
     }
 
-    public void setFavorited(boolean favorited) {
-        this.favorited = favorited;
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }

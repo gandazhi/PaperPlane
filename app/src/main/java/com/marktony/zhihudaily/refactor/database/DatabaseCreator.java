@@ -1,7 +1,9 @@
 package com.marktony.zhihudaily.refactor.database;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -29,6 +31,19 @@ public class DatabaseCreator {
             }
         }
         return INSTANCE;
+    }
+
+    public void createDb(Context context) {
+
+        Log.d("DatabaseCreator", "Creating DB from " + Thread.currentThread().getName());
+
+        if (!mInitializing.compareAndSet(true, false)) {
+            return;
+        }
+
+        mDb = Room.databaseBuilder(context.getApplicationContext(),
+                AppDatabase.class, AppDatabase.DATABASE_NAME).build();
+
     }
 
 }

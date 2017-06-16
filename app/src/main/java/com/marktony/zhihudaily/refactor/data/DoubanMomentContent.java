@@ -1,5 +1,9 @@
 package com.marktony.zhihudaily.refactor.data;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,88 +13,111 @@ import java.util.List;
  * Created by lizhaotailang on 2017/5/20.
  */
 
+@Entity(tableName = "douban_moment_content")
 public class DoubanMomentContent {
 
+    @ColumnInfo(name = "display_style")
     @Expose
     @SerializedName("display_style")
     private int displayStyle;
 
+    @ColumnInfo(name = "short_url")
     @Expose
     @SerializedName("short_url")
     private String shortUrl;
 
+    @ColumnInfo(name = "abstract")
     @Expose
     @SerializedName("abstract")
     private String abs;
 
+    @ColumnInfo(name = "app_css")
     @Expose
     @SerializedName("app_css")
     private int appCss;
 
+    @ColumnInfo(name = "like_count")
     @Expose
     @SerializedName("like_count")
     private int likeCount;
 
+    @ColumnInfo(name = "thumbs")
     @Expose
     @SerializedName("thumbs")
     private List<DoubanMomentNews.Posts.Thumbs> thumbs;
 
+    @ColumnInfo(name = "created_time")
     @Expose
     @SerializedName("created_time")
     private String createdTime;
 
+    @ColumnInfo(name = "id")
+    @PrimaryKey
     @Expose
     @SerializedName("id")
     private int id;
 
+    @ColumnInfo(name = "is_editor_choice")
     @Expose
     @SerializedName("is_editor_choice")
     private boolean isEditorChoice;
 
+    @ColumnInfo(name = "original_url")
     @Expose
     @SerializedName("original_url")
     private String originalUrl;
 
+    @ColumnInfo(name = "content")
     @Expose
     @SerializedName("content")
     private String content;
 
+    @ColumnInfo(name = "share_pic_url")
     @Expose
     @SerializedName("share_pic_url")
     private String sharePicUrl;
 
+    @ColumnInfo(name = "type")
     @Expose
     @SerializedName("type")
     private String type;
 
+    @ColumnInfo(name = "is_liked")
     @Expose
     @SerializedName("is_liked")
     private boolean isLiked;
 
+    @ColumnInfo(name = "photos")
     @Expose
     @SerializedName("photos")
     private List<DoubanMomentNews.Posts.Thumbs> photos;
 
+    @ColumnInfo(name = "published_time")
     @Expose
     @SerializedName("published_time")
     private String publishedTime;
 
+    @ColumnInfo(name = "url")
     @Expose
     @SerializedName("url")
     private String url;
 
+    @ColumnInfo(name = "column")
     @Expose
     @SerializedName("column")
     private String column;
 
+    @ColumnInfo(name = "comments_count")
     @Expose
     @SerializedName("comments_count")
     private int commentsCount;
 
+    @ColumnInfo(name = "title")
     @Expose
     @SerializedName("title")
     private String title;
 
+    @ColumnInfo(name = "favorite")
     @Expose
     private boolean favorite;
 

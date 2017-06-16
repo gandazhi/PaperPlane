@@ -85,7 +85,7 @@ public class ZhihuDailyContentRepository implements ZhihuDailyContentDataSource 
         mRemoteDataSource.favorite(favorite);
 
         if (mContent != null) {
-            mContent.setFavorited(favorite);
+            mContent.setFavorite(favorite);
         }
     }
 

@@ -88,7 +88,7 @@ public class GuokrHandpickNews {
         this.result = result;
     }
 
-    @Entity
+    @Entity(tableName = "guokr_handpick_news")
     public class Result {
 
         @ColumnInfo(name = "image")

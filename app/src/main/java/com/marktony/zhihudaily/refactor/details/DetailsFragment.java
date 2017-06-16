@@ -232,7 +232,7 @@ public class DetailsFragment extends Fragment
 
     @Override
     public void showZhihuDailyContent(@NonNull ZhihuDailyContent content) {
-        mFavorite = content.isFavorited();
+        mFavorite = content.isFavorite();
 
         if (content.getBody() != null) {
             String result = content.getBody();
