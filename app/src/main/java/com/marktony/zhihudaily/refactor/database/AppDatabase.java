@@ -4,11 +4,11 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
 import com.marktony.zhihudaily.refactor.data.DoubanMomentContent;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickContent;
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickContentResult;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyContent;
-import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 import com.marktony.zhihudaily.refactor.database.dao.DoubanMomentContentDao;
 import com.marktony.zhihudaily.refactor.database.dao.DoubanMomentNewsDao;
 import com.marktony.zhihudaily.refactor.database.dao.GuokrHandpickContentDao;
@@ -22,12 +22,12 @@ import com.marktony.zhihudaily.refactor.database.dao.ZhihuDailyNewsDao;
  */
 
 @Database(entities = {
-        ZhihuDailyNews.Question.class,
-        DoubanMomentNews.Posts.class,
-        GuokrHandpickNews.Result.class,
+        ZhihuDailyNewsQuestion.class,
+        DoubanMomentPosts.class,
+        GuokrHandpickNewsResult.class,
         ZhihuDailyContent.class,
         DoubanMomentContent.class,
-        GuokrHandpickContent.class},
+        GuokrHandpickContentResult.class},
         version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 

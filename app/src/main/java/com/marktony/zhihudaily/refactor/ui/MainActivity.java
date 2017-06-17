@@ -116,33 +116,42 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         if (fragment instanceof TimelineFragment) {
             if (!mTimelineFragment.isAdded()) {
-                fm.beginTransaction().add(R.id.container, mTimelineFragment, TimelineFragment.class.getSimpleName()).commit();
+                fm.beginTransaction()
+                        .add(R.id.container, mTimelineFragment, TimelineFragment.class.getSimpleName())
+                        .commit();
+                if (mFavoritesPresenter == null) {
+                    mFavoritesPresenter = new FavoritesPresenter(mFavoritesFragment);
+                }
             }
-            fm.beginTransaction().show(mTimelineFragment).commit();
-            hideFragments(fm, mInfoFragment);
-            hideFragments(fm, mFavoritesFragment);
+            fm.beginTransaction()
+                    .show(mTimelineFragment)
+                    .hide(mInfoFragment)
+                    .hide(mFavoritesFragment)
+                    .commit();
 
         } else if (fragment instanceof InfoFragment) {
             if (!mInfoFragment.isAdded()) {
-                fm.beginTransaction().add(R.id.container, mInfoFragment, InfoFragment.class.getSimpleName()).commit();
+                fm.beginTransaction()
+                        .add(R.id.container, mInfoFragment, InfoFragment.class.getSimpleName())
+                        .commit();
             }
-            fm.beginTransaction().show(mInfoFragment).commit();
-            hideFragments(fm, mTimelineFragment);
-            hideFragments(fm, mFavoritesFragment);
-
+            fm.beginTransaction()
+                    .show(mInfoFragment)
+                    .hide(mTimelineFragment)
+                    .hide(mFavoritesFragment)
+                    .commit();
         } else if (fragment instanceof FavoritesFragment) {
             if (!mFavoritesFragment.isAdded()) {
-                fm.beginTransaction().add(R.id.container, mFavoritesFragment, FavoritesFragment.class.getSimpleName()).commit();
+                fm.beginTransaction()
+                        .add(R.id.container, mFavoritesFragment, FavoritesFragment.class.getSimpleName())
+                        .commit();
             }
-            fm.beginTransaction().show(mFavoritesFragment).commit();
-            hideFragments(fm, mTimelineFragment);
-            hideFragments(fm, mInfoFragment);
+            fm.beginTransaction()
+                    .show(mFavoritesFragment)
+                    .hide(mTimelineFragment)
+                    .hide(mInfoFragment)
+                    .commit();
         }
     }
 
-    private void hideFragments(FragmentManager fm, Fragment... fragments) {
-        for (Fragment f : fragments) {
-            fm.beginTransaction().hide(f).commit();
-        }
-    }
 }

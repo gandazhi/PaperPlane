@@ -6,7 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 
 import java.util.List;
 
@@ -17,16 +17,16 @@ import java.util.List;
 @Dao
 public interface ZhihuDailyNewsDao {
 
-    @Query("SELECT * FROM zhihu_daily")
-    List<ZhihuDailyNews.Question> loadAllZhihuDailyNews();
+    @Query("SELECT * FROM zhihu_daily_news")
+    List<ZhihuDailyNewsQuestion> loadAllZhihuDailyNews();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<ZhihuDailyNews.Question> items);
+    void insertAll(List<ZhihuDailyNewsQuestion> items);
 
-    @Query("SELECT * FROM zhihu_daily where id = :id")
-    ZhihuDailyNews.Question loadZhihuDailyNewsItem(int id);
+    @Query("SELECT * FROM zhihu_daily_news where id = :id")
+    ZhihuDailyNewsQuestion loadZhihuDailyNewsItem(int id);
 
     @Update
-    void updateZhihuDailyNews(ZhihuDailyNews.Question question);
+    void updateZhihuDailyNews(ZhihuDailyNewsQuestion question);
 
 }

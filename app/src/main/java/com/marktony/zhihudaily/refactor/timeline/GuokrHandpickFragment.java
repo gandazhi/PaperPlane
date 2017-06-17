@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.data.ContentType;
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.details.DetailsActivity;
 
 import java.util.List;
@@ -114,7 +114,7 @@ public class GuokrHandpickFragment extends Fragment
     }
 
     @Override
-    public void showResult(@NonNull List<GuokrHandpickNews.Result> list) {
+    public void showResult(@NonNull List<GuokrHandpickNewsResult> list) {
         mOffset = list.size();
         if (mAdapter == null) {
             mAdapter = new GuokrHandpickNewsAdapter(list, getContext());

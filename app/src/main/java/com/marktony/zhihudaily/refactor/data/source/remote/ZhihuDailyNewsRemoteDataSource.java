@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 import com.marktony.zhihudaily.refactor.data.source.datasource.ZhihuDailyNewsDataSource;
 import com.marktony.zhihudaily.refactor.retrofit.RetrofitService;
 import com.marktony.zhihudaily.refactor.util.DateFormatUtil;
@@ -72,7 +73,7 @@ public class ZhihuDailyNewsRemoteDataSource implements ZhihuDailyNewsDataSource 
     }
 
     @Override
-    public void saveItem(@NonNull ZhihuDailyNews.Question item) {
+    public void saveItem(@NonNull ZhihuDailyNewsQuestion item) {
 
     }
 }

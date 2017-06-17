@@ -6,7 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
 
 import java.util.List;
 
@@ -17,16 +17,16 @@ import java.util.List;
 @Dao
 public interface DoubanMomentNewsDao {
 
-    @Query("SELECT * FROM douban_moment")
-    List<DoubanMomentNews.Posts> loadDoubanMomentNews();
+    @Query("SELECT * FROM douban_moment_news")
+    List<DoubanMomentPosts> loadDoubanMomentNews();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<DoubanMomentNews.Posts> items);
+    void insertAll(List<DoubanMomentPosts> items);
 
-    @Query("SELECT * FROM douban_moment where id = :id")
-    DoubanMomentNews.Posts loadDoubanMomentItem(int id);
+    @Query("SELECT * FROM douban_moment_news where id = :id")
+    DoubanMomentPosts loadDoubanMomentItem(int id);
 
     @Update
-    void updateDoubanMomentNews(DoubanMomentNews.Posts item);
+    void updateDoubanMomentNews(DoubanMomentPosts item);
 
 }

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
 
 import java.util.List;
@@ -30,10 +30,10 @@ public class GuokrHandpickNewsAdapter extends RecyclerView.Adapter<RecyclerView.
     private final Context mContext;
 
     @NonNull
-    private final List<GuokrHandpickNews.Result> mList;
+    private final List<GuokrHandpickNewsResult> mList;
     private OnRecyclerViewItemOnClickListener mListener;
 
-    public GuokrHandpickNewsAdapter(@NonNull List<GuokrHandpickNews.Result> list,
+    public GuokrHandpickNewsAdapter(@NonNull List<GuokrHandpickNewsResult> list,
                                     @NonNull Context context) {
         this.mContext = context;
         this.mList = list;
@@ -55,7 +55,7 @@ public class GuokrHandpickNewsAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         if (viewHolder instanceof ItemViewHolder) {
-            GuokrHandpickNews.Result item = mList.get(i);
+            GuokrHandpickNewsResult item = mList.get(i);
             Glide.with(mContext)
                     .load(item.getImageInfo().getUrl())
                     .asBitmap()
@@ -83,7 +83,7 @@ public class GuokrHandpickNewsAdapter extends RecyclerView.Adapter<RecyclerView.
         this.mListener = listener;
     }
 
-    public void updateData(@NonNull List<GuokrHandpickNews.Result> list) {
+    public void updateData(@NonNull List<GuokrHandpickNewsResult> list) {
         mList.clear();
         mList.addAll(list);
         notifyDataSetChanged();

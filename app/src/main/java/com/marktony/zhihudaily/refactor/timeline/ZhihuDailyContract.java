@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.marktony.zhihudaily.refactor.BasePresenter;
 import com.marktony.zhihudaily.refactor.BaseView;
-import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public interface ZhihuDailyContract {
 
         void setLoadingIndicator(boolean active);
 
-        void showResult(@NonNull List<ZhihuDailyNews.Question> list);
+        void showResult(@NonNull List<ZhihuDailyNewsQuestion> list);
 
     }
 

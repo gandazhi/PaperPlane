@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.data.ContentType;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
-import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 import com.marktony.zhihudaily.refactor.details.DetailsActivity;
 
 import java.util.List;
@@ -88,9 +88,9 @@ public class FavoritesFragment extends Fragment
     }
 
     @Override
-    public void showFavorites(List<ZhihuDailyNews.Question> zhihuList,
-                              List<DoubanMomentNews.Posts> doubanList,
-                              List<GuokrHandpickNews.Result> guokrList) {
+    public void showFavorites(List<ZhihuDailyNewsQuestion> zhihuList,
+                              List<DoubanMomentPosts> doubanList,
+                              List<GuokrHandpickNewsResult> guokrList) {
         if (zhihuList == null || doubanList == null || guokrList == null) {
             mEmptyView.setVisibility(View.VISIBLE);
             return;

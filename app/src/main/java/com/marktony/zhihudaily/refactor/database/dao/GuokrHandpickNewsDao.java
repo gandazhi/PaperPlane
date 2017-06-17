@@ -6,7 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 
 import java.util.List;
 
@@ -17,16 +17,16 @@ import java.util.List;
 @Dao
 public interface GuokrHandpickNewsDao {
 
-    @Query("SELECT * FROM guokr_handpick")
-    List<GuokrHandpickNews.Result> loadGuokrHandpickNews();
+    @Query("SELECT * FROM guokr_handpick_news")
+    List<GuokrHandpickNewsResult> loadGuokrHandpickNews();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<GuokrHandpickNews.Result> items);
+    void insertAll(List<GuokrHandpickNewsResult> items);
 
-    @Query("SELECT * FROM guokr_handpck where id = :id")
-    GuokrHandpickNews.Result loadGuokrHandpickItem(int id);
+    @Query("SELECT * FROM guokr_handpick_news where id = :id")
+    GuokrHandpickNewsResult loadGuokrHandpickItem(int id);
 
     @Update
-    void updateGuokrHandpickNews(GuokrHandpickNews.Result item);
+    void updateGuokrHandpickNews(GuokrHandpickNewsResult item);
 
 }

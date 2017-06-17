@@ -3,9 +3,11 @@ package com.marktony.zhihudaily.refactor.data;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.marktony.zhihudaily.refactor.database.converter.DoubanContentTypeConverters;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
  */
 
 @Entity(tableName = "douban_moment_content")
+@TypeConverters(DoubanContentTypeConverters.class)
 public class DoubanMomentContent {
 
     @ColumnInfo(name = "display_style")
@@ -44,7 +47,7 @@ public class DoubanMomentContent {
     @ColumnInfo(name = "thumbs")
     @Expose
     @SerializedName("thumbs")
-    private List<DoubanMomentNews.Posts.Thumbs> thumbs;
+    private List<DoubanMomentThumbs> thumbs;
 
     @ColumnInfo(name = "created_time")
     @Expose
@@ -90,7 +93,7 @@ public class DoubanMomentContent {
     @ColumnInfo(name = "photos")
     @Expose
     @SerializedName("photos")
-    private List<DoubanMomentNews.Posts.Thumbs> photos;
+    private List<DoubanMomentThumbs> photos;
 
     @ColumnInfo(name = "published_time")
     @Expose
@@ -161,11 +164,11 @@ public class DoubanMomentContent {
         this.likeCount = likeCount;
     }
 
-    public List<DoubanMomentNews.Posts.Thumbs> getThumbs() {
+    public List<DoubanMomentThumbs> getThumbs() {
         return thumbs;
     }
 
-    public void setThumbs(List<DoubanMomentNews.Posts.Thumbs> thumbs) {
+    public void setThumbs(List<DoubanMomentThumbs> thumbs) {
         this.thumbs = thumbs;
     }
 
@@ -233,11 +236,11 @@ public class DoubanMomentContent {
         isLiked = liked;
     }
 
-    public List<DoubanMomentNews.Posts.Thumbs> getPhotos() {
+    public List<DoubanMomentThumbs> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<DoubanMomentNews.Posts.Thumbs> photos) {
+    public void setPhotos(List<DoubanMomentThumbs> photos) {
         this.photos = photos;
     }
 

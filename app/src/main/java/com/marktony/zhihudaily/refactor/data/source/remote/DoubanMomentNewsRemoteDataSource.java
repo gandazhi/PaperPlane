@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
 import com.marktony.zhihudaily.refactor.data.source.datasource.DoubanMomentNewsDataSource;
 import com.marktony.zhihudaily.refactor.retrofit.RetrofitService;
 import com.marktony.zhihudaily.refactor.util.DateFormatUtil;
@@ -73,7 +74,7 @@ public class DoubanMomentNewsRemoteDataSource implements DoubanMomentNewsDataSou
     }
 
     @Override
-    public void saveItem(@NonNull DoubanMomentNews.Posts item) {
+    public void saveItem(@NonNull DoubanMomentPosts item) {
 
     }
 

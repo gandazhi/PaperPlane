@@ -4,9 +4,11 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.marktony.zhihudaily.refactor.database.converter.StringTypeConverter;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ import java.util.List;
  */
 
 @Entity(tableName = "zhihu_daily_content")
+@TypeConverters(StringTypeConverter.class)
 public class ZhihuDailyContent {
 
     @ColumnInfo(name = "body")

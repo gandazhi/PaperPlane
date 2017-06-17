@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
-import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
 
 import java.util.ArrayList;
@@ -32,22 +32,22 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private final LayoutInflater mLayoutInflater;
 
     @NonNull
-    private final List<ZhihuDailyNews.Question> mZhihuList;
+    private final List<ZhihuDailyNewsQuestion> mZhihuList;
 
     @NonNull
-    private final List<DoubanMomentNews.Posts> mDoubanList;
+    private final List<DoubanMomentPosts> mDoubanList;
 
     @NonNull
-    private final List<GuokrHandpickNews.Result> mGuokrList;
+    private final List<GuokrHandpickNewsResult> mGuokrList;
 
     private final List<ItemWrapper> mWrapperList;
 
     private OnRecyclerViewItemOnClickListener mListener;
 
     public FavoritesAdapter(@NonNull Context context,
-                            @NonNull List<ZhihuDailyNews.Question> zhihuDailyNewsList,
-                            @NonNull List<DoubanMomentNews.Posts> doubanMomentNewsList,
-                            @NonNull List<GuokrHandpickNews.Result> guokrHandpickNewsList) {
+                            @NonNull List<ZhihuDailyNewsQuestion> zhihuDailyNewsList,
+                            @NonNull List<DoubanMomentPosts> doubanMomentNewsList,
+                            @NonNull List<GuokrHandpickNewsResult> guokrHandpickNewsList) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mZhihuList = zhihuDailyNewsList;
@@ -147,9 +147,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return mWrapperList.get(position).index;
     }
 
-    public void updateData(List<ZhihuDailyNews.Question> zhihuDailyNewsList,
-                           List<DoubanMomentNews.Posts> doubanMomentNewsList,
-                           List<GuokrHandpickNews.Result> guokrHandpickNewsList) {
+    public void updateData(List<ZhihuDailyNewsQuestion> zhihuDailyNewsList,
+                           List<DoubanMomentPosts> doubanMomentNewsList,
+                           List<GuokrHandpickNewsResult> guokrHandpickNewsList) {
         mZhihuList.clear();
         mDoubanList.clear();
         mGuokrList.clear();

@@ -31,7 +31,7 @@ import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.customtabs.CustomTabsHelper;
 import com.marktony.zhihudaily.refactor.data.ContentType;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentContent;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentThumbs;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickContent;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyContent;
 import com.marktony.zhihudaily.refactor.util.InfoConstants;
@@ -266,7 +266,7 @@ public class DetailsFragment extends Fragment
     }
 
     @Override
-    public void showDoubanMomentContent(@NonNull DoubanMomentContent content, @Nullable List<DoubanMomentNews.Posts.Thumbs> list) {
+    public void showDoubanMomentContent(@NonNull DoubanMomentContent content, @Nullable List<DoubanMomentThumbs> list) {
         mFavorite = content.isFavorite();
 
         String css;
@@ -278,7 +278,7 @@ public class DetailsFragment extends Fragment
         }
         if (list != null && !list.isEmpty()) {
             setCover(list.get(0).getMedium().getUrl());
-            for (DoubanMomentNews.Posts.Thumbs t : list) {
+            for (DoubanMomentThumbs t : list) {
                 String old = "<img id=\"" + t.getTagName()+ "\" />";
                 String newStr = "<img id=\"" + t.getTagName() + "\" "
                         + "src=\"" + t.getMedium().getUrl() + "\"/>";

@@ -8,7 +8,7 @@ import com.marktony.zhihudaily.refactor.BasePresenter;
 import com.marktony.zhihudaily.refactor.BaseView;
 import com.marktony.zhihudaily.refactor.data.ContentType;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentContent;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentThumbs;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickContent;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyContent;
 
@@ -28,7 +28,7 @@ public interface DetailsContract {
 
         void showZhihuDailyContent(@NonNull ZhihuDailyContent content);
 
-        void showDoubanMomentContent(@NonNull DoubanMomentContent content, @Nullable List<DoubanMomentNews.Posts.Thumbs> list);
+        void showDoubanMomentContent(@NonNull DoubanMomentContent content, @Nullable List<DoubanMomentThumbs> list);
 
         void showGuokrHandpickContent(@NonNull GuokrHandpickContent content);
 

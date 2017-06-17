@@ -2,7 +2,7 @@ package com.marktony.zhihudaily.refactor.data.source.datasource;
 
 import android.support.annotation.NonNull;
 
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface GuokrHandpickDataSource {
 
     interface LoadGuokrHandpickNewsCallback {
 
-        void onNewsLoad(@NonNull List<GuokrHandpickNews.Result> list);
+        void onNewsLoad(@NonNull List<GuokrHandpickNewsResult> list);
 
         void onDataNotAvailable();
 
@@ -22,7 +22,7 @@ public interface GuokrHandpickDataSource {
 
     interface GetNewsItemCallback {
 
-        void onItemLoaded(@NonNull GuokrHandpickNews.Result item);
+        void onItemLoaded(@NonNull GuokrHandpickNewsResult item);
 
         void onDataNotAvailable();
 
@@ -36,6 +36,6 @@ public interface GuokrHandpickDataSource {
 
     void outdateItem(int itemId);
 
-    void saveItem(@NonNull GuokrHandpickNews.Result item);
+    void saveItem(@NonNull GuokrHandpickNewsResult item);
 
 }

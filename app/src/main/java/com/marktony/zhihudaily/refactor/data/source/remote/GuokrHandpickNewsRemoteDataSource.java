@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.source.datasource.GuokrHandpickDataSource;
 import com.marktony.zhihudaily.refactor.retrofit.RetrofitService;
 
@@ -72,7 +73,7 @@ public class GuokrHandpickNewsRemoteDataSource implements GuokrHandpickDataSourc
     }
 
     @Override
-    public void saveItem(@NonNull GuokrHandpickNews.Result item) {
+    public void saveItem(@NonNull GuokrHandpickNewsResult item) {
 
     }
 }

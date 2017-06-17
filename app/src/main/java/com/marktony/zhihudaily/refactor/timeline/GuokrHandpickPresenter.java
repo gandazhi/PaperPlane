@@ -2,7 +2,7 @@ package com.marktony.zhihudaily.refactor.timeline;
 
 import android.support.annotation.NonNull;
 
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.source.datasource.GuokrHandpickDataSource;
 import com.marktony.zhihudaily.refactor.data.source.repository.GuokrHandpickNewsRepository;
 
@@ -35,7 +35,7 @@ public class GuokrHandpickPresenter implements GuokrHandpickContract.Presenter {
         }
         mRepository.getGuokrHandpickNews(forceUpdate, clearCache, offset, limit, new GuokrHandpickDataSource.LoadGuokrHandpickNewsCallback() {
             @Override
-            public void onNewsLoad(@NonNull List<GuokrHandpickNews.Result> list) {
+            public void onNewsLoad(@NonNull List<GuokrHandpickNewsResult> list) {
                 if (mView.isActive()) {
                     mView.showResult(list);
                     mView.setLoadingIndicator(false);

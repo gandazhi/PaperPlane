@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.data.ContentType;
-import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 import com.marktony.zhihudaily.refactor.details.DetailsActivity;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -158,7 +158,7 @@ public class ZhihuDailyFragment extends Fragment
     }
 
     @Override
-    public void showResult(@NonNull List<ZhihuDailyNews.Question> list) {
+    public void showResult(@NonNull List<ZhihuDailyNewsQuestion> list) {
         if (mAdapter == null) {
             mAdapter = new ZhihuDailyNewsAdapter(list, getContext());
             mAdapter.setItemClickListener((v, i) -> {

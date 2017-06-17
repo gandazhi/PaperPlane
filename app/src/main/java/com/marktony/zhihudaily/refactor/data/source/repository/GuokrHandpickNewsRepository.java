@@ -3,7 +3,7 @@ package com.marktony.zhihudaily.refactor.data.source.repository;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.source.datasource.GuokrHandpickDataSource;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
     @NonNull
     private final GuokrHandpickDataSource mRemoteDataSource;
 
-    private Map<Integer, GuokrHandpickNews.Result> mCachedItems;
+    private Map<Integer, GuokrHandpickNewsResult> mCachedItems;
 
     private GuokrHandpickNewsRepository(@NonNull GuokrHandpickDataSource remoteDataSource,
                                         @NonNull GuokrHandpickDataSource localDataSource) {
@@ -56,7 +56,7 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
 
         mRemoteDataSource.getGuokrHandpickNews(false, clearCache, offset, limit, new LoadGuokrHandpickNewsCallback() {
             @Override
-            public void onNewsLoad(@NonNull List<GuokrHandpickNews.Result> list) {
+            public void onNewsLoad(@NonNull List<GuokrHandpickNewsResult> list) {
                 refreshCache(clearCache, list);
                 refreshLocalDataSource(list);
                 callback.onNewsLoad(new ArrayList<>(mCachedItems.values()));
@@ -66,7 +66,7 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
             public void onDataNotAvailable() {
                 mLocalDataSource.getGuokrHandpickNews(false, clearCache, offset, limit, new LoadGuokrHandpickNewsCallback() {
                     @Override
-                    public void onNewsLoad(@NonNull List<GuokrHandpickNews.Result> list) {
+                    public void onNewsLoad(@NonNull List<GuokrHandpickNewsResult> list) {
                         refreshCache(clearCache, list);
                         callback.onNewsLoad(new ArrayList<>(mCachedItems.values()));
                     }
@@ -82,7 +82,7 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
 
     @Override
     public void getItem(int itemId, @NonNull GetNewsItemCallback callback) {
-        GuokrHandpickNews.Result item = getItemWithId(itemId);
+        GuokrHandpickNewsResult item = getItemWithId(itemId);
 
         if (item != null) {
             callback.onItemLoaded(item);
@@ -91,7 +91,7 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
 
         mLocalDataSource.getItem(itemId, new GetNewsItemCallback() {
             @Override
-            public void onItemLoaded(@NonNull GuokrHandpickNews.Result item) {
+            public void onItemLoaded(@NonNull GuokrHandpickNewsResult item) {
                 if (mCachedItems == null) {
                     mCachedItems = new LinkedHashMap<>();
                 }
@@ -103,7 +103,7 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
             public void onDataNotAvailable() {
                 mRemoteDataSource.getItem(itemId, new GetNewsItemCallback() {
                     @Override
-                    public void onItemLoaded(@NonNull GuokrHandpickNews.Result item) {
+                    public void onItemLoaded(@NonNull GuokrHandpickNewsResult item) {
                         if (mCachedItems == null) {
                             mCachedItems = new LinkedHashMap<>();
                         }
@@ -125,7 +125,7 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
         mRemoteDataSource.favoriteItem(itemId, favorite);
         mLocalDataSource.favoriteItem(itemId, favorite);
 
-        GuokrHandpickNews.Result cachedItem = getItemWithId(itemId);
+        GuokrHandpickNewsResult cachedItem = getItemWithId(itemId);
         if (cachedItem != null) {
             cachedItem.setFavorite(favorite);
         }
@@ -136,40 +136,40 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
         mRemoteDataSource.outdateItem(itemId);
         mLocalDataSource.outdateItem(itemId);
 
-        GuokrHandpickNews.Result cachedItem = getItemWithId(itemId);
+        GuokrHandpickNewsResult cachedItem = getItemWithId(itemId);
         if (cachedItem != null) {
             cachedItem.setOutdated(true);
         }
     }
 
     @Override
-    public void saveItem(@NonNull GuokrHandpickNews.Result item) {
+    public void saveItem(@NonNull GuokrHandpickNewsResult item) {
         mRemoteDataSource.saveItem(item);
         mLocalDataSource.saveItem(item);
 
         mCachedItems.put(item.getId(), item);
     }
 
-    private void refreshLocalDataSource(List<GuokrHandpickNews.Result> list) {
-        for (GuokrHandpickNews.Result item : list) {
+    private void refreshLocalDataSource(List<GuokrHandpickNewsResult> list) {
+        for (GuokrHandpickNewsResult item : list) {
             mLocalDataSource.saveItem(item);
         }
     }
 
-    private void refreshCache(boolean clearCache, List<GuokrHandpickNews.Result> list) {
+    private void refreshCache(boolean clearCache, List<GuokrHandpickNewsResult> list) {
         if (mCachedItems == null) {
             mCachedItems = new LinkedHashMap<>();
         }
         if (clearCache) {
             mCachedItems.clear();
         }
-        for (GuokrHandpickNews.Result item : list) {
+        for (GuokrHandpickNewsResult item : list) {
             mCachedItems.put(item.getId(), item);
         }
     }
 
     @Nullable
-    private GuokrHandpickNews.Result getItemWithId(int itemId) {
+    private GuokrHandpickNewsResult getItemWithId(int itemId) {
         return (mCachedItems == null || mCachedItems.isEmpty()) ? null : mCachedItems.get(itemId);
     }
 

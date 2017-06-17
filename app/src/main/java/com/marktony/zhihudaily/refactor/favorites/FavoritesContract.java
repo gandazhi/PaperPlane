@@ -3,9 +3,9 @@ package com.marktony.zhihudaily.refactor.favorites;
 
 import com.marktony.zhihudaily.refactor.BasePresenter;
 import com.marktony.zhihudaily.refactor.BaseView;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
-import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 
 import java.util.List;
 
@@ -21,9 +21,9 @@ public interface FavoritesContract {
 
         void setLoadingIndicator(boolean active);
 
-        void showFavorites(List<ZhihuDailyNews.Question> zhihuList,
-                           List<DoubanMomentNews.Posts> doubanList,
-                           List<GuokrHandpickNews.Result> guokrList);
+        void showFavorites(List<ZhihuDailyNewsQuestion> zhihuList,
+                           List<DoubanMomentPosts> doubanList,
+                           List<GuokrHandpickNewsResult> guokrList);
 
     }
 

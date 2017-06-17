@@ -3,7 +3,7 @@ package com.marktony.zhihudaily.refactor.data.source.local;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
 import com.marktony.zhihudaily.refactor.data.source.datasource.DoubanMomentNewsDataSource;
 
 /**
@@ -47,7 +47,7 @@ public class DoubanMomentNewsLocalDataSource implements DoubanMomentNewsDataSour
     }
 
     @Override
-    public void saveItem(@NonNull DoubanMomentNews.Posts item) {
+    public void saveItem(@NonNull DoubanMomentPosts item) {
 
     }
 }

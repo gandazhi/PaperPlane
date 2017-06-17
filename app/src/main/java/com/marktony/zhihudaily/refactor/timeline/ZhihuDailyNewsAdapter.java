@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
-import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
 
 import java.util.List;
 
@@ -30,10 +30,10 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private final Context mContext;
 
     @NonNull
-    private List<ZhihuDailyNews.Question> mList;
+    private List<ZhihuDailyNewsQuestion> mList;
     private OnRecyclerViewItemOnClickListener mListener;
 
-    public ZhihuDailyNewsAdapter(@NonNull List<ZhihuDailyNews.Question> list,
+    public ZhihuDailyNewsAdapter(@NonNull List<ZhihuDailyNewsQuestion> list,
                                  @NonNull Context context) {
         this.mList = list;
         this.mContext = context;
@@ -55,7 +55,7 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         if (viewHolder instanceof ItemViewHolder) {
 
-            ZhihuDailyNews.Question item = mList.get(i);
+            ZhihuDailyNewsQuestion item = mList.get(i);
 
             if (item.getImages().get(0) == null){
                 ((ItemViewHolder)viewHolder).itemImg.setImageResource(R.drawable.placeholder);
@@ -90,7 +90,7 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         this.mListener = listener;
     }
 
-    public void updateData(@NonNull List<ZhihuDailyNews.Question> list) {
+    public void updateData(@NonNull List<ZhihuDailyNewsQuestion> list) {
         mList.clear();
         mList.addAll(list);
         notifyDataSetChanged();

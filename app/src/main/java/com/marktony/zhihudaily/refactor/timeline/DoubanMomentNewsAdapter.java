@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
 import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
 
 import java.util.List;
@@ -31,11 +31,11 @@ public class DoubanMomentNewsAdapter extends RecyclerView.Adapter<RecyclerView.V
     private Context mContext;
 
     @NonNull
-    private List<DoubanMomentNews.Posts> mList;
+    private List<DoubanMomentPosts> mList;
 
     private OnRecyclerViewItemOnClickListener mListener;
 
-    public DoubanMomentNewsAdapter(@NonNull List<DoubanMomentNews.Posts> list,
+    public DoubanMomentNewsAdapter(@NonNull List<DoubanMomentPosts> list,
                                    @NonNull Context context) {
         this.mList = list;
         this.mContext = context;
@@ -61,7 +61,7 @@ public class DoubanMomentNewsAdapter extends RecyclerView.Adapter<RecyclerView.V
             return;
         }
 
-        DoubanMomentNews.Posts item = mList.get(i);
+        DoubanMomentPosts item = mList.get(i);
         if (viewHolder instanceof ItemViewHolder) {
 
             Glide.with(mContext)
@@ -93,7 +93,7 @@ public class DoubanMomentNewsAdapter extends RecyclerView.Adapter<RecyclerView.V
         return mList.get(position).getThumbs().isEmpty() ? TYPE_NO_IMG : TYPE_ITEM;
     }
 
-    public void updateData(@NonNull List<DoubanMomentNews.Posts> list) {
+    public void updateData(@NonNull List<DoubanMomentPosts> list) {
         mList.clear();
         mList.addAll(list);
         notifyDataSetChanged();

@@ -2,9 +2,9 @@ package com.marktony.zhihudaily.refactor.data.source.datasource;
 
 import android.support.annotation.NonNull;
 
-import com.marktony.zhihudaily.refactor.data.DoubanMomentNews;
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
-import com.marktony.zhihudaily.refactor.data.ZhihuDailyNews;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
+import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 
 import java.util.List;
 
@@ -16,9 +16,9 @@ public interface FavoritesDataSource {
 
     interface LoadFavoritesCallback {
 
-        void onItemsLoaded(@NonNull List<ZhihuDailyNews.Question> zhihuList,
-                           @NonNull List<DoubanMomentNews.Posts> doubanList,
-                           @NonNull List<GuokrHandpickNews.Result> guokrList);
+        void onItemsLoaded(@NonNull List<ZhihuDailyNewsQuestion> zhihuList,
+                           @NonNull List<DoubanMomentPosts> doubanList,
+                           @NonNull List<GuokrHandpickNewsResult> guokrList);
 
         void onDataNotAvailable();
 
@@ -26,7 +26,7 @@ public interface FavoritesDataSource {
 
     interface LoadZhihuItemCallback {
 
-        void onItemLoaded(@NonNull ZhihuDailyNews.Question item);
+        void onItemLoaded(@NonNull ZhihuDailyNewsQuestion item);
 
         void onDataNotAvailable();
 
@@ -34,7 +34,7 @@ public interface FavoritesDataSource {
 
     interface LoadDoubanItemCallback {
 
-        void onItemLoaded(@NonNull DoubanMomentNews.Posts item);
+        void onItemLoaded(@NonNull DoubanMomentPosts item);
 
         void onDataNotAvailable();
 
@@ -42,7 +42,7 @@ public interface FavoritesDataSource {
 
     interface LoadGuokrItemCallback {
 
-        void onItemLoaded(@NonNull GuokrHandpickNews.Result item);
+        void onItemLoaded(@NonNull GuokrHandpickNewsResult item);
 
         void onDataNotAvailable();
 

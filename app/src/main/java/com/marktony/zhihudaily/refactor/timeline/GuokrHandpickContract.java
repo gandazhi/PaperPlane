@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.marktony.zhihudaily.BasePresenter;
 import com.marktony.zhihudaily.BaseView;
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNews;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public interface GuokrHandpickContract {
 
         void setLoadingIndicator(boolean active);
 
-        void showResult(@NonNull List<GuokrHandpickNews.Result> list);
+        void showResult(@NonNull List<GuokrHandpickNewsResult> list);
 
     }
 
