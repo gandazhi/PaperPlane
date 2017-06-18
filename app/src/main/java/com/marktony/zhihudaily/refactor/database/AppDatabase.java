@@ -4,7 +4,7 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
 import com.marktony.zhihudaily.refactor.data.DoubanMomentContent;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickContentResult;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyContent;
@@ -23,7 +23,7 @@ import com.marktony.zhihudaily.refactor.database.dao.ZhihuDailyNewsDao;
 
 @Database(entities = {
         ZhihuDailyNewsQuestion.class,
-        DoubanMomentPosts.class,
+        DoubanMomentNewsPosts.class,
         GuokrHandpickNewsResult.class,
         ZhihuDailyContent.class,
         DoubanMomentContent.class,

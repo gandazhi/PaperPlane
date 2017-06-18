@@ -2,11 +2,10 @@ package com.marktony.zhihudaily.refactor.database.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 
 import java.util.List;
 
@@ -18,15 +17,15 @@ import java.util.List;
 public interface DoubanMomentNewsDao {
 
     @Query("SELECT * FROM douban_moment_news")
-    List<DoubanMomentPosts> loadDoubanMomentNews();
+    List<DoubanMomentNewsPosts> loadDoubanMomentNews();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<DoubanMomentPosts> items);
+    @Insert()
+    void insertAll(List<DoubanMomentNewsPosts> items);
 
-    @Query("SELECT * FROM douban_moment_news where id = :id")
-    DoubanMomentPosts loadDoubanMomentItem(int id);
+    @Query("SELECT * FROM douban_moment_news WHERE id = :id")
+    DoubanMomentNewsPosts loadDoubanMomentItem(int id);
 
     @Update
-    void updateDoubanMomentNews(DoubanMomentPosts item);
+    void updateDoubanMomentNews(DoubanMomentNewsPosts item);
 
 }

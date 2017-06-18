@@ -17,7 +17,7 @@ public class DoubanMomentNews {
 
     @Expose
     @SerializedName("posts")
-    private List<DoubanMomentPosts> posts;
+    private List<DoubanMomentNewsPosts> posts;
 
     @Expose
     @SerializedName("offset")
@@ -39,11 +39,11 @@ public class DoubanMomentNews {
         this.count = count;
     }
 
-    public List<DoubanMomentPosts> getPosts() {
+    public List<DoubanMomentNewsPosts> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<DoubanMomentPosts> posts) {
+    public void setPosts(List<DoubanMomentNewsPosts> posts) {
         this.posts = posts;
     }
 

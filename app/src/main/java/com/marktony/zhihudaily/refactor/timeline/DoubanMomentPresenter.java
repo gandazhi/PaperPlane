@@ -2,7 +2,7 @@ package com.marktony.zhihudaily.refactor.timeline;
 
 import android.support.annotation.NonNull;
 
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 import com.marktony.zhihudaily.refactor.data.source.datasource.DoubanMomentNewsDataSource;
 import com.marktony.zhihudaily.refactor.data.source.repository.DoubanMomentNewsRepository;
 
@@ -40,7 +40,7 @@ public class DoubanMomentPresenter implements DoubanMomentContract.Presenter {
         }
         mRepository.getDoubanMomentNews(forceUpdate, clearCache, date, new DoubanMomentNewsDataSource.LoadDoubanMomentDailyCallback() {
             @Override
-            public void onNewsLoaded(@NonNull List<DoubanMomentPosts> list) {
+            public void onNewsLoaded(@NonNull List<DoubanMomentNewsPosts> list) {
                 if (mView.isActive()) {
                     mView.showResult(list);
                     mView.setLoadingIndicator(false);

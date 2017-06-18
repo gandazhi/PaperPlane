@@ -9,6 +9,8 @@ import com.marktony.zhihudaily.refactor.data.source.datasource.ZhihuDailyNewsDat
 import com.marktony.zhihudaily.refactor.retrofit.RetrofitService;
 import com.marktony.zhihudaily.refactor.util.DateFormatUtil;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,6 +71,11 @@ public class ZhihuDailyNewsRemoteDataSource implements ZhihuDailyNewsDataSource 
 
     @Override
     public void outdateItem(int itemId) {
+
+    }
+
+    @Override
+    public void saveAll(@NonNull List<ZhihuDailyNewsQuestion> list) {
 
     }
 

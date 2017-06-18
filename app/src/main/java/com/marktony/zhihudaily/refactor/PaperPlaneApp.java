@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatDelegate;
  * Created by lizhaotailang on 2017/5/24.
  */
 
-public class App extends Application {
+public class PaperPlaneApp extends Application {
 
     @Override
     public void onCreate() {

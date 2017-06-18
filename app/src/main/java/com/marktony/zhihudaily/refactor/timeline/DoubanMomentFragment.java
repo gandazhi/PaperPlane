@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.data.ContentType;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 import com.marktony.zhihudaily.refactor.details.DetailsActivity;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -152,7 +152,7 @@ public class DoubanMomentFragment extends Fragment
     }
 
     @Override
-    public void showResult(@NonNull List<DoubanMomentPosts> list) {
+    public void showResult(@NonNull List<DoubanMomentNewsPosts> list) {
         if (mAdapter == null) {
             mAdapter = new DoubanMomentNewsAdapter(list, getContext());
             mAdapter.setItemClickListener((v, i) -> {

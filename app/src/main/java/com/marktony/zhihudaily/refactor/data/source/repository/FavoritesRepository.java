@@ -3,7 +3,7 @@ package com.marktony.zhihudaily.refactor.data.source.repository;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 import com.marktony.zhihudaily.refactor.data.source.datasource.FavoritesDataSource;
@@ -26,7 +26,7 @@ public class FavoritesRepository implements FavoritesDataSource {
     private final FavoritesDataSource mLocalDataSource;
 
     private Map<Integer, ZhihuDailyNewsQuestion> mZhihuCachedItems;
-    private Map<Integer, DoubanMomentPosts> mDoubanCachedItems;
+    private Map<Integer, DoubanMomentNewsPosts> mDoubanCachedItems;
     private Map<Integer, GuokrHandpickNewsResult> mGuokrCachedItems;
 
     private FavoritesRepository(@NonNull FavoritesDataSource localDataSource) {
@@ -57,7 +57,7 @@ public class FavoritesRepository implements FavoritesDataSource {
         mLocalDataSource.getFavoriteItems(new LoadFavoritesCallback() {
             @Override
             public void onItemsLoaded(@NonNull List<ZhihuDailyNewsQuestion> zhihuList,
-                                      @NonNull List<DoubanMomentPosts> doubanList,
+                                      @NonNull List<DoubanMomentNewsPosts> doubanList,
                                       @NonNull List<GuokrHandpickNewsResult> guokrList) {
                 refreshCache(zhihuList, doubanList, guokrList);
                 callback.onItemsLoaded(zhihuList, doubanList, guokrList);
@@ -71,7 +71,7 @@ public class FavoritesRepository implements FavoritesDataSource {
     }
 
     private void refreshCache(List<ZhihuDailyNewsQuestion> zhihuList,
-                              List<DoubanMomentPosts> doubanList,
+                              List<DoubanMomentNewsPosts> doubanList,
                               List<GuokrHandpickNewsResult> guokrList) {
         if (mZhihuCachedItems == null) {
             mZhihuCachedItems = new LinkedHashMap<>();
@@ -90,7 +90,7 @@ public class FavoritesRepository implements FavoritesDataSource {
         for (ZhihuDailyNewsQuestion item : zhihuList) {
             mZhihuCachedItems.put(item.getId(), item);
         }
-        for (DoubanMomentPosts item : doubanList) {
+        for (DoubanMomentNewsPosts item : doubanList) {
             mDoubanCachedItems.put(item.getId(), item);
         }
         for (GuokrHandpickNewsResult item : guokrList) {

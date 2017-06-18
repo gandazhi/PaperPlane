@@ -47,7 +47,7 @@ public class DoubanMomentContent {
     @ColumnInfo(name = "thumbs")
     @Expose
     @SerializedName("thumbs")
-    private List<DoubanMomentThumbs> thumbs;
+    private List<DoubanMomentNewsThumbs> thumbs;
 
     @ColumnInfo(name = "created_time")
     @Expose
@@ -93,7 +93,7 @@ public class DoubanMomentContent {
     @ColumnInfo(name = "photos")
     @Expose
     @SerializedName("photos")
-    private List<DoubanMomentThumbs> photos;
+    private List<DoubanMomentNewsThumbs> photos;
 
     @ColumnInfo(name = "published_time")
     @Expose
@@ -164,11 +164,11 @@ public class DoubanMomentContent {
         this.likeCount = likeCount;
     }
 
-    public List<DoubanMomentThumbs> getThumbs() {
+    public List<DoubanMomentNewsThumbs> getThumbs() {
         return thumbs;
     }
 
-    public void setThumbs(List<DoubanMomentThumbs> thumbs) {
+    public void setThumbs(List<DoubanMomentNewsThumbs> thumbs) {
         this.thumbs = thumbs;
     }
 
@@ -236,11 +236,11 @@ public class DoubanMomentContent {
         isLiked = liked;
     }
 
-    public List<DoubanMomentThumbs> getPhotos() {
+    public List<DoubanMomentNewsThumbs> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<DoubanMomentThumbs> photos) {
+    public void setPhotos(List<DoubanMomentNewsThumbs> photos) {
         this.photos = photos;
     }
 

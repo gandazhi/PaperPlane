@@ -2,7 +2,7 @@ package com.marktony.zhihudaily.refactor.data.source.datasource;
 
 import android.support.annotation.NonNull;
 
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface DoubanMomentNewsDataSource {
 
     interface LoadDoubanMomentDailyCallback {
 
-        void onNewsLoaded(@NonNull List<DoubanMomentPosts> list);
+        void onNewsLoaded(@NonNull List<DoubanMomentNewsPosts> list);
 
         void onDataNotAvailable();
 
@@ -22,7 +22,7 @@ public interface DoubanMomentNewsDataSource {
 
     interface GetNewsItemCallback {
 
-        void onItemLoaded(@NonNull DoubanMomentPosts item);
+        void onItemLoaded(@NonNull DoubanMomentNewsPosts item);
 
         void onDataNotAvailable();
 
@@ -36,6 +36,8 @@ public interface DoubanMomentNewsDataSource {
 
     void outdateItem(int itemId);
 
-    void saveItem(@NonNull DoubanMomentPosts item);
+    void saveAll(@NonNull List<DoubanMomentNewsPosts> list);
+
+    void saveItem(@NonNull DoubanMomentNewsPosts item);
 
 }

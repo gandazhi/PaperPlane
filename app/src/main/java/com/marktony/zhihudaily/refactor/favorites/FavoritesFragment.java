@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.data.ContentType;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 import com.marktony.zhihudaily.refactor.details.DetailsActivity;
@@ -89,7 +89,7 @@ public class FavoritesFragment extends Fragment
 
     @Override
     public void showFavorites(List<ZhihuDailyNewsQuestion> zhihuList,
-                              List<DoubanMomentPosts> doubanList,
+                              List<DoubanMomentNewsPosts> doubanList,
                               List<GuokrHandpickNewsResult> guokrList) {
         if (zhihuList == null || doubanList == null || guokrList == null) {
             mEmptyView.setVisibility(View.VISIBLE);

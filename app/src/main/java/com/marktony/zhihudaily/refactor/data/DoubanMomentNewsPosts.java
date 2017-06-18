@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Entity(tableName = "douban_moment_news")
 @TypeConverters(DoubanTypeConverters.class)
-public class DoubanMomentPosts {
+public class DoubanMomentNewsPosts {
 
     @ColumnInfo(name = "display_style")
     @Expose
@@ -87,7 +87,7 @@ public class DoubanMomentPosts {
     @ColumnInfo(name = "thumbs")
     @Expose
     @SerializedName("thumbs")
-    private List<DoubanMomentThumbs> thumbs;
+    private List<DoubanMomentNewsThumbs> thumbs;
 
     @ColumnInfo(name = "created_time")
     @Expose
@@ -227,11 +227,11 @@ public class DoubanMomentPosts {
         this.commentsCount = commentsCount;
     }
 
-    public List<DoubanMomentThumbs> getThumbs() {
+    public List<DoubanMomentNewsThumbs> getThumbs() {
         return thumbs;
     }
 
-    public void setThumbs(List<DoubanMomentThumbs> thumbs) {
+    public void setThumbs(List<DoubanMomentNewsThumbs> thumbs) {
         this.thumbs = thumbs;
     }
 

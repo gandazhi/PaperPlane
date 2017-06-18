@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.source.datasource.GuokrHandpickDataSource;
 
+import java.util.List;
+
 /**
  * Created by lizhaotailang on 2017/5/24.
  */
@@ -43,6 +45,11 @@ public class GuokrHandpickNewsLocalDataSource implements GuokrHandpickDataSource
 
     @Override
     public void outdateItem(int itemId) {
+
+    }
+
+    @Override
+    public void saveAll(@NonNull List<GuokrHandpickNewsResult> list) {
 
     }
 

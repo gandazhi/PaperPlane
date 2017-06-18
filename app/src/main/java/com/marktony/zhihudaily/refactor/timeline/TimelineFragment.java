@@ -59,7 +59,7 @@ public class TimelineFragment extends Fragment {
 
         new ZhihuDailyPresenter(mZhihuFragment, ZhihuDailyNewsRepository.getInstance(
                 ZhihuDailyNewsRemoteDataSource.getInstance(),
-                ZhihuDailyNewsLocalDataSource.getInstance()));
+                ZhihuDailyNewsLocalDataSource.getInstance(getContext())));
 
         new DoubanMomentPresenter(mDoubanFragment, DoubanMomentNewsRepository.getInstance(
                 DoubanMomentNewsRemoteDataSource.getInstance(),

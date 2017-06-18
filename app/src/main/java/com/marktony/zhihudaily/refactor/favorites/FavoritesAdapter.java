@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.marktony.zhihudaily.R;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 import com.marktony.zhihudaily.refactor.interfaze.OnRecyclerViewItemOnClickListener;
@@ -35,7 +35,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private final List<ZhihuDailyNewsQuestion> mZhihuList;
 
     @NonNull
-    private final List<DoubanMomentPosts> mDoubanList;
+    private final List<DoubanMomentNewsPosts> mDoubanList;
 
     @NonNull
     private final List<GuokrHandpickNewsResult> mGuokrList;
@@ -46,7 +46,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public FavoritesAdapter(@NonNull Context context,
                             @NonNull List<ZhihuDailyNewsQuestion> zhihuDailyNewsList,
-                            @NonNull List<DoubanMomentPosts> doubanMomentNewsList,
+                            @NonNull List<DoubanMomentNewsPosts> doubanMomentNewsList,
                             @NonNull List<GuokrHandpickNewsResult> guokrHandpickNewsList) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
@@ -148,7 +148,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void updateData(List<ZhihuDailyNewsQuestion> zhihuDailyNewsList,
-                           List<DoubanMomentPosts> doubanMomentNewsList,
+                           List<DoubanMomentNewsPosts> doubanMomentNewsList,
                            List<GuokrHandpickNewsResult> guokrHandpickNewsList) {
         mZhihuList.clear();
         mDoubanList.clear();

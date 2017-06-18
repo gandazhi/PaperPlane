@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.refactor.data.ContentType;
 import com.marktony.zhihudaily.refactor.data.DoubanMomentContent;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickContent;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyContent;
 import com.marktony.zhihudaily.refactor.data.source.datasource.DoubanMomentContentDataSource;
@@ -79,7 +79,7 @@ public class DetailsPresenter implements DetailsContract.Presenter {
             public void onContentLoaded(@NonNull DoubanMomentContent content) {
                 mDoubanNewsRepository.getItem(id, new DoubanMomentNewsDataSource.GetNewsItemCallback() {
                     @Override
-                    public void onItemLoaded(@NonNull DoubanMomentPosts item) {
+                    public void onItemLoaded(@NonNull DoubanMomentNewsPosts item) {
                         if (mView.isActive()) {
                             mView.showDoubanMomentContent(content, item.getThumbs());
                         }

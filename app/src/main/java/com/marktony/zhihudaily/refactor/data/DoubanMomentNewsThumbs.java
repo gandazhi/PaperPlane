@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by lizhaotailang on 2017/6/17.
  */
-public class DoubanMomentThumbs {
+public class DoubanMomentNewsThumbs {
 
     @Embedded
     @Expose
@@ -33,14 +33,14 @@ public class DoubanMomentThumbs {
     @Embedded
     @Expose
     @SerializedName("small")
-    private DoubanMomentSmall small;
+    private DoubanMomentNewsSmall small;
 
     @ColumnInfo(name = "thumb_id")
     @Expose
     @SerializedName("id")
     private int id;
 
-    public DoubanMomentThumbs() {
+    public DoubanMomentNewsThumbs() {
     }
 
     public DoubanMomentMedium getMedium() {
@@ -75,11 +75,11 @@ public class DoubanMomentThumbs {
         this.tagName = tag_name;
     }
 
-    public DoubanMomentSmall getSmall() {
+    public DoubanMomentNewsSmall getSmall() {
         return small;
     }
 
-    public void setSmall(DoubanMomentSmall small) {
+    public void setSmall(DoubanMomentNewsSmall small) {
         this.small = small;
     }
 

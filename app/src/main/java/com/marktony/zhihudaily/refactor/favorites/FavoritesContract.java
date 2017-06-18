@@ -3,7 +3,7 @@ package com.marktony.zhihudaily.refactor.favorites;
 
 import com.marktony.zhihudaily.refactor.BasePresenter;
 import com.marktony.zhihudaily.refactor.BaseView;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 
@@ -22,7 +22,7 @@ public interface FavoritesContract {
         void setLoadingIndicator(boolean active);
 
         void showFavorites(List<ZhihuDailyNewsQuestion> zhihuList,
-                           List<DoubanMomentPosts> doubanList,
+                           List<DoubanMomentNewsPosts> doubanList,
                            List<GuokrHandpickNewsResult> guokrList);
 
     }

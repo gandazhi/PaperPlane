@@ -36,6 +36,8 @@ public interface ZhihuDailyNewsDataSource {
 
     void outdateItem(int itemId);
 
+    void saveAll(@NonNull List<ZhihuDailyNewsQuestion> list);
+
     void saveItem(@NonNull ZhihuDailyNewsQuestion item);
 
 }

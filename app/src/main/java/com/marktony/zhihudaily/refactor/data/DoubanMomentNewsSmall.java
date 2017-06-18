@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by lizhaotailang on 2017/6/17.
  */
-public class DoubanMomentSmall {
+public class DoubanMomentNewsSmall {
 
     @ColumnInfo(name = "small_url")
     @Expose
@@ -25,7 +25,7 @@ public class DoubanMomentSmall {
     @SerializedName("height")
     private int height;
 
-    public DoubanMomentSmall() {
+    public DoubanMomentNewsSmall() {
     }
 
     public String getUrl() {

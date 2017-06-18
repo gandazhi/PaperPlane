@@ -8,6 +8,8 @@ import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.source.datasource.GuokrHandpickDataSource;
 import com.marktony.zhihudaily.refactor.retrofit.RetrofitService;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,6 +71,11 @@ public class GuokrHandpickNewsRemoteDataSource implements GuokrHandpickDataSourc
 
     @Override
     public void outdateItem(int itemId) {
+
+    }
+
+    @Override
+    public void saveAll(@NonNull List<GuokrHandpickNewsResult> list) {
 
     }
 

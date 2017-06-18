@@ -4,7 +4,7 @@ import android.arch.persistence.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentThumbs;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsThumbs;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -17,13 +17,13 @@ import java.util.List;
 public class DoubanContentTypeConverters {
 
     @TypeConverter
-    public String thumbListToString(List<DoubanMomentThumbs> thumbs) {
+    public String thumbListToString(List<DoubanMomentNewsThumbs> thumbs) {
         return new Gson().toJson(thumbs);
     }
 
     @TypeConverter
-    public List<DoubanMomentThumbs> stringToThumbList(String string) {
-        Type listType = new TypeToken<ArrayList<DoubanMomentThumbs>>(){}.getType();
+    public List<DoubanMomentNewsThumbs> stringToThumbList(String string) {
+        Type listType = new TypeToken<ArrayList<DoubanMomentNewsThumbs>>(){}.getType();
         return new Gson().fromJson(string, listType);
     }
 

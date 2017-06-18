@@ -3,8 +3,10 @@ package com.marktony.zhihudaily.refactor.data.source.local;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 import com.marktony.zhihudaily.refactor.data.source.datasource.DoubanMomentNewsDataSource;
+
+import java.util.List;
 
 /**
  * Created by lizhaotailang on 2017/5/21.
@@ -47,7 +49,12 @@ public class DoubanMomentNewsLocalDataSource implements DoubanMomentNewsDataSour
     }
 
     @Override
-    public void saveItem(@NonNull DoubanMomentPosts item) {
+    public void saveAll(@NonNull List<DoubanMomentNewsPosts> list) {
+
+    }
+
+    @Override
+    public void saveItem(@NonNull DoubanMomentNewsPosts item) {
 
     }
 }

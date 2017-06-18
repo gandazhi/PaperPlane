@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.marktony.zhihudaily.refactor.BasePresenter;
 import com.marktony.zhihudaily.refactor.BaseView;
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public interface DoubanMomentContract {
 
         boolean isActive();
 
-        void showResult(@NonNull List<DoubanMomentPosts> list);
+        void showResult(@NonNull List<DoubanMomentNewsPosts> list);
 
     }
 

@@ -36,6 +36,8 @@ public interface GuokrHandpickDataSource {
 
     void outdateItem(int itemId);
 
+    void saveAll(@NonNull List<GuokrHandpickNewsResult> list);
+
     void saveItem(@NonNull GuokrHandpickNewsResult item);
 
 }

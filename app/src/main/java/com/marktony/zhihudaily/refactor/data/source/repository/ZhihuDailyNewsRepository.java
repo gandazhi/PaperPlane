@@ -145,6 +145,11 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
     }
 
     @Override
+    public void saveAll(@NonNull List<ZhihuDailyNewsQuestion> list) {
+
+    }
+
+    @Override
     public void saveItem(@NonNull ZhihuDailyNewsQuestion item) {
         mLocalDataSource.saveItem(item);
         mRemoteDataSource.saveItem(item);

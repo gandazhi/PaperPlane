@@ -2,7 +2,6 @@ package com.marktony.zhihudaily.refactor.database.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
@@ -20,10 +19,10 @@ public interface GuokrHandpickNewsDao {
     @Query("SELECT * FROM guokr_handpick_news")
     List<GuokrHandpickNewsResult> loadGuokrHandpickNews();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert()
     void insertAll(List<GuokrHandpickNewsResult> items);
 
-    @Query("SELECT * FROM guokr_handpick_news where id = :id")
+    @Query("SELECT * FROM guokr_handpick_news WHERE id = :id")
     GuokrHandpickNewsResult loadGuokrHandpickItem(int id);
 
     @Update

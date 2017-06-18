@@ -2,7 +2,7 @@ package com.marktony.zhihudaily.refactor.data.source.datasource;
 
 import android.support.annotation.NonNull;
 
-import com.marktony.zhihudaily.refactor.data.DoubanMomentPosts;
+import com.marktony.zhihudaily.refactor.data.DoubanMomentNewsPosts;
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyNewsQuestion;
 
@@ -17,7 +17,7 @@ public interface FavoritesDataSource {
     interface LoadFavoritesCallback {
 
         void onItemsLoaded(@NonNull List<ZhihuDailyNewsQuestion> zhihuList,
-                           @NonNull List<DoubanMomentPosts> doubanList,
+                           @NonNull List<DoubanMomentNewsPosts> doubanList,
                            @NonNull List<GuokrHandpickNewsResult> guokrList);
 
         void onDataNotAvailable();
@@ -34,7 +34,7 @@ public interface FavoritesDataSource {
 
     interface LoadDoubanItemCallback {
 
-        void onItemLoaded(@NonNull DoubanMomentPosts item);
+        void onItemLoaded(@NonNull DoubanMomentNewsPosts item);
 
         void onDataNotAvailable();
 
