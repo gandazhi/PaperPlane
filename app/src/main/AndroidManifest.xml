@@ -22,7 +22,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".refactor.PaperPlaneApp"
+        android:name=".PaperPlaneApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,7 +30,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".refactor.ui.MainActivity"
+            android:name=".ui.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -45,7 +45,7 @@
                 android:resource="@xml/shortcuts" />
         </activity>
 
-        <activity android:name=".refactor.details.DetailsActivity"
+        <activity android:name=".details.DetailsActivity"
             android:label="@string/title_activity_read"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
             android:theme="@style/AppTheme.Translucent" />
@@ -60,7 +60,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".refactor.ui.LicenseActivity"
+        <activity android:name=".ui.LicenseActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
             android:label="@string/open_source_licenses"
             android:theme="@style/AppTheme" />

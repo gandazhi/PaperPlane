@@ -47,7 +47,6 @@ ext {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/library-1.0.19.jar')
 
     // Support series
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
