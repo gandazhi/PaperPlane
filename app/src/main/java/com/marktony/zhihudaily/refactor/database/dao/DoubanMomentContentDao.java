@@ -17,10 +17,10 @@ public interface DoubanMomentContentDao {
     @Query("SELECT * FROM douban_moment_content WHERE id = :id")
     DoubanMomentContent loadDoubanMomentContent(int id);
 
-    @Insert()
-    void insertDoubanMomentContent(DoubanMomentContent content);
+    @Insert
+    void saveContent(DoubanMomentContent content);
 
     @Update
-    void updateDoubanMomentContent(DoubanMomentContent content);
+    void updateContent(DoubanMomentContent content);
 
 }

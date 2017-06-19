@@ -19,8 +19,11 @@ public interface DoubanMomentNewsDao {
     @Query("SELECT * FROM douban_moment_news")
     List<DoubanMomentNewsPosts> loadDoubanMomentNews();
 
-    @Insert()
-    void insertAll(List<DoubanMomentNewsPosts> items);
+    @Insert
+    void saveAll(List<DoubanMomentNewsPosts> items);
+
+    @Insert
+    void saveItem(DoubanMomentNewsPosts item);
 
     @Query("SELECT * FROM douban_moment_news WHERE id = :id")
     DoubanMomentNewsPosts loadDoubanMomentItem(int id);

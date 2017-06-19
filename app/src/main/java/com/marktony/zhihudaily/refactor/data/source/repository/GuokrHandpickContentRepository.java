@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickContent;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickContentResult;
 import com.marktony.zhihudaily.refactor.data.source.datasource.GuokrHandpickContentDataSource;
 
 /**
@@ -22,7 +23,7 @@ public class GuokrHandpickContentRepository implements GuokrHandpickContentDataS
     private final GuokrHandpickContentDataSource mRemoteDataSource;
 
     @Nullable
-    private GuokrHandpickContent mContent;
+    private GuokrHandpickContentResult mContent;
 
     private GuokrHandpickContentRepository(@NonNull GuokrHandpickContentDataSource remoteDataSource,
                                            @NonNull GuokrHandpickContentDataSource localDataSource) {
@@ -51,7 +52,7 @@ public class GuokrHandpickContentRepository implements GuokrHandpickContentDataS
 
         mRemoteDataSource.getGuokrHandpickContent(id, new LoadGuokrHandpickContentCallback() {
             @Override
-            public void onContentLoaded(@NonNull GuokrHandpickContent content) {
+            public void onContentLoaded(@NonNull GuokrHandpickContentResult content) {
                 if (mContent == null) {
                     mContent = content;
                     saveContent(content);
@@ -63,7 +64,7 @@ public class GuokrHandpickContentRepository implements GuokrHandpickContentDataS
             public void onDataNotAvailable() {
                 mLocalDataSource.getGuokrHandpickContent(id, new LoadGuokrHandpickContentCallback() {
                     @Override
-                    public void onContentLoaded(@NonNull GuokrHandpickContent content) {
+                    public void onContentLoaded(@NonNull GuokrHandpickContentResult content) {
                         if (mContent == null) {
                             mContent = content;
                         }
@@ -84,12 +85,12 @@ public class GuokrHandpickContentRepository implements GuokrHandpickContentDataS
         mRemoteDataSource.favorite(favorite);
         mLocalDataSource.favorite(favorite);
         if (mContent != null) {
-            mContent.getResult().setFavorite(favorite);
+            mContent.setFavorite(favorite);
         }
     }
 
     @Override
-    public void saveContent(@NonNull GuokrHandpickContent content) {
+    public void saveContent(@NonNull GuokrHandpickContentResult content) {
         mLocalDataSource.saveContent(content);
         mRemoteDataSource.saveContent(content);
     }

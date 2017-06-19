@@ -1,10 +1,14 @@
 package com.marktony.zhihudaily.refactor.data.source.local;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.refactor.data.source.datasource.GuokrHandpickDataSource;
+import com.marktony.zhihudaily.refactor.database.AppDatabase;
+import com.marktony.zhihudaily.refactor.database.DatabaseCreator;
 
 import java.util.List;
 
@@ -17,25 +21,74 @@ public class GuokrHandpickNewsLocalDataSource implements GuokrHandpickDataSource
     @Nullable
     private static GuokrHandpickNewsLocalDataSource INSTANCE = null;
 
-    private GuokrHandpickNewsLocalDataSource() {
+    @Nullable
+    private AppDatabase mDb = null;
 
+    private GuokrHandpickNewsLocalDataSource(@NonNull Context context) {
+        DatabaseCreator creator = DatabaseCreator.getInstance();
+        if (!creator.isDatabaseCreated()) {
+            creator.createDb(context);
+        }
+        mDb = creator.getDatabase();
     }
 
-    public static GuokrHandpickNewsLocalDataSource getInstance() {
+    public static GuokrHandpickNewsLocalDataSource getInstance(@NonNull Context context) {
         if (INSTANCE == null) {
-            INSTANCE = new GuokrHandpickNewsLocalDataSource();
+            INSTANCE = new GuokrHandpickNewsLocalDataSource(context);
         }
         return INSTANCE;
     }
 
     @Override
     public void getGuokrHandpickNews(boolean forceUpdate, boolean clearCache, int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback) {
+        if (mDb == null) {
+            callback.onDataNotAvailable();
+            return;
+        }
 
+        new AsyncTask<Void, Void, List<GuokrHandpickNewsResult>>() {
+
+            @Override
+            protected List<GuokrHandpickNewsResult> doInBackground(Void... voids) {
+                return mDb.guokrHandpickNewsDao().loadGuokrHandpickNews();
+            }
+
+            @Override
+            protected void onPostExecute(List<GuokrHandpickNewsResult> list) {
+                super.onPostExecute(list);
+                if (list == null) {
+                    callback.onDataNotAvailable();
+                } else {
+                    callback.onNewsLoad(list);
+                }
+            }
+        }.execute();
     }
 
     @Override
     public void getItem(int itemId, @NonNull GetNewsItemCallback callback) {
+        if (mDb == null) {
+            callback.onDataNotAvailable();
+            return;
+        }
 
+        new AsyncTask<Void, Void, GuokrHandpickNewsResult>() {
+
+            @Override
+            protected GuokrHandpickNewsResult doInBackground(Void... voids) {
+                return mDb.guokrHandpickNewsDao().loadGuokrHandpickItem(itemId);
+            }
+
+            @Override
+            protected void onPostExecute(GuokrHandpickNewsResult item) {
+                super.onPostExecute(item);
+                if (item == null) {
+                    callback.onDataNotAvailable();
+                } else {
+                    callback.onItemLoaded(item);
+                }
+            }
+        }.execute();
     }
 
     @Override
@@ -50,11 +103,27 @@ public class GuokrHandpickNewsLocalDataSource implements GuokrHandpickDataSource
 
     @Override
     public void saveAll(@NonNull List<GuokrHandpickNewsResult> list) {
-
+        if (mDb != null) {
+            mDb.beginTransaction();
+            try {
+                mDb.guokrHandpickNewsDao().insertAll(list);
+                mDb.setTransactionSuccessful();
+            } finally {
+                mDb.endTransaction();
+            }
+        }
     }
 
     @Override
     public void saveItem(@NonNull GuokrHandpickNewsResult item) {
-
+        if (mDb != null) {
+            mDb.beginTransaction();
+            try {
+                mDb.guokrHandpickNewsDao().insertItem(item);
+                mDb.setTransactionSuccessful();
+            } finally {
+                mDb.endTransaction();
+            }
+        }
     }
 }

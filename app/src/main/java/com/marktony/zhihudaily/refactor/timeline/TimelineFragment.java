@@ -63,11 +63,11 @@ public class TimelineFragment extends Fragment {
 
         new DoubanMomentPresenter(mDoubanFragment, DoubanMomentNewsRepository.getInstance(
                 DoubanMomentNewsRemoteDataSource.getInstance(),
-                DoubanMomentNewsLocalDataSource.getInstance()));
+                DoubanMomentNewsLocalDataSource.getInstance(getContext())));
 
         new GuokrHandpickPresenter(mGuokrFragment, GuokrHandpickNewsRepository.getInstance(
                 GuokrHandpickNewsRemoteDataSource.getInstance(),
-                GuokrHandpickNewsLocalDataSource.getInstance()));
+                GuokrHandpickNewsLocalDataSource.getInstance(getContext())));
     }
 
     @Nullable

@@ -17,10 +17,10 @@ public interface ZhihuDailyContentDao {
     @Query("SELECT * FROM zhihu_daily_content WHERE id = :id")
     ZhihuDailyContent loadZhihuDailyContent(int id);
 
-    @Insert()
-    void insertZhihuDailyContent(ZhihuDailyContent content);
+    @Insert
+    void saveContent(ZhihuDailyContent content);
 
     @Update
-    void updateZhihuDailyContent(ZhihuDailyContent item);
+    void updateContent(ZhihuDailyContent content);
 
 }

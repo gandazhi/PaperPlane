@@ -1,10 +1,14 @@
 package com.marktony.zhihudaily.refactor.data.source.local;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.refactor.data.ZhihuDailyContent;
 import com.marktony.zhihudaily.refactor.data.source.datasource.ZhihuDailyContentDataSource;
+import com.marktony.zhihudaily.refactor.database.AppDatabase;
+import com.marktony.zhihudaily.refactor.database.DatabaseCreator;
 
 /**
  * Created by lizhaotailang on 2017/5/26.
@@ -15,20 +19,49 @@ public class ZhihuDailyContentLocalDataSource implements ZhihuDailyContentDataSo
     @Nullable
     private static ZhihuDailyContentLocalDataSource INSTANCE = null;
 
-    private ZhihuDailyContentLocalDataSource() {
+    @Nullable
+    private AppDatabase mDb = null;
 
+    private ZhihuDailyContentLocalDataSource(@NonNull Context context) {
+        DatabaseCreator creator = DatabaseCreator.getInstance();
+        if (!creator.isDatabaseCreated()) {
+            creator.createDb(context);
+        }
+        mDb = creator.getDatabase();
     }
 
-    public static ZhihuDailyContentLocalDataSource getInstance() {
+    public static ZhihuDailyContentLocalDataSource getInstance(@NonNull Context context) {
         if (INSTANCE == null) {
-            INSTANCE = new ZhihuDailyContentLocalDataSource();
+            INSTANCE = new ZhihuDailyContentLocalDataSource(context);
         }
         return INSTANCE;
     }
 
     @Override
     public void getZhihuDailyContent(int id, @NonNull LoadZhihuDailyContentCallback callback) {
+        if (mDb == null) {
+            callback.onDataNotAvailable();
+            return;
+        }
 
+        new AsyncTask<Void, Void, ZhihuDailyContent>() {
+
+            @Override
+            protected ZhihuDailyContent doInBackground(Void... voids) {
+                return mDb.zhihuDailyContentDao().loadZhihuDailyContent(id);
+            }
+
+            @Override
+            protected void onPostExecute(ZhihuDailyContent content) {
+                super.onPostExecute(content);
+                if (content == null) {
+                    callback.onDataNotAvailable();
+                } else {
+                    callback.onContentLoaded(content);
+                }
+            }
+
+        }.execute();
     }
 
     @Override
@@ -38,6 +71,15 @@ public class ZhihuDailyContentLocalDataSource implements ZhihuDailyContentDataSo
 
     @Override
     public void saveContent(@NonNull ZhihuDailyContent content) {
-
+        if (mDb != null) {
+            mDb.beginTransaction();
+            try {
+                mDb.zhihuDailyContentDao().saveContent(content);
+                mDb.setTransactionSuccessful();
+            } finally {
+                mDb.endTransaction();
+            }
+        }
     }
+
 }

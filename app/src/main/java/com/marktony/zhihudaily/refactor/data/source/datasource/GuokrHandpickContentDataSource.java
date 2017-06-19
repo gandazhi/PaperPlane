@@ -2,7 +2,7 @@ package com.marktony.zhihudaily.refactor.data.source.datasource;
 
 import android.support.annotation.NonNull;
 
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickContent;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickContentResult;
 
 /**
  * Created by lizhaotailang on 2017/5/26.
@@ -12,7 +12,7 @@ public interface GuokrHandpickContentDataSource {
 
     interface LoadGuokrHandpickContentCallback {
 
-        void onContentLoaded(@NonNull GuokrHandpickContent content);
+        void onContentLoaded(@NonNull GuokrHandpickContentResult content);
 
         void onDataNotAvailable();
 
@@ -22,6 +22,6 @@ public interface GuokrHandpickContentDataSource {
 
     void favorite(boolean favorite);
 
-    void saveContent(@NonNull GuokrHandpickContent content);
+    void saveContent(@NonNull GuokrHandpickContentResult content);
 
 }

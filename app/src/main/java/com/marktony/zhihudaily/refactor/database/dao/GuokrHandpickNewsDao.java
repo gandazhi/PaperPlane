@@ -19,8 +19,11 @@ public interface GuokrHandpickNewsDao {
     @Query("SELECT * FROM guokr_handpick_news")
     List<GuokrHandpickNewsResult> loadGuokrHandpickNews();
 
-    @Insert()
+    @Insert
     void insertAll(List<GuokrHandpickNewsResult> items);
+
+    @Insert
+    void insertItem(GuokrHandpickNewsResult item);
 
     @Query("SELECT * FROM guokr_handpick_news WHERE id = :id")
     GuokrHandpickNewsResult loadGuokrHandpickItem(int id);

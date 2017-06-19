@@ -28,8 +28,8 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
         DatabaseCreator creator = DatabaseCreator.getInstance();
         if (!creator.isDatabaseCreated()) {
             creator.createDb(context);
-            mDb = creator.getDatabase();
         }
+        mDb = creator.getDatabase();
     }
 
     public static ZhihuDailyNewsLocalDataSource getInstance(@NonNull Context context) {
@@ -54,7 +54,7 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
 
             @Override
             protected List<ZhihuDailyNewsQuestion> doInBackground(Void... voids) {
-                return null;
+                return mDb.zhihuDailyNewsDao().loadAllZhihuDailyNews();
             }
 
             @Override
@@ -79,9 +79,10 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
         }
 
         new AsyncTask<Void, Void, ZhihuDailyNewsQuestion>() {
+
             @Override
             protected ZhihuDailyNewsQuestion doInBackground(Void... voids) {
-                return null;
+                return mDb.zhihuDailyNewsDao().loadZhihuDailyNewsItem(itemId);
             }
 
             @Override

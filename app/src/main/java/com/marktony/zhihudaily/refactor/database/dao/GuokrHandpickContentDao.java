@@ -5,9 +5,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.marktony.zhihudaily.refactor.data.GuokrHandpickNewsResult;
-
-import java.util.List;
+import com.marktony.zhihudaily.refactor.data.GuokrHandpickContentResult;
 
 /**
  * Created by lizhaotailang on 2017/6/15.
@@ -16,16 +14,13 @@ import java.util.List;
 @Dao
 public interface GuokrHandpickContentDao {
 
-    @Query("SELECT * FROM guokr_handpick_news")
-    List<GuokrHandpickNewsResult> loadGuokrHandpickNews();
+    @Insert
+    void saveContent(GuokrHandpickContentResult content);
 
-    @Insert()
-    void insertAll(List<GuokrHandpickNewsResult> items);
-
-    @Query("SELECT * FROM guokr_handpick_news WHERE id = :id")
-    GuokrHandpickNewsResult loadGuokrHandpickNewsItem(int id);
+    @Query("SELECT * FROM guokr_handpick_content WHERE id = :id")
+    GuokrHandpickContentResult loadGuokrHandpickNewsItem(int id);
 
     @Update
-    void updateGuokrHandpickNews(GuokrHandpickNewsResult item);
+    void updateContent(GuokrHandpickContentResult content);
 
 }
