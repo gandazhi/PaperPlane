@@ -1,6 +1,7 @@
 package com.marktony.zhihudaily.database.dao;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
@@ -27,5 +28,8 @@ public interface GuokrHandpickNewsDao {
 
     @Update
     void updateGuokrHandpickNews(GuokrHandpickNewsResult item);
+
+    @Delete
+    void deleteGuokrHandpickNews(GuokrHandpickNewsResult item);
 
 }

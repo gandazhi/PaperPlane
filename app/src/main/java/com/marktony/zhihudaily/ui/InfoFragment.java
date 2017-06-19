@@ -26,7 +26,7 @@ public class InfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.re_fragment_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_info, container, false);
 
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.info_container, new InfoPreferenceFragment())

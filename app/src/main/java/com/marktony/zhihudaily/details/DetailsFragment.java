@@ -86,7 +86,7 @@ public class DetailsFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.re_fragment_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
 
         initViews(view);
 
@@ -129,7 +129,7 @@ public class DetailsFragment extends Fragment
 
             final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
 
-            View view = getActivity().getLayoutInflater().inflate(R.layout.reading_actions_sheet, null);
+            View view = getActivity().getLayoutInflater().inflate(R.layout.actions_details_sheet, null);
 
             AppCompatTextView favorite = view.findViewById(R.id.text_view_favorite);
             AppCompatTextView copyLink = view.findViewById(R.id.text_view_copy_link);

@@ -10,16 +10,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.marktony.zhihudaily.data.DoubanMomentContent;
-import com.marktony.zhihudaily.data.GuokrHandpickContent;
+import com.marktony.zhihudaily.data.GuokrHandpickContentResult;
 import com.marktony.zhihudaily.data.PostType;
 import com.marktony.zhihudaily.data.ZhihuDailyContent;
 import com.marktony.zhihudaily.database.AppDatabase;
 import com.marktony.zhihudaily.database.DatabaseCreator;
 import com.marktony.zhihudaily.retrofit.RetrofitService;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.io.IOException;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -49,12 +48,6 @@ public class CacheService extends Service {
 
         mReceiver = new LocalReceiver();
 
-        DatabaseCreator creator = DatabaseCreator.getInstance();
-        if (!creator.isDatabaseCreated()) {
-            creator.createDb(this);
-        }
-        mDb = creator.getDatabase();
-
         IntentFilter filter = new IntentFilter();
         filter.addAction(BROADCAST_FILTER_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filter);
@@ -78,22 +71,6 @@ public class CacheService extends Service {
                 .create(RetrofitService.GuokrHandpickService.class);
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return super.onStartCommand(intent, flags, startId);
-    }
-
-    @Override
-    public boolean onUnbind(Intent intent) {
-        return super.onUnbind(intent);
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -101,6 +78,12 @@ public class CacheService extends Service {
         if (mReceiver != null) {
             LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
         }
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     // A local broadcast receiver that receives broadcast from the corresponding fragment.
@@ -123,7 +106,6 @@ public class CacheService extends Service {
                     break;
                 default:
                     break;
-
             }
         }
 
@@ -132,91 +114,116 @@ public class CacheService extends Service {
     // Get zhihu content data by accessing network.
     private void cacheZhihuDailyContent(int id) {
 
-        if (mDb == null
-                || mDb.zhihuDailyNewsDao().loadZhihuDailyNewsItem(id) == null
-                || mDb.zhihuDailyContentDao().loadZhihuDailyContent(id) == null) {
-            return;
+        if (mDb == null) {
+            DatabaseCreator creator = DatabaseCreator.getInstance();
+            if (!creator.isDatabaseCreated()) {
+                creator.createDb(this);
+            }
+            mDb = creator.getDatabase();
         }
 
-        mZhihuService.getZhihuContent(id).enqueue(new Callback<ZhihuDailyContent>() {
-            @Override
-            public void onResponse(Call<ZhihuDailyContent> call, Response<ZhihuDailyContent> response) {
-                if (response.body() != null && mDb != null) {
-                    mDb.beginTransaction();
-                    try {
-                        mDb.zhihuDailyContentDao().saveContent(response.body());
+        new Thread(() -> {
+
+            if (mDb != null && mDb.zhihuDailyContentDao().loadZhihuDailyContent(id) == null) {
+                mDb.beginTransaction();
+                try {
+                    // Call execute() rather than enqueue()
+                    // or you will go back to main thread in onResponse() function.
+                    ZhihuDailyContent tmp = mZhihuService.getZhihuContent(id).execute().body();
+                    if (tmp != null) {
+                        mDb.zhihuDailyContentDao().saveContent(tmp);
                         mDb.setTransactionSuccessful();
-                    } finally {
-                        mDb.endTransaction();
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    mDb.endTransaction();
                 }
             }
-
-            @Override
-            public void onFailure(Call<ZhihuDailyContent> call, Throwable t) {
-
-            }
-        });
+        }).start();
     }
 
     // Get douban content data by accessing network.
     private void cacheDoubanContent(int id) {
 
-        if (mDb == null
-                || mDb.doubanMomentNewsDao().loadDoubanMomentItem(id) == null
-                || mDb.doubanMomentContentDao().loadDoubanMomentContent(id) == null) {
-            return;
+        if (mDb == null) {
+            DatabaseCreator creator = DatabaseCreator.getInstance();
+            if (!creator.isDatabaseCreated()) {
+                creator.createDb(this);
+            }
+            mDb = creator.getDatabase();
         }
 
-        mDoubanService.getDoubanContent(id).enqueue(new Callback<DoubanMomentContent>() {
-            @Override
-            public void onResponse(Call<DoubanMomentContent> call, Response<DoubanMomentContent> response) {
-                if (response.body() != null && mDb != null) {
-                    mDb.beginTransaction();
-                    try {
-                        mDb.doubanMomentContentDao().saveContent(response.body());
+        new Thread(() -> {
+            if (mDb != null && mDb.doubanMomentContentDao().loadDoubanMomentContent(id) == null) {
+                mDb.beginTransaction();
+                try {
+                    // Call execute() rather than enqueue()
+                    // or you will go back to main thread in onResponse() function.
+                    DoubanMomentContent tmp = mDoubanService.getDoubanContent(id).execute().body();
+                    if (tmp != null) {
+                        mDb.doubanMomentContentDao().saveContent(tmp);
                         mDb.setTransactionSuccessful();
-                    } finally {
-                        mDb.endTransaction();
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    mDb.endTransaction();
                 }
             }
-
-            @Override
-            public void onFailure(Call<DoubanMomentContent> call, Throwable t) {
-
-            }
-        });
+        }).start();
     }
 
     // Get guokr content data by accessing network.
     private void cacheGuokrContent(int id) {
 
-        if (mDb == null
-                || mDb.guokrHandpickNewsDao().loadGuokrHandpickItem(id) == null
-                || mDb.guokrHandpickContentDao().loadGuokrHandpickNewsItem(id) == null) {
-            return;
+        if (mDb == null) {
+            DatabaseCreator creator = DatabaseCreator.getInstance();
+            if (!creator.isDatabaseCreated()) {
+                creator.createDb(this);
+            }
+            mDb = creator.getDatabase();
         }
 
-        mGuokrService.getGuokrContent(id).enqueue(new Callback<GuokrHandpickContent>() {
-            @Override
-            public void onResponse(Call<GuokrHandpickContent> call, Response<GuokrHandpickContent> response) {
-                if (response.body() != null && mDb != null) {
-                    mDb.beginTransaction();
-                    try {
-                        mDb.guokrHandpickContentDao().saveContent(response.body().getResult());
+        new Thread(() -> {
+            if (mDb != null && mDb.guokrHandpickContentDao().loadGuokrHandpickNewsItem(id) == null) {
+                mDb.beginTransaction();
+                try {
+                    // Call execute() rather than enqueue()
+                    // or you will go back to main thread in onResponse() function.
+                    GuokrHandpickContentResult tmp = mGuokrService.getGuokrContent(id).execute().body().getResult();
+                    if (tmp != null) {
+                        mDb.guokrHandpickContentDao().saveContent(tmp);
                         mDb.setTransactionSuccessful();
-                    } finally {
-                        mDb.endTransaction();
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    mDb.endTransaction();
                 }
             }
+        }).start();
+    }
 
-            @Override
-            public void onFailure(Call<GuokrHandpickContent> call, Throwable t) {
-
+    private void clearTimeoutContent() {
+        if (mDb == null) {
+            DatabaseCreator creator = DatabaseCreator.getInstance();
+            if (!creator.isDatabaseCreated()) {
+                creator.createDb(this);
             }
-        });
+            mDb = creator.getDatabase();
+        }
+
+        new Thread(() -> {
+            if (mDb != null) {
+                mDb.beginTransaction();
+                try {
+                    // todo
+                } finally {
+                    mDb.endTransaction();
+                }
+            }
+        }).start();
     }
 
 }

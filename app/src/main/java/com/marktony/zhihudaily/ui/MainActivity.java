@@ -1,5 +1,6 @@
 package com.marktony.zhihudaily.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.favorites.FavoritesFragment;
 import com.marktony.zhihudaily.favorites.FavoritesPresenter;
+import com.marktony.zhihudaily.service.CacheService;
 import com.marktony.zhihudaily.timeline.TimelineFragment;
 
 /**
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.re_activity_main);
+        setContentView(R.layout.activity_main);
 
         initViews();
 
@@ -77,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
             ft.commit();
             return true;
         }));
+
+        // Start the caching service.
+        startService(new Intent(MainActivity.this, CacheService.class));
+
     }
 
     private void initViews() {

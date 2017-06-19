@@ -7,12 +7,17 @@ import android.arch.persistence.room.Update;
 
 import com.marktony.zhihudaily.data.DoubanMomentContent;
 
+import java.util.List;
+
 /**
  * Created by lizhaotailang on 2017/6/15.
  */
 
 @Dao
 public interface DoubanMomentContentDao {
+
+    @Query("SELECT * FROM douban_moment_content")
+    List<DoubanMomentContent> loadAllDoubanContents();
 
     @Query("SELECT * FROM douban_moment_content WHERE id = :id")
     DoubanMomentContent loadDoubanMomentContent(int id);
