@@ -50,7 +50,33 @@ public class DoubanMomentNewsLocalDataSource implements DoubanMomentNewsDataSour
 
             @Override
             protected List<DoubanMomentNewsPosts> doInBackground(Void... voids) {
-                return mDb.doubanMomentNewsDao().loadDoubanMomentNews();
+                return mDb.doubanMomentNewsDao().queryAll();
+            }
+
+            @Override
+            protected void onPostExecute(List<DoubanMomentNewsPosts> list) {
+                super.onPostExecute(list);
+                if (list == null) {
+                    callback.onDataNotAvailable();
+                } else {
+                    callback.onNewsLoaded(list);
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getFavorites(@NonNull LoadDoubanMomentDailyCallback callback) {
+        if (mDb == null) {
+            callback.onDataNotAvailable();
+            return;
+        }
+
+        new AsyncTask<Void, Void, List<DoubanMomentNewsPosts>>() {
+
+            @Override
+            protected List<DoubanMomentNewsPosts> doInBackground(Void... voids) {
+                return mDb.doubanMomentNewsDao().queryAllFavorites();
             }
 
             @Override
@@ -76,7 +102,7 @@ public class DoubanMomentNewsLocalDataSource implements DoubanMomentNewsDataSour
 
             @Override
             protected DoubanMomentNewsPosts doInBackground(Void... voids) {
-                return mDb.doubanMomentNewsDao().loadDoubanMomentItem(id);
+                return mDb.doubanMomentNewsDao().queryItemById(id);
             }
 
             @Override
@@ -107,7 +133,7 @@ public class DoubanMomentNewsLocalDataSource implements DoubanMomentNewsDataSour
         if (mDb != null) {
             mDb.beginTransaction();
             try {
-                mDb.doubanMomentNewsDao().saveAll(list);
+                mDb.doubanMomentNewsDao().insertAll(list);
                 mDb.setTransactionSuccessful();
             } finally {
                 mDb.endTransaction();

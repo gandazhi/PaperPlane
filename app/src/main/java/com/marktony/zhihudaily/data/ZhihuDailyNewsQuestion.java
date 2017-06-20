@@ -53,6 +53,10 @@ public class ZhihuDailyNewsQuestion {
     @Expose
     private boolean outdated;
 
+    @ColumnInfo(name = "timestamp")
+    @Expose
+    private long timestamp;
+
     public List<String> getImages() {
         return images;
     }
@@ -107,5 +111,13 @@ public class ZhihuDailyNewsQuestion {
 
     public void setOutdated(boolean outdate) {
         this.outdated = outdate;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

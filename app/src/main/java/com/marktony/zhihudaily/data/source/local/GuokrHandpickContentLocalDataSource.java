@@ -52,7 +52,7 @@ public class GuokrHandpickContentLocalDataSource implements GuokrHandpickContent
 
             @Override
             protected GuokrHandpickContentResult doInBackground(Void... voids) {
-                return mDb.guokrHandpickContentDao().loadGuokrHandpickNewsItem(id);
+                return mDb.guokrHandpickContentDao().queryContentById(id);
             }
 
             @Override
@@ -75,13 +75,15 @@ public class GuokrHandpickContentLocalDataSource implements GuokrHandpickContent
     @Override
     public void saveContent(@NonNull GuokrHandpickContentResult content) {
         if (mDb != null) {
-            mDb.beginTransaction();
-            try {
-                mDb.guokrHandpickContentDao().saveContent(content);
-                mDb.setTransactionSuccessful();
-            } finally {
-                mDb.endTransaction();
-            }
+            new Thread(() -> {
+                mDb.beginTransaction();
+                try {
+                    mDb.guokrHandpickContentDao().insert(content);
+                    mDb.setTransactionSuccessful();
+                } finally {
+                    mDb.endTransaction();
+                }
+            }).start();
         }
     }
 }

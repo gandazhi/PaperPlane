@@ -174,6 +174,10 @@ public class GuokrHandpickContentResult {
     @Expose
     private boolean favorite;
 
+    @ColumnInfo(name = "timestamp")
+    @Expose
+    private long timestamp;
+
     public String getImage() {
         return image;
     }
@@ -420,5 +424,13 @@ public class GuokrHandpickContentResult {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

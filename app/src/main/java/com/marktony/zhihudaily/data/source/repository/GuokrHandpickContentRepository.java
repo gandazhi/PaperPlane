@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.data.GuokrHandpickContentResult;
 import com.marktony.zhihudaily.data.source.datasource.GuokrHandpickContentDataSource;
+import com.marktony.zhihudaily.util.DateFormatUtil;
 
 /**
  * Created by lizhaotailang on 2017/5/26.
@@ -90,6 +91,7 @@ public class GuokrHandpickContentRepository implements GuokrHandpickContentDataS
 
     @Override
     public void saveContent(@NonNull GuokrHandpickContentResult content) {
+        content.setTimestamp(DateFormatUtil.formatZhihuDailyDateStringToLong(content.getDatePublished()));
         mLocalDataSource.saveContent(content);
         mRemoteDataSource.saveContent(content);
     }

@@ -50,7 +50,33 @@ public class GuokrHandpickNewsLocalDataSource implements GuokrHandpickDataSource
 
             @Override
             protected List<GuokrHandpickNewsResult> doInBackground(Void... voids) {
-                return mDb.guokrHandpickNewsDao().loadGuokrHandpickNews();
+                return mDb.guokrHandpickNewsDao().queryAllItems();
+            }
+
+            @Override
+            protected void onPostExecute(List<GuokrHandpickNewsResult> list) {
+                super.onPostExecute(list);
+                if (list == null) {
+                    callback.onDataNotAvailable();
+                } else {
+                    callback.onNewsLoad(list);
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getFavorites(@NonNull LoadGuokrHandpickNewsCallback callback) {
+        if (mDb == null) {
+            callback.onDataNotAvailable();
+            return;
+        }
+
+        new AsyncTask<Void, Void, List<GuokrHandpickNewsResult>>() {
+
+            @Override
+            protected List<GuokrHandpickNewsResult> doInBackground(Void... voids) {
+                return mDb.guokrHandpickNewsDao().queryAllFavorites();
             }
 
             @Override
@@ -76,7 +102,7 @@ public class GuokrHandpickNewsLocalDataSource implements GuokrHandpickDataSource
 
             @Override
             protected GuokrHandpickNewsResult doInBackground(Void... voids) {
-                return mDb.guokrHandpickNewsDao().loadGuokrHandpickItem(itemId);
+                return mDb.guokrHandpickNewsDao().queryItemById(itemId);
             }
 
             @Override

@@ -18,18 +18,27 @@ import java.util.List;
 public interface ZhihuDailyNewsDao {
 
     @Query("SELECT * FROM zhihu_daily_news")
-    List<ZhihuDailyNewsQuestion> loadAllZhihuDailyNews();
+    List<ZhihuDailyNewsQuestion> queryAll();
+
+    @Query("SELECT * FROM zhihu_daily_news WHERE id = :id")
+    ZhihuDailyNewsQuestion queryItemById(int id);
+
+    @Query("SELECT * FROM zhihu_daily_news WHERE favorite = 1")
+    List<ZhihuDailyNewsQuestion> queryAllFavorites();
+
+    @Query("SELECT * FROM zhihu_daily_news WHERE timestamp < :timestamp")
+    List<ZhihuDailyNewsQuestion> queryAllTimeoutItems(long timestamp);
+
+    @Query("SELECT timestamp from zhihu_daily_news WHERE id = :id")
+    long queryTimestampById(int id);
 
     @Insert
     void insertAll(List<ZhihuDailyNewsQuestion> items);
 
-    @Query("SELECT * FROM zhihu_daily_news WHERE id = :id")
-    ZhihuDailyNewsQuestion loadZhihuDailyNewsItem(int id);
-
     @Update
-    void updateZhihuDailyNews(ZhihuDailyNewsQuestion question);
+    void update(ZhihuDailyNewsQuestion item);
 
     @Delete
-    void deleteZhihuDailyNews(ZhihuDailyNewsQuestion item);
+    void delete(ZhihuDailyNewsQuestion item);
 
 }

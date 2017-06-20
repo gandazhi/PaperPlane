@@ -60,6 +60,12 @@ public class GuokrHandpickNewsRemoteDataSource implements GuokrHandpickDataSourc
     }
 
     @Override
+    public void getFavorites(@NonNull LoadGuokrHandpickNewsCallback callback) {
+        // Not required for the remote data source because the {@link TasksRepository} handles
+        // converting from a {@code taskId} to a {@link task} using its cached data.
+    }
+
+    @Override
     public void getItem(int itemId, @NonNull GetNewsItemCallback callback) {
         // Not required for the remote data source because the {@link TasksRepository} handles
         // converting from a {@code taskId} to a {@link task} using its cached data.

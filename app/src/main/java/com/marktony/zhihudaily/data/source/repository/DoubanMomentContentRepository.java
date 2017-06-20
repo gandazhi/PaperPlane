@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.data.DoubanMomentContent;
 import com.marktony.zhihudaily.data.source.datasource.DoubanMomentContentDataSource;
+import com.marktony.zhihudaily.util.DateFormatUtil;
 
 /**
  * Created by lizhaotailang on 2017/5/25.
@@ -91,6 +92,7 @@ public class DoubanMomentContentRepository implements DoubanMomentContentDataSou
 
     @Override
     public void saveContent(@NonNull DoubanMomentContent content) {
+        content.setTimestamp(DateFormatUtil.formatDoubanMomentDateStringToLong(content.getPublishedTime()));
         mLocalDataSource.saveContent(content);
         mRemoteDataSource.saveContent(content);
     }

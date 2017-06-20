@@ -52,7 +52,7 @@ public class DoubanMomentNewsPosts {
     @Embedded
     @Expose
     @SerializedName("author")
-    private DoubamMomentNewsAuthor author;
+    private DoubanMomentNewsAuthor author;
 
     @ColumnInfo(name = "column")
     @Expose
@@ -123,6 +123,10 @@ public class DoubanMomentNewsPosts {
     @Expose
     private boolean outdated;
 
+    @ColumnInfo(name = "timestamp")
+    @Expose
+    private long timestamp;
+
     public int getDisplayStyle() {
         return displayStyle;
     }
@@ -171,11 +175,11 @@ public class DoubanMomentNewsPosts {
         this.isLiked = liked;
     }
 
-    public DoubamMomentNewsAuthor getAuthor() {
+    public DoubanMomentNewsAuthor getAuthor() {
         return author;
     }
 
-    public void setAuthor(DoubamMomentNewsAuthor author) {
+    public void setAuthor(DoubanMomentNewsAuthor author) {
         this.author = author;
     }
 
@@ -297,5 +301,13 @@ public class DoubanMomentNewsPosts {
 
     public void setOutdated(boolean outdated) {
         this.outdated = outdated;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

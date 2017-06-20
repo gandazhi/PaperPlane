@@ -1,7 +1,9 @@
 package com.marktony.zhihudaily.database.dao;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
@@ -16,16 +18,19 @@ import java.util.List;
 @Dao
 public interface DoubanMomentContentDao {
 
-    @Query("SELECT * FROM douban_moment_content")
-    List<DoubanMomentContent> loadAllDoubanContents();
-
     @Query("SELECT * FROM douban_moment_content WHERE id = :id")
-    DoubanMomentContent loadDoubanMomentContent(int id);
+    DoubanMomentContent queryContentById(int id);
 
-    @Insert
-    void saveContent(DoubanMomentContent content);
+    @Query("SELECT * FROM douban_moment_content WHERE timestamp < :timestamp")
+    List<DoubanMomentContent> queryAllTimeoutContents(long timestamp);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(DoubanMomentContent content);
 
     @Update
-    void updateContent(DoubanMomentContent content);
+    void update(DoubanMomentContent content);
+
+    @Delete
+    void delete(DoubanMomentContent content);
 
 }

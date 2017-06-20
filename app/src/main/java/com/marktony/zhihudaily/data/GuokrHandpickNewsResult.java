@@ -178,8 +178,11 @@ public class GuokrHandpickNewsResult {
     @Expose
     private boolean outdated;
 
-    public GuokrHandpickNewsResult() {
-    }
+    @ColumnInfo(name = "timestamp")
+    @Expose
+    private long timestamp;
+
+    public GuokrHandpickNewsResult() {}
 
     public boolean isFavorite() {
         return favorite;
@@ -437,4 +440,11 @@ public class GuokrHandpickNewsResult {
         this.resourceUrl = resourceUrl;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 }

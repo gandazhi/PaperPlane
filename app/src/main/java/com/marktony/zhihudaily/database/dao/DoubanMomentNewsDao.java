@@ -18,18 +18,24 @@ import java.util.List;
 public interface DoubanMomentNewsDao {
 
     @Query("SELECT * FROM douban_moment_news")
-    List<DoubanMomentNewsPosts> loadDoubanMomentNews();
-
-    @Insert
-    void saveAll(List<DoubanMomentNewsPosts> items);
+    List<DoubanMomentNewsPosts> queryAll();
 
     @Query("SELECT * FROM douban_moment_news WHERE id = :id")
-    DoubanMomentNewsPosts loadDoubanMomentItem(int id);
+    DoubanMomentNewsPosts queryItemById(int id);
+
+    @Query("SELECT * FROM douban_moment_news WHERE favorite = 1")
+    List<DoubanMomentNewsPosts> queryAllFavorites();
+
+    @Query("SELECT * FROM douban_moment_news WHERE timestamp < :timestamp")
+    List<DoubanMomentNewsPosts> queryAllTimeoutItems(long timestamp);
+
+    @Insert
+    void insertAll(List<DoubanMomentNewsPosts> items);
 
     @Update
-    void updateDoubanMomentNews(DoubanMomentNewsPosts item);
+    void update(DoubanMomentNewsPosts item);
 
     @Delete
-    void deleteDoubanMomentNews(DoubanMomentNewsPosts item);
+    void delete(DoubanMomentNewsPosts item);
 
 }

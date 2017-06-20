@@ -91,6 +91,8 @@ public class ZhihuDailyContentRepository implements ZhihuDailyContentDataSource 
 
     @Override
     public void saveContent(@NonNull ZhihuDailyContent content) {
-
+        // Note: Setting of timestamp was done in the {@link ZhihuDailyContentLocalDataSource} class.
+        mLocalDataSource.saveContent(content);
+        mRemoteDataSource.saveContent(content);
     }
 }

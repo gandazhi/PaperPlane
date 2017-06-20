@@ -124,6 +124,10 @@ public class DoubanMomentContent {
     @Expose
     private boolean favorite;
 
+    @ColumnInfo(name = "timestamp")
+    @Expose
+    private long timestamp;
+
     public int getDisplayStyle() {
         return displayStyle;
     }
@@ -290,5 +294,13 @@ public class DoubanMomentContent {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

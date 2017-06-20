@@ -1,11 +1,14 @@
 package com.marktony.zhihudaily.database.dao;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.marktony.zhihudaily.data.GuokrHandpickContentResult;
+import com.marktony.zhihudaily.data.GuokrHandpickNewsResult;
 
 import java.util.List;
 
@@ -16,16 +19,19 @@ import java.util.List;
 @Dao
 public interface GuokrHandpickContentDao {
 
-    @Query("SELECT * FROM guokr_handpick_content")
-    List<GuokrHandpickContentResult> loadAllGuokrContents();
-
     @Query("SELECT * FROM guokr_handpick_content WHERE id = :id")
-    GuokrHandpickContentResult loadGuokrHandpickNewsItem(int id);
+    GuokrHandpickContentResult queryContentById(int id);
 
-    @Insert
-    void saveContent(GuokrHandpickContentResult content);
+    @Query("SELECT * FROM guokr_handpick_content WHERE timestamp < :timestamp")
+    List<GuokrHandpickContentResult> queryAllTimeoutContents(long timestamp);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(GuokrHandpickContentResult content);
 
     @Update
-    void updateContent(GuokrHandpickContentResult content);
+    void update(GuokrHandpickContentResult content);
+
+    @Delete
+    void delete(GuokrHandpickNewsResult item);
 
 }

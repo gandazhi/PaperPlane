@@ -3,6 +3,7 @@ package com.marktony.zhihudaily.database.dao;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
@@ -17,19 +18,19 @@ import java.util.List;
 @Dao
 public interface ZhihuDailyContentDao {
 
-    @Query("SELECT * FROM zhihu_daily_content")
-    List<ZhihuDailyContent> loadAllZhihuContents();
-
     @Query("SELECT * FROM zhihu_daily_content WHERE id = :id")
-    ZhihuDailyContent loadZhihuDailyContent(int id);
+    ZhihuDailyContent queryContentById(int id);
 
-    @Insert
-    void saveContent(ZhihuDailyContent content);
+    @Query("SELECT * FROM zhihu_daily_content WHERE timestamp > :timestamp")
+    List<ZhihuDailyContent> queryAllTimeoutContents(long timestamp);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(ZhihuDailyContent content);
 
     @Update
-    void updateContent(ZhihuDailyContent content);
+    void update(ZhihuDailyContent content);
 
     @Delete
-    void deleteContent(ZhihuDailyContent content);
+    void delete(ZhihuDailyContent content);
 
 }

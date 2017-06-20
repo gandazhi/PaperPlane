@@ -55,7 +55,7 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
 
             @Override
             protected List<ZhihuDailyNewsQuestion> doInBackground(Void... voids) {
-                return mDb.zhihuDailyNewsDao().loadAllZhihuDailyNews();
+                return mDb.zhihuDailyNewsDao().queryAll();
             }
 
             @Override
@@ -73,6 +73,32 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
     }
 
     @Override
+    public void getFavorites(@NonNull LoadZhihuDailyNewsCallback callback) {
+        if (mDb == null) {
+            callback.onDataNotAvailable();
+            return;
+        }
+
+        new AsyncTask<Void, Void, List<ZhihuDailyNewsQuestion>>() {
+
+            @Override
+            protected List<ZhihuDailyNewsQuestion> doInBackground(Void... voids) {
+                return mDb.zhihuDailyNewsDao().queryAllFavorites();
+            }
+
+            @Override
+            protected void onPostExecute(List<ZhihuDailyNewsQuestion> list) {
+                super.onPostExecute(list);
+                if (list == null) {
+                    callback.onDataNotAvailable();
+                } else {
+                    callback.onNewsLoaded(list);
+                }
+            }
+        }.execute();
+    }
+
+    @Override
     public void getItem(int itemId, @NonNull GetNewsItemCallback callback) {
         if (mDb == null) {
             callback.onDataNotAvailable();
@@ -82,7 +108,7 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
         new AsyncTask<Void, Void, ZhihuDailyNewsQuestion>() {
             @Override
             protected ZhihuDailyNewsQuestion doInBackground(Void... voids) {
-                return null;
+                return mDb.zhihuDailyNewsDao().queryItemById(itemId);
             }
 
             @Override

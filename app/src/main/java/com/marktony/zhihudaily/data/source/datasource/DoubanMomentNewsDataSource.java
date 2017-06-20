@@ -30,6 +30,8 @@ public interface DoubanMomentNewsDataSource {
 
     void getDoubanMomentNews(boolean forceUpdate, boolean clearCache, long date, @NonNull LoadDoubanMomentDailyCallback callback);
 
+    void getFavorites(@NonNull LoadDoubanMomentDailyCallback callback);
+
     void getItem(int id, @NonNull GetNewsItemCallback callback);
 
     void favoriteItem(int itemId, boolean favorite);

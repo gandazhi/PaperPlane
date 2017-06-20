@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.marktony.zhihudaily.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.data.source.datasource.GuokrHandpickDataSource;
+import com.marktony.zhihudaily.util.DateFormatUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -83,6 +84,35 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
     }
 
     @Override
+    public void getFavorites(@NonNull LoadGuokrHandpickNewsCallback callback) {
+        if (mCachedItems != null) {
+            List<GuokrHandpickNewsResult> list = new ArrayList<>();
+            for (GuokrHandpickNewsResult item : mCachedItems.values()) {
+                if (item.isFavorite()) {
+                    list.add(item);
+                }
+            }
+            callback.onNewsLoad(list);
+            return;
+        }
+
+        mLocalDataSource.getFavorites(new LoadGuokrHandpickNewsCallback() {
+            @Override
+            public void onNewsLoad(@NonNull List<GuokrHandpickNewsResult> list) {
+                for (GuokrHandpickNewsResult item : list) {
+                    mCachedItems.get(item.getId()).setFavorite(true);
+                }
+                callback.onNewsLoad(list);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+        });
+    }
+
+    @Override
     public void getItem(int itemId, @NonNull GetNewsItemCallback callback) {
         GuokrHandpickNewsResult item = getItemWithId(itemId);
 
@@ -146,6 +176,12 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
 
     @Override
     public void saveAll(@NonNull List<GuokrHandpickNewsResult> list) {
+        for (GuokrHandpickNewsResult item : list) {
+            // Set the timestamp.
+            item.setTimestamp(DateFormatUtil.formatGuokrHandpickTimeStringToLong(item.getDatePublished()));
+            mCachedItems.put(item.getId(), item);
+        }
+
         mLocalDataSource.saveAll(list);
         mRemoteDataSource.saveAll(list);
 
@@ -153,9 +189,6 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
             mCachedItems = new LinkedHashMap<>();
         }
 
-        for (GuokrHandpickNewsResult item : list) {
-            mCachedItems.put(item.getId(), item);
-        }
     }
 
     private void refreshCache(boolean clearCache, List<GuokrHandpickNewsResult> list) {

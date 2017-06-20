@@ -49,10 +49,17 @@ public class ZhihuDailyNewsRemoteDataSource implements ZhihuDailyNewsDataSource 
 
         RetrofitService.ZhihuDailyService service = retrofit.create(RetrofitService.ZhihuDailyService.class);
 
-        service.getZhihuList(DateFormatUtil.ZhihuDailyDateFormat(date))
+        service.getZhihuList(DateFormatUtil.formatZhihuDailyDateLongToString(date))
                 .enqueue(new Callback<ZhihuDailyNews>() {
                     @Override
                     public void onResponse(Call<ZhihuDailyNews> call, Response<ZhihuDailyNews> response) {
+
+                        // Note: Only the timestamp of zhihu daily was set in remote source.
+                        // The other two was set in repository due to structure of returning json.
+                        long timestamp = DateFormatUtil.formatZhihuDailyDateStringToLong(response.body().getDate());
+                        for (ZhihuDailyNewsQuestion item : response.body().getStories()) {
+                            item.setTimestamp(timestamp);
+                        }
                         callback.onNewsLoaded(response.body().getStories());
                     }
 
@@ -62,6 +69,12 @@ public class ZhihuDailyNewsRemoteDataSource implements ZhihuDailyNewsDataSource 
                     }
                 });
 
+    }
+
+    @Override
+    public void getFavorites(@NonNull LoadZhihuDailyNewsCallback callback) {
+        // Not required for the remote data source because the {@link TasksRepository} handles
+        // converting from a {@code taskId} to a {@link task} using its cached data.
     }
 
     @Override

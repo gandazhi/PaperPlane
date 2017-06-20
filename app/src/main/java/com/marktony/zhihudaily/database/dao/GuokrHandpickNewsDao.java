@@ -18,18 +18,24 @@ import java.util.List;
 public interface GuokrHandpickNewsDao {
 
     @Query("SELECT * FROM guokr_handpick_news")
-    List<GuokrHandpickNewsResult> loadGuokrHandpickNews();
+    List<GuokrHandpickNewsResult> queryAllItems();
+
+    @Query("SELECT * FROM guokr_handpick_news WHERE id = :id")
+    GuokrHandpickNewsResult queryItemById(int id);
+
+    @Query("SELECT * FROM guokr_handpick_news WHERE favorite = 1")
+    List<GuokrHandpickNewsResult> queryAllFavorites();
+
+    @Query("SELECT * FROM guokr_handpick_news WHERE timestamp < :timestamp")
+    List<GuokrHandpickNewsResult> queryAllTimeoutItems(long timestamp);
 
     @Insert
     void insertAll(List<GuokrHandpickNewsResult> items);
 
-    @Query("SELECT * FROM guokr_handpick_news WHERE id = :id")
-    GuokrHandpickNewsResult loadGuokrHandpickItem(int id);
-
     @Update
-    void updateGuokrHandpickNews(GuokrHandpickNewsResult item);
+    void update(GuokrHandpickNewsResult item);
 
     @Delete
-    void deleteGuokrHandpickNews(GuokrHandpickNewsResult item);
+    void delete(GuokrHandpickNewsResult item);
 
 }

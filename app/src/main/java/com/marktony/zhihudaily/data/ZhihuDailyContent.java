@@ -80,6 +80,10 @@ public class ZhihuDailyContent {
     @Expose
     private boolean favorite;
 
+    @ColumnInfo(name = "timestamp")
+    @Expose
+    private long timestamp;
+
     public String getBody() {
         return body;
     }
@@ -174,5 +178,13 @@ public class ZhihuDailyContent {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

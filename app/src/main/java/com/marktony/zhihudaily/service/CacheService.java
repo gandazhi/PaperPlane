@@ -124,14 +124,14 @@ public class CacheService extends Service {
 
         new Thread(() -> {
 
-            if (mDb != null && mDb.zhihuDailyContentDao().loadZhihuDailyContent(id) == null) {
+            if (mDb != null && mDb.zhihuDailyContentDao().queryContentById(id) == null) {
                 mDb.beginTransaction();
                 try {
                     // Call execute() rather than enqueue()
                     // or you will go back to main thread in onResponse() function.
                     ZhihuDailyContent tmp = mZhihuService.getZhihuContent(id).execute().body();
                     if (tmp != null) {
-                        mDb.zhihuDailyContentDao().saveContent(tmp);
+                        mDb.zhihuDailyContentDao().insert(tmp);
                         mDb.setTransactionSuccessful();
                     }
                 } catch (IOException e) {
@@ -155,14 +155,14 @@ public class CacheService extends Service {
         }
 
         new Thread(() -> {
-            if (mDb != null && mDb.doubanMomentContentDao().loadDoubanMomentContent(id) == null) {
+            if (mDb != null && mDb.doubanMomentContentDao().queryContentById(id) == null) {
                 mDb.beginTransaction();
                 try {
                     // Call execute() rather than enqueue()
                     // or you will go back to main thread in onResponse() function.
                     DoubanMomentContent tmp = mDoubanService.getDoubanContent(id).execute().body();
                     if (tmp != null) {
-                        mDb.doubanMomentContentDao().saveContent(tmp);
+                        mDb.doubanMomentContentDao().insert(tmp);
                         mDb.setTransactionSuccessful();
                     }
                 } catch (IOException e) {
@@ -186,14 +186,14 @@ public class CacheService extends Service {
         }
 
         new Thread(() -> {
-            if (mDb != null && mDb.guokrHandpickContentDao().loadGuokrHandpickNewsItem(id) == null) {
+            if (mDb != null && mDb.guokrHandpickContentDao().queryContentById(id) == null) {
                 mDb.beginTransaction();
                 try {
                     // Call execute() rather than enqueue()
                     // or you will go back to main thread in onResponse() function.
                     GuokrHandpickContentResult tmp = mGuokrService.getGuokrContent(id).execute().body().getResult();
                     if (tmp != null) {
-                        mDb.guokrHandpickContentDao().saveContent(tmp);
+                        mDb.guokrHandpickContentDao().insert(tmp);
                         mDb.setTransactionSuccessful();
                     }
                 } catch (IOException e) {
@@ -218,7 +218,7 @@ public class CacheService extends Service {
             if (mDb != null) {
                 mDb.beginTransaction();
                 try {
-                    // todo
+
                 } finally {
                     mDb.endTransaction();
                 }

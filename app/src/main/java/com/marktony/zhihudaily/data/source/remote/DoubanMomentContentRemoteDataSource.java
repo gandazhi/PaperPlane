@@ -2,7 +2,6 @@ package com.marktony.zhihudaily.data.source.remote;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.marktony.zhihudaily.data.DoubanMomentContent;
 import com.marktony.zhihudaily.data.source.datasource.DoubanMomentContentDataSource;
@@ -47,7 +46,6 @@ public class DoubanMomentContentRemoteDataSource implements DoubanMomentContentD
         service.getDoubanContent(id).enqueue(new Callback<DoubanMomentContent>() {
             @Override
             public void onResponse(Call<DoubanMomentContent> call, Response<DoubanMomentContent> response) {
-                Log.d("TAG", "onResponse: " + response.body().getContent());
                 callback.onContentLoaded(response.body());
             }
 
@@ -61,11 +59,13 @@ public class DoubanMomentContentRemoteDataSource implements DoubanMomentContentD
 
     @Override
     public void favorite(boolean favorite) {
-
+        // Not required for the remote data source because the {@link TasksRepository} handles
+        // converting from a {@code taskId} to a {@link task} using its cached data.
     }
 
     @Override
     public void saveContent(@NonNull DoubanMomentContent content) {
-
+        // Not required for the remote data source because the {@link TasksRepository} handles
+        // converting from a {@code taskId} to a {@link task} using its cached data.
     }
 }

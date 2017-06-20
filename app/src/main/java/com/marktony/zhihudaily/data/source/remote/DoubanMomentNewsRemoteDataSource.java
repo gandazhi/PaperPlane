@@ -46,7 +46,7 @@ public class DoubanMomentNewsRemoteDataSource implements DoubanMomentNewsDataSou
 
         RetrofitService.DoubanMomentService service = retrofit.create(RetrofitService.DoubanMomentService.class);
 
-        service.getDoubanList(DateFormatUtil.DoubanDateFormat(date))
+        service.getDoubanList(DateFormatUtil.formatDoubanMomentDateLongToString(date))
                 .enqueue(new Callback<DoubanMomentNews>() {
                     @Override
                     public void onResponse(Call<DoubanMomentNews> call, Response<DoubanMomentNews> response) {
@@ -58,6 +58,12 @@ public class DoubanMomentNewsRemoteDataSource implements DoubanMomentNewsDataSou
                         callback.onDataNotAvailable();
                     }
                 });
+    }
+
+    @Override
+    public void getFavorites(@NonNull LoadDoubanMomentDailyCallback callback) {
+        // Not required for the remote data source because the {@link TasksRepository} handles
+        // converting from a {@code taskId} to a {@link task} using its cached data.
     }
 
     @Override

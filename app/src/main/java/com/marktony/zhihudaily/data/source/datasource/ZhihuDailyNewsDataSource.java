@@ -30,6 +30,8 @@ public interface ZhihuDailyNewsDataSource {
 
     void getZhihuDailyNews(boolean forceUpdate, boolean clearCache, long date, @NonNull LoadZhihuDailyNewsCallback callback);
 
+    void getFavorites(@NonNull LoadZhihuDailyNewsCallback callback);
+
     void getItem(int itemId, @NonNull GetNewsItemCallback callback);
 
     void favoriteItem(int itemId, boolean favorite);

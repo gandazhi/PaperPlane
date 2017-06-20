@@ -55,7 +55,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
             return;
         }
 
-        // Get data by accessing internet first.
+        // Get data by accessing network first.
         mRemoteDataSource.getZhihuDailyNews(false, clearCache, date, new LoadZhihuDailyNewsCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<ZhihuDailyNewsQuestion> list) {
@@ -83,6 +83,36 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
             }
         });
 
+    }
+
+    @Override
+    public void getFavorites(@NonNull LoadZhihuDailyNewsCallback callback) {
+        if (mCachedItems != null) {
+            List<ZhihuDailyNewsQuestion> list = new ArrayList<>();
+            for (ZhihuDailyNewsQuestion item : mCachedItems.values()) {
+                if (item.isFavorite()) {
+                    list.add(item);
+                }
+            }
+            callback.onNewsLoaded(list);
+            return;
+        }
+
+        mLocalDataSource.getFavorites(new LoadZhihuDailyNewsCallback() {
+            @Override
+            public void onNewsLoaded(@NonNull List<ZhihuDailyNewsQuestion> list) {
+                callback.onNewsLoaded(list);
+                for (ZhihuDailyNewsQuestion item : list) {
+                    // Update the cache to make ui keep updated.
+                    mCachedItems.get(item.getId()).setFavorite(true);
+                }
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+        });
     }
 
     @Override
@@ -157,6 +187,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
         }
 
         for (ZhihuDailyNewsQuestion item : list) {
+            // Note:  Setting of timestamp was done in the {@link ZhihuDailyNewsRemoteDataSource} class.
             mCachedItems.put(item.getId(), item);
         }
     }

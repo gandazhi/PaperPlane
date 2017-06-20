@@ -1,5 +1,6 @@
 package com.marktony.zhihudaily.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -7,9 +8,13 @@ import java.util.Date;
  * Created by lizhaotailang on 2017/5/21.
  */
 
-public class DateFormatUtil {
+public final class DateFormatUtil {
 
-    public static String ZhihuDailyDateFormat(long date) {
+    private DateFormatUtil() {
+        throw new AssertionError("No construction for constant class");
+    }
+
+    public static String formatZhihuDailyDateLongToString(long date) {
         String sDate;
         Date d = new Date(date + 24*60*60*1000);
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
@@ -18,13 +23,43 @@ public class DateFormatUtil {
         return sDate;
     }
 
-    public static String DoubanDateFormat(long date){
+    public static long formatZhihuDailyDateStringToLong(String date) {
+        Date d = null;
+        try {
+            d = new SimpleDateFormat("yyyyMMdd").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return d == null ? 0 : d.getTime();
+    }
+
+    public static String formatDoubanMomentDateLongToString(long date){
         String sDate;
         Date d = new Date(date);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         sDate = format.format(d);
 
         return sDate;
+    }
+
+    public static long formatDoubanMomentDateStringToLong(String date) {
+        Date d = null;
+        try {
+            d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return d == null ? 0 : d.getTime();
+    }
+
+    public static long formatGuokrHandpickTimeStringToLong(String date) {
+        Date d = null;
+        try {
+            d = new SimpleDateFormat("yyyy-MM-dd").parse(date.substring(0,10));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return d == null ? 0 : d.getTime();
     }
 
 }

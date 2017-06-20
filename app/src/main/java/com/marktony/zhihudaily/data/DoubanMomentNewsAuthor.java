@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by lizhaotailang on 2017/6/17.
  */
-public class DoubamMomentNewsAuthor {
+public class DoubanMomentNewsAuthor {
 
     @ColumnInfo(name = "is_followed")
     @Expose
@@ -65,7 +65,7 @@ public class DoubamMomentNewsAuthor {
     @SerializedName("is_auth_author")
     private boolean isAuthAuthor;
 
-    public DoubamMomentNewsAuthor() {
+    public DoubanMomentNewsAuthor() {
     }
 
     public boolean isFollowed() {

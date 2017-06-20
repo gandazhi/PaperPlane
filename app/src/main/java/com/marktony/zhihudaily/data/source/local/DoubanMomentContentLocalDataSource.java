@@ -48,7 +48,7 @@ public class DoubanMomentContentLocalDataSource implements DoubanMomentContentDa
 
             @Override
             protected DoubanMomentContent doInBackground(Void... voids) {
-                return mDb.doubanMomentContentDao().loadDoubanMomentContent(id);
+                return mDb.doubanMomentContentDao().queryContentById(id);
             }
 
             @Override
@@ -71,13 +71,15 @@ public class DoubanMomentContentLocalDataSource implements DoubanMomentContentDa
     @Override
     public void saveContent(@NonNull DoubanMomentContent content) {
         if (mDb != null) {
-            mDb.beginTransaction();
-            try {
-                mDb.doubanMomentContentDao().saveContent(content);
-                mDb.setTransactionSuccessful();
-            } finally {
-                mDb.endTransaction();
-            }
+            new Thread(() -> {
+                mDb.beginTransaction();
+                try {
+                    mDb.doubanMomentContentDao().insert(content);
+                    mDb.setTransactionSuccessful();
+                } finally {
+                    mDb.endTransaction();
+                }
+            }).start();
         }
     }
 }

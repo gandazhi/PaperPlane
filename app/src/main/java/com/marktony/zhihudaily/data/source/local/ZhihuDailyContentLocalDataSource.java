@@ -48,7 +48,7 @@ public class ZhihuDailyContentLocalDataSource implements ZhihuDailyContentDataSo
 
             @Override
             protected ZhihuDailyContent doInBackground(Void... voids) {
-                return mDb.zhihuDailyContentDao().loadZhihuDailyContent(id);
+                return mDb.zhihuDailyContentDao().queryContentById(id);
             }
 
             @Override
@@ -72,13 +72,18 @@ public class ZhihuDailyContentLocalDataSource implements ZhihuDailyContentDataSo
     @Override
     public void saveContent(@NonNull ZhihuDailyContent content) {
         if (mDb != null) {
-            mDb.beginTransaction();
-            try {
-                mDb.zhihuDailyContentDao().saveContent(content);
-                mDb.setTransactionSuccessful();
-            } finally {
-                mDb.endTransaction();
-            }
+            new Thread(() -> {
+                // Query the timestamp from zhihu news database of corresponding id
+                // and set the content's timestamp of query value.
+                content.setTimestamp(mDb.zhihuDailyNewsDao().queryTimestampById(content.getId()));
+                mDb.beginTransaction();
+                try {
+                    mDb.zhihuDailyContentDao().insert(content);
+                    mDb.setTransactionSuccessful();
+                } finally {
+                    mDb.endTransaction();
+                }
+            }).start();
         }
     }
 

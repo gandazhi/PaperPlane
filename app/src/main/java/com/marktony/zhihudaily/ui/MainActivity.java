@@ -10,6 +10,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.marktony.zhihudaily.R;
+import com.marktony.zhihudaily.data.source.local.DoubanMomentNewsLocalDataSource;
+import com.marktony.zhihudaily.data.source.local.GuokrHandpickNewsLocalDataSource;
+import com.marktony.zhihudaily.data.source.local.ZhihuDailyNewsLocalDataSource;
+import com.marktony.zhihudaily.data.source.remote.DoubanMomentNewsRemoteDataSource;
+import com.marktony.zhihudaily.data.source.remote.GuokrHandpickNewsRemoteDataSource;
+import com.marktony.zhihudaily.data.source.remote.ZhihuDailyNewsRemoteDataSource;
+import com.marktony.zhihudaily.data.source.repository.DoubanMomentNewsRepository;
+import com.marktony.zhihudaily.data.source.repository.GuokrHandpickNewsRepository;
+import com.marktony.zhihudaily.data.source.repository.ZhihuDailyNewsRepository;
 import com.marktony.zhihudaily.favorites.FavoritesFragment;
 import com.marktony.zhihudaily.favorites.FavoritesPresenter;
 import com.marktony.zhihudaily.service.CacheService;
@@ -126,7 +135,11 @@ public class MainActivity extends AppCompatActivity {
                         .add(R.id.container, mTimelineFragment, TimelineFragment.class.getSimpleName())
                         .commit();
                 if (mFavoritesPresenter == null) {
-                    mFavoritesPresenter = new FavoritesPresenter(mFavoritesFragment);
+                    mFavoritesPresenter = new FavoritesPresenter(
+                            mFavoritesFragment,
+                            ZhihuDailyNewsRepository.getInstance(ZhihuDailyNewsRemoteDataSource.getInstance(), ZhihuDailyNewsLocalDataSource.getInstance(MainActivity.this)),
+                            DoubanMomentNewsRepository.getInstance(DoubanMomentNewsRemoteDataSource.getInstance(), DoubanMomentNewsLocalDataSource.getInstance(MainActivity.this)),
+                            GuokrHandpickNewsRepository.getInstance(GuokrHandpickNewsRemoteDataSource.getInstance(), GuokrHandpickNewsLocalDataSource.getInstance(MainActivity.this)));
                 }
             }
             fm.beginTransaction()
