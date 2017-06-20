@@ -3,6 +3,7 @@ package com.marktony.zhihudaily.database.dao;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
@@ -17,8 +18,8 @@ import java.util.List;
 @Dao
 public interface GuokrHandpickNewsDao {
 
-    @Query("SELECT * FROM guokr_handpick_news")
-    List<GuokrHandpickNewsResult> queryAllItems();
+    @Query("SELECT * FROM guokr_handpick_news LIMIT :limit OFFSET :offset")
+    List<GuokrHandpickNewsResult> queryAllByOffsetAndLimit(int offset, int limit);
 
     @Query("SELECT * FROM guokr_handpick_news WHERE id = :id")
     GuokrHandpickNewsResult queryItemById(int id);
@@ -29,7 +30,7 @@ public interface GuokrHandpickNewsDao {
     @Query("SELECT * FROM guokr_handpick_news WHERE timestamp < :timestamp")
     List<GuokrHandpickNewsResult> queryAllTimeoutItems(long timestamp);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<GuokrHandpickNewsResult> items);
 
     @Update

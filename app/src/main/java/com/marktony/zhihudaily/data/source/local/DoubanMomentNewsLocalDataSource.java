@@ -29,7 +29,6 @@ public class DoubanMomentNewsLocalDataSource implements DoubanMomentNewsDataSour
         if (!creator.isDatabaseCreated()) {
             creator.createDb(context);
         }
-        mDb = creator.getDatabase();
     }
 
     public static DoubanMomentNewsLocalDataSource getInstance(@NonNull Context context) {
@@ -42,85 +41,98 @@ public class DoubanMomentNewsLocalDataSource implements DoubanMomentNewsDataSour
     @Override
     public void getDoubanMomentNews(boolean forceUpdate, boolean clearCache, long date, @NonNull LoadDoubanMomentDailyCallback callback) {
         if (mDb == null) {
-            callback.onDataNotAvailable();
-            return;
+            mDb = DatabaseCreator.getInstance().getDatabase();
         }
 
-        new AsyncTask<Void, Void, List<DoubanMomentNewsPosts>>() {
+        if (mDb != null) {
+            new AsyncTask<Void, Void, List<DoubanMomentNewsPosts>>() {
 
-            @Override
-            protected List<DoubanMomentNewsPosts> doInBackground(Void... voids) {
-                return mDb.doubanMomentNewsDao().queryAll();
-            }
-
-            @Override
-            protected void onPostExecute(List<DoubanMomentNewsPosts> list) {
-                super.onPostExecute(list);
-                if (list == null) {
-                    callback.onDataNotAvailable();
-                } else {
-                    callback.onNewsLoaded(list);
+                @Override
+                protected List<DoubanMomentNewsPosts> doInBackground(Void... voids) {
+                    return mDb.doubanMomentNewsDao().queryAllByDate(date);
                 }
-            }
-        }.execute();
+
+                @Override
+                protected void onPostExecute(List<DoubanMomentNewsPosts> list) {
+                    super.onPostExecute(list);
+                    if (list == null) {
+                        callback.onDataNotAvailable();
+                    } else {
+                        callback.onNewsLoaded(list);
+                    }
+                }
+            }.execute();
+        }
     }
 
     @Override
     public void getFavorites(@NonNull LoadDoubanMomentDailyCallback callback) {
         if (mDb == null) {
-            callback.onDataNotAvailable();
-            return;
+            mDb = DatabaseCreator.getInstance().getDatabase();
         }
 
-        new AsyncTask<Void, Void, List<DoubanMomentNewsPosts>>() {
+        if (mDb != null) {
+            new AsyncTask<Void, Void, List<DoubanMomentNewsPosts>>() {
 
-            @Override
-            protected List<DoubanMomentNewsPosts> doInBackground(Void... voids) {
-                return mDb.doubanMomentNewsDao().queryAllFavorites();
-            }
-
-            @Override
-            protected void onPostExecute(List<DoubanMomentNewsPosts> list) {
-                super.onPostExecute(list);
-                if (list == null) {
-                    callback.onDataNotAvailable();
-                } else {
-                    callback.onNewsLoaded(list);
+                @Override
+                protected List<DoubanMomentNewsPosts> doInBackground(Void... voids) {
+                    return mDb.doubanMomentNewsDao().queryAllFavorites();
                 }
-            }
-        }.execute();
+
+                @Override
+                protected void onPostExecute(List<DoubanMomentNewsPosts> list) {
+                    super.onPostExecute(list);
+                    if (list == null) {
+                        callback.onDataNotAvailable();
+                    } else {
+                        callback.onNewsLoaded(list);
+                    }
+                }
+            }.execute();
+        }
     }
 
     @Override
     public void getItem(int id, @NonNull GetNewsItemCallback callback) {
         if (mDb == null) {
-            callback.onDataNotAvailable();
-            return;
+            mDb = DatabaseCreator.getInstance().getDatabase();
         }
 
-        new AsyncTask<Void, Void, DoubanMomentNewsPosts>() {
+        if (mDb != null) {
+            new AsyncTask<Void, Void, DoubanMomentNewsPosts>() {
 
-            @Override
-            protected DoubanMomentNewsPosts doInBackground(Void... voids) {
-                return mDb.doubanMomentNewsDao().queryItemById(id);
-            }
-
-            @Override
-            protected void onPostExecute(DoubanMomentNewsPosts item) {
-                super.onPostExecute(item);
-                if (item == null) {
-                    callback.onDataNotAvailable();
-                } else {
-                    callback.onItemLoaded(item);
+                @Override
+                protected DoubanMomentNewsPosts doInBackground(Void... voids) {
+                    return mDb.doubanMomentNewsDao().queryItemById(id);
                 }
-            }
 
-        }.execute();
+                @Override
+                protected void onPostExecute(DoubanMomentNewsPosts item) {
+                    super.onPostExecute(item);
+                    if (item == null) {
+                        callback.onDataNotAvailable();
+                    } else {
+                        callback.onItemLoaded(item);
+                    }
+                }
+
+            }.execute();
+        }
     }
 
     @Override
-    public void favoriteItem(int itemId, boolean favorited) {
+    public void favoriteItem(int itemId, boolean favorite) {
+        if (mDb == null) {
+            mDb = DatabaseCreator.getInstance().getDatabase();
+        }
 
+        if (mDb != null) {
+            new Thread(() -> {
+                DoubanMomentNewsPosts tmp = mDb.doubanMomentNewsDao().queryItemById(itemId);
+                tmp.setFavorite(favorite);
+                mDb.doubanMomentNewsDao().update(tmp);
+            }).start();
+        }
     }
 
     @Override
@@ -130,14 +142,20 @@ public class DoubanMomentNewsLocalDataSource implements DoubanMomentNewsDataSour
 
     @Override
     public void saveAll(@NonNull List<DoubanMomentNewsPosts> list) {
+        if (mDb == null) {
+            mDb = DatabaseCreator.getInstance().getDatabase();
+        }
+
         if (mDb != null) {
-            mDb.beginTransaction();
-            try {
-                mDb.doubanMomentNewsDao().insertAll(list);
-                mDb.setTransactionSuccessful();
-            } finally {
-                mDb.endTransaction();
-            }
+            new Thread(() -> {
+                mDb.beginTransaction();
+                try {
+                    mDb.doubanMomentNewsDao().insertAll(list);
+                    mDb.setTransactionSuccessful();
+                } finally {
+                    mDb.endTransaction();
+                }
+            }).start();
         }
     }
 

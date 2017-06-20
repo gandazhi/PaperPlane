@@ -20,7 +20,7 @@ public interface ZhihuDailyContentDataSource {
 
     void getZhihuDailyContent(int id, @NonNull LoadZhihuDailyContentCallback callback);
 
-    void favorite(boolean favorite);
+    void favorite(int id, boolean favorite);
 
     void saveContent(@NonNull ZhihuDailyContent content);
 

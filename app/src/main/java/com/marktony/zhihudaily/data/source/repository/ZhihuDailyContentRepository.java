@@ -80,13 +80,14 @@ public class ZhihuDailyContentRepository implements ZhihuDailyContentDataSource 
     }
 
     @Override
-    public void favorite(boolean favorite) {
-        mLocalDataSource.favorite(favorite);
-        mRemoteDataSource.favorite(favorite);
+    public void favorite(int id, boolean favorite) {
+        mLocalDataSource.favorite(id, favorite);
+        mRemoteDataSource.favorite(id, favorite);
 
         if (mContent != null) {
             mContent.setFavorite(favorite);
         }
+
     }
 
     @Override

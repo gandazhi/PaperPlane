@@ -68,8 +68,18 @@ public class GuokrHandpickContentLocalDataSource implements GuokrHandpickContent
     }
 
     @Override
-    public void favorite(boolean favorite) {
+    public void favorite(int id, boolean favorite) {
+        if (mDb == null) {
+            mDb = DatabaseCreator.getInstance().getDatabase();
+        }
 
+        if (mDb != null) {
+            new Thread(() -> {
+                GuokrHandpickContentResult tmp = mDb.guokrHandpickContentDao().queryContentById(id);
+                tmp.setFavorite(favorite);
+                mDb.guokrHandpickContentDao().update(tmp);
+            }).start();
+        }
     }
 
     @Override

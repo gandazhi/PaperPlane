@@ -30,7 +30,6 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
         if (!creator.isDatabaseCreated()) {
             creator.createDb(context);
         }
-        mDb = creator.getDatabase();
     }
 
     public static ZhihuDailyNewsLocalDataSource getInstance(@NonNull Context context) {
@@ -46,37 +45,37 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
 
     @Override
     public void getZhihuDailyNews(boolean forceUpdate, boolean clearCache, long date, @NonNull LoadZhihuDailyNewsCallback callback) {
+
         if (mDb == null) {
-            callback.onDataNotAvailable();
-            return;
+            mDb = DatabaseCreator.getInstance().getDatabase();
         }
 
-        new AsyncTask<Void, Void, List<ZhihuDailyNewsQuestion>>() {
+        if (mDb != null) {
+            new AsyncTask<Void, Void, List<ZhihuDailyNewsQuestion>>() {
 
-            @Override
-            protected List<ZhihuDailyNewsQuestion> doInBackground(Void... voids) {
-                return mDb.zhihuDailyNewsDao().queryAll();
-            }
-
-            @Override
-            protected void onPostExecute(List<ZhihuDailyNewsQuestion> list) {
-                super.onPostExecute(list);
-                if (list == null) {
-                    callback.onDataNotAvailable();
-                } else {
-                    callback.onNewsLoaded(list);
+                @Override
+                protected List<ZhihuDailyNewsQuestion> doInBackground(Void... voids) {
+                    return mDb.zhihuDailyNewsDao().queryAllByDate(date);
                 }
-            }
 
-        }.execute();
+                @Override
+                protected void onPostExecute(List<ZhihuDailyNewsQuestion> list) {
+                    super.onPostExecute(list);
+                    if (list == null) {
+                        callback.onDataNotAvailable();
+                    } else {
+                        callback.onNewsLoaded(list);
+                    }
+                }
 
+            }.execute();
+        }
     }
 
     @Override
     public void getFavorites(@NonNull LoadZhihuDailyNewsCallback callback) {
         if (mDb == null) {
-            callback.onDataNotAvailable();
-            return;
+            mDb = DatabaseCreator.getInstance().getDatabase();
         }
 
         new AsyncTask<Void, Void, List<ZhihuDailyNewsQuestion>>() {
@@ -101,31 +100,42 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
     @Override
     public void getItem(int itemId, @NonNull GetNewsItemCallback callback) {
         if (mDb == null) {
-            callback.onDataNotAvailable();
-            return;
+            mDb = DatabaseCreator.getInstance().getDatabase();
         }
 
-        new AsyncTask<Void, Void, ZhihuDailyNewsQuestion>() {
-            @Override
-            protected ZhihuDailyNewsQuestion doInBackground(Void... voids) {
-                return mDb.zhihuDailyNewsDao().queryItemById(itemId);
-            }
-
-            @Override
-            protected void onPostExecute(ZhihuDailyNewsQuestion item) {
-                super.onPostExecute(item);
-                if (item == null) {
-                    callback.onDataNotAvailable();
-                } else {
-                    callback.onItemLoaded(item);
+        if (mDb != null) {
+            new AsyncTask<Void, Void, ZhihuDailyNewsQuestion>() {
+                @Override
+                protected ZhihuDailyNewsQuestion doInBackground(Void... voids) {
+                    return mDb.zhihuDailyNewsDao().queryItemById(itemId);
                 }
-            }
-        }.execute();
+
+                @Override
+                protected void onPostExecute(ZhihuDailyNewsQuestion item) {
+                    super.onPostExecute(item);
+                    if (item == null) {
+                        callback.onDataNotAvailable();
+                    } else {
+                        callback.onItemLoaded(item);
+                    }
+                }
+            }.execute();
+        }
     }
 
     @Override
-    public void favoriteItem(int itemId, boolean favorited) {
+    public void favoriteItem(int itemId, boolean favorite) {
+        if (mDb == null) {
+            mDb = DatabaseCreator.getInstance().getDatabase();
+        }
 
+        if (mDb != null) {
+            new Thread(() -> {
+                ZhihuDailyNewsQuestion tmp = mDb.zhihuDailyNewsDao().queryItemById(itemId);
+                tmp.setFavorite(favorite);
+                mDb.zhihuDailyNewsDao().update(tmp);
+            }).start();
+        }
     }
 
     @Override
@@ -135,14 +145,21 @@ public class ZhihuDailyNewsLocalDataSource implements ZhihuDailyNewsDataSource {
 
     @Override
     public void saveAll(@NonNull List<ZhihuDailyNewsQuestion> list) {
-        if (mDb != null) {
-            mDb.beginTransaction();
-            try {
-                mDb.zhihuDailyNewsDao().insertAll(list);
-                mDb.setTransactionSuccessful();
-            } finally {
-                mDb.endTransaction();
-            }
+
+        if (mDb == null) {
+            mDb = DatabaseCreator.getInstance().getDatabase();
+        }
+
+        if (mDb != null){
+            new Thread(() -> {
+                mDb.beginTransaction();
+                try {
+                    mDb.zhihuDailyNewsDao().insertAll(list);
+                    mDb.setTransactionSuccessful();
+                } finally {
+                    mDb.endTransaction();
+                }
+            }).start();
         }
     }
 }

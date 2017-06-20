@@ -2,6 +2,7 @@ package com.marktony.zhihudaily.data.source.repository;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.marktony.zhihudaily.data.ZhihuDailyNewsQuestion;
 import com.marktony.zhihudaily.data.source.datasource.ZhihuDailyNewsDataSource;
@@ -68,6 +69,7 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
 
             @Override
             public void onDataNotAvailable() {
+
                 mLocalDataSource.getZhihuDailyNews(false, false, date, new LoadZhihuDailyNewsCallback() {
                     @Override
                     public void onNewsLoaded(@NonNull List<ZhihuDailyNewsQuestion> list) {
@@ -87,25 +89,10 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
 
     @Override
     public void getFavorites(@NonNull LoadZhihuDailyNewsCallback callback) {
-        if (mCachedItems != null) {
-            List<ZhihuDailyNewsQuestion> list = new ArrayList<>();
-            for (ZhihuDailyNewsQuestion item : mCachedItems.values()) {
-                if (item.isFavorite()) {
-                    list.add(item);
-                }
-            }
-            callback.onNewsLoaded(list);
-            return;
-        }
-
         mLocalDataSource.getFavorites(new LoadZhihuDailyNewsCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<ZhihuDailyNewsQuestion> list) {
                 callback.onNewsLoaded(list);
-                for (ZhihuDailyNewsQuestion item : list) {
-                    // Update the cache to make ui keep updated.
-                    mCachedItems.get(item.getId()).setFavorite(true);
-                }
             }
 
             @Override

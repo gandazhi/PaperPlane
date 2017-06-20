@@ -92,9 +92,7 @@ public class DetailsFragment extends Fragment
 
         setTitle(mTitle);
 
-        toolbar.setOnClickListener(v -> {
-            mScrollView.smoothScrollTo(0, 0);
-        });
+        toolbar.setOnClickListener(v -> mScrollView.smoothScrollTo(0, 0));
 
         setHasOptionsMenu(true);
 
@@ -143,7 +141,7 @@ public class DetailsFragment extends Fragment
             // add to bookmarks or delete from bookmarks
             favorite.setOnClickListener(v -> {
                 dialog.dismiss();
-                mPresenter.favorite(mType, !mFavorite);
+                mPresenter.favorite(mType, mId, !mFavorite);
                 mFavorite = !mFavorite;
             });
 

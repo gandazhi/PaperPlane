@@ -14,7 +14,7 @@ public class DoubanMomentNewsThumbs {
     @Embedded
     @Expose
     @SerializedName("medium")
-    private DoubanMomentMedium medium;
+    private DoubanMomentNewsMedium medium;
 
     @ColumnInfo(name = "thumb_description")
     @Expose
@@ -24,7 +24,7 @@ public class DoubanMomentNewsThumbs {
     @Embedded
     @Expose
     @SerializedName("large")
-    private DoubanMomentLarge large;
+    private DoubanMomentNewsLarge large;
 
     @Expose
     @SerializedName("tag_name")
@@ -43,11 +43,11 @@ public class DoubanMomentNewsThumbs {
     public DoubanMomentNewsThumbs() {
     }
 
-    public DoubanMomentMedium getMedium() {
+    public DoubanMomentNewsMedium getMedium() {
         return medium;
     }
 
-    public void setMedium(DoubanMomentMedium medium) {
+    public void setMedium(DoubanMomentNewsMedium medium) {
         this.medium = medium;
     }
 
@@ -59,11 +59,11 @@ public class DoubanMomentNewsThumbs {
         this.description = description;
     }
 
-    public DoubanMomentLarge getLarge() {
+    public DoubanMomentNewsLarge getLarge() {
         return large;
     }
 
-    public void setLarge(DoubanMomentLarge large) {
+    public void setLarge(DoubanMomentNewsLarge large) {
         this.large = large;
     }
 

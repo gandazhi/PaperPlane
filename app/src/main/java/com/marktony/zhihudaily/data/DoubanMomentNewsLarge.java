@@ -8,24 +8,24 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by lizhaotailang on 2017/6/17.
  */
-public class DoubanMomentMedium {
+public class DoubanMomentNewsLarge {
 
-    @ColumnInfo(name = "medium_url")
+    @ColumnInfo(name = "large_url")
     @Expose
     @SerializedName("url")
     private String url;
 
-    @ColumnInfo(name = "medium_width")
+    @ColumnInfo(name = "large_width")
     @Expose
     @SerializedName("width")
     private int width;
 
-    @ColumnInfo(name = "medium_height")
+    @ColumnInfo(name = "large_height")
     @Expose
     @SerializedName("height")
     private int height;
 
-    public DoubanMomentMedium() {
+    public DoubanMomentNewsLarge() {
     }
 
     public String getUrl() {

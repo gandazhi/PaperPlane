@@ -42,84 +42,97 @@ public class GuokrHandpickNewsLocalDataSource implements GuokrHandpickDataSource
     @Override
     public void getGuokrHandpickNews(boolean forceUpdate, boolean clearCache, int offset, int limit, @NonNull LoadGuokrHandpickNewsCallback callback) {
         if (mDb == null) {
-            callback.onDataNotAvailable();
-            return;
+            mDb = DatabaseCreator.getInstance().getDatabase();
         }
 
-        new AsyncTask<Void, Void, List<GuokrHandpickNewsResult>>() {
+        if (mDb != null) {
+            new AsyncTask<Void, Void, List<GuokrHandpickNewsResult>>() {
 
-            @Override
-            protected List<GuokrHandpickNewsResult> doInBackground(Void... voids) {
-                return mDb.guokrHandpickNewsDao().queryAllItems();
-            }
-
-            @Override
-            protected void onPostExecute(List<GuokrHandpickNewsResult> list) {
-                super.onPostExecute(list);
-                if (list == null) {
-                    callback.onDataNotAvailable();
-                } else {
-                    callback.onNewsLoad(list);
+                @Override
+                protected List<GuokrHandpickNewsResult> doInBackground(Void... voids) {
+                    return mDb.guokrHandpickNewsDao().queryAllByOffsetAndLimit(offset, limit);
                 }
-            }
-        }.execute();
+
+                @Override
+                protected void onPostExecute(List<GuokrHandpickNewsResult> list) {
+                    super.onPostExecute(list);
+                    if (list == null) {
+                        callback.onDataNotAvailable();
+                    } else {
+                        callback.onNewsLoad(list);
+                    }
+                }
+            }.execute();
+        }
     }
 
     @Override
     public void getFavorites(@NonNull LoadGuokrHandpickNewsCallback callback) {
         if (mDb == null) {
-            callback.onDataNotAvailable();
-            return;
+            mDb = DatabaseCreator.getInstance().getDatabase();
         }
 
-        new AsyncTask<Void, Void, List<GuokrHandpickNewsResult>>() {
+        if (mDb != null) {
+            new AsyncTask<Void, Void, List<GuokrHandpickNewsResult>>() {
 
-            @Override
-            protected List<GuokrHandpickNewsResult> doInBackground(Void... voids) {
-                return mDb.guokrHandpickNewsDao().queryAllFavorites();
-            }
-
-            @Override
-            protected void onPostExecute(List<GuokrHandpickNewsResult> list) {
-                super.onPostExecute(list);
-                if (list == null) {
-                    callback.onDataNotAvailable();
-                } else {
-                    callback.onNewsLoad(list);
+                @Override
+                protected List<GuokrHandpickNewsResult> doInBackground(Void... voids) {
+                    return mDb.guokrHandpickNewsDao().queryAllFavorites();
                 }
-            }
-        }.execute();
+
+                @Override
+                protected void onPostExecute(List<GuokrHandpickNewsResult> list) {
+                    super.onPostExecute(list);
+                    if (list == null) {
+                        callback.onDataNotAvailable();
+                    } else {
+                        callback.onNewsLoad(list);
+                    }
+                }
+            }.execute();
+        }
     }
 
     @Override
     public void getItem(int itemId, @NonNull GetNewsItemCallback callback) {
         if (mDb == null) {
-            callback.onDataNotAvailable();
-            return;
+            mDb = DatabaseCreator.getInstance().getDatabase();
         }
 
-        new AsyncTask<Void, Void, GuokrHandpickNewsResult>() {
+        if (mDb != null) {
+            new AsyncTask<Void, Void, GuokrHandpickNewsResult>() {
 
-            @Override
-            protected GuokrHandpickNewsResult doInBackground(Void... voids) {
-                return mDb.guokrHandpickNewsDao().queryItemById(itemId);
-            }
-
-            @Override
-            protected void onPostExecute(GuokrHandpickNewsResult item) {
-                super.onPostExecute(item);
-                if (item == null) {
-                    callback.onDataNotAvailable();
-                } else {
-                    callback.onItemLoaded(item);
+                @Override
+                protected GuokrHandpickNewsResult doInBackground(Void... voids) {
+                    return mDb.guokrHandpickNewsDao().queryItemById(itemId);
                 }
-            }
-        }.execute();
+
+                @Override
+                protected void onPostExecute(GuokrHandpickNewsResult item) {
+                    super.onPostExecute(item);
+                    if (item == null) {
+                        callback.onDataNotAvailable();
+                    } else {
+                        callback.onItemLoaded(item);
+                    }
+                }
+            }.execute();
+        }
     }
 
     @Override
     public void favoriteItem(int itemId, boolean favorite) {
+        if (mDb == null) {
+            mDb = DatabaseCreator.getInstance().getDatabase();
+        }
 
+        if (mDb != null) {
+            new Thread(() -> {
+                GuokrHandpickNewsResult tmp = mDb.guokrHandpickNewsDao().queryItemById(itemId);
+                tmp.setFavorite(favorite);
+                mDb.guokrHandpickNewsDao().update(tmp);
+            }).start();
+        }
     }
 
     @Override
@@ -129,14 +142,20 @@ public class GuokrHandpickNewsLocalDataSource implements GuokrHandpickDataSource
 
     @Override
     public void saveAll(@NonNull List<GuokrHandpickNewsResult> list) {
+        if (mDb == null) {
+            mDb = DatabaseCreator.getInstance().getDatabase();
+        }
+
         if (mDb != null) {
-            mDb.beginTransaction();
-            try {
-                mDb.guokrHandpickNewsDao().insertAll(list);
-                mDb.setTransactionSuccessful();
-            } finally {
-                mDb.endTransaction();
-            }
+            new Thread(() -> {
+                mDb.beginTransaction();
+                try {
+                    mDb.guokrHandpickNewsDao().insertAll(list);
+                    mDb.setTransactionSuccessful();
+                } finally {
+                    mDb.endTransaction();
+                }
+            }).start();
         }
     }
 

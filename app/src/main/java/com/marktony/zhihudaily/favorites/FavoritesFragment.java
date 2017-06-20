@@ -60,6 +60,7 @@ public class FavoritesFragment extends Fragment
     public void onResume() {
         super.onResume();
         mPresenter.start();
+        mPresenter.loadFavorites();
     }
 
     @Override
@@ -132,6 +133,8 @@ public class FavoritesFragment extends Fragment
         } else {
             mAdapter.updateData(zhihuList, doubanList, guokrList);
         }
+        mRecyclerView.setVisibility((zhihuList.isEmpty() && doubanList.isEmpty() && guokrList.isEmpty()) ? View.GONE : View.VISIBLE);
         mEmptyView.setVisibility((zhihuList.isEmpty() && doubanList.isEmpty() && guokrList.isEmpty()) ? View.VISIBLE : View.GONE);
     }
+
 }

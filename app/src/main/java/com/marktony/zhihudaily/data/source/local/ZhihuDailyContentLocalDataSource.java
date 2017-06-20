@@ -65,12 +65,26 @@ public class ZhihuDailyContentLocalDataSource implements ZhihuDailyContentDataSo
     }
 
     @Override
-    public void favorite(boolean favorite) {
+    public void favorite(int id, boolean favorite) {
+        if (mDb == null) {
+            mDb = DatabaseCreator.getInstance().getDatabase();
+        }
 
+        if (mDb != null) {
+            new Thread(() -> {
+                ZhihuDailyContent tmp = mDb.zhihuDailyContentDao().queryContentById(id);
+                tmp.setFavorite(favorite);
+                mDb.zhihuDailyContentDao().update(tmp);
+            }).start();
+        }
     }
 
     @Override
     public void saveContent(@NonNull ZhihuDailyContent content) {
+        if (mDb == null) {
+            mDb = DatabaseCreator.getInstance().getDatabase();
+        }
+
         if (mDb != null) {
             new Thread(() -> {
                 // Query the timestamp from zhihu news database of corresponding id

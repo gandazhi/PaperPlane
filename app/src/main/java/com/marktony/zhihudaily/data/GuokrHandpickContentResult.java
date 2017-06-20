@@ -57,7 +57,7 @@ public class GuokrHandpickContentResult {
     @Embedded
     @Expose
     @SerializedName("author")
-    private GuokrHandpickContentAuthor author;
+    private GuokrHandpickNewsAuthor author;
 
     @ColumnInfo(name = "image_description")
     @Expose
@@ -234,11 +234,11 @@ public class GuokrHandpickContentResult {
         this.copyright = copyright;
     }
 
-    public GuokrHandpickContentAuthor getAuthor() {
+    public GuokrHandpickNewsAuthor getAuthor() {
         return author;
     }
 
-    public void setAuthor(GuokrHandpickContentAuthor author) {
+    public void setAuthor(GuokrHandpickNewsAuthor author) {
         this.author = author;
     }
 

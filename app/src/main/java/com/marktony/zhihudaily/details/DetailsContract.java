@@ -42,7 +42,7 @@ public interface DetailsContract {
 
     interface Presenter extends BasePresenter {
 
-        void favorite(ContentType type, boolean favorite);
+        void favorite(ContentType type, int id, boolean favorite);
 
         void loadDoubanContent(int id);
 

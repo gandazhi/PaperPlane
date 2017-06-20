@@ -15,7 +15,9 @@ import com.marktony.zhihudaily.data.source.repository.DoubanMomentContentReposit
 import com.marktony.zhihudaily.data.source.datasource.DoubanMomentNewsDataSource;
 import com.marktony.zhihudaily.data.source.repository.DoubanMomentNewsRepository;
 import com.marktony.zhihudaily.data.source.repository.GuokrHandpickContentRepository;
+import com.marktony.zhihudaily.data.source.repository.GuokrHandpickNewsRepository;
 import com.marktony.zhihudaily.data.source.repository.ZhihuDailyContentRepository;
+import com.marktony.zhihudaily.data.source.repository.ZhihuDailyNewsRepository;
 
 /**
  * Created by lizhaotailang on 2017/5/24.
@@ -29,8 +31,10 @@ public class DetailsPresenter implements DetailsContract.Presenter {
     private DoubanMomentNewsRepository mDoubanNewsRepository;
     private DoubanMomentContentRepository mDoubanContentRepository;
 
+    private ZhihuDailyNewsRepository mZhihuNewsRepository;
     private ZhihuDailyContentRepository mZhihuContentRepository;
 
+    private GuokrHandpickNewsRepository mGuokrNewsRepository;
     private GuokrHandpickContentRepository mGuokrContentRepository;
 
     public DetailsPresenter(@NonNull DetailsContract.View view,
@@ -43,16 +47,20 @@ public class DetailsPresenter implements DetailsContract.Presenter {
     }
 
     public DetailsPresenter(@NonNull DetailsContract.View view,
+                            @NonNull ZhihuDailyNewsRepository zhihuNewsRepository,
                             @NonNull ZhihuDailyContentRepository zhihuContentRepository) {
         this.mView = view;
         mView.setPresenter(this);
+        mZhihuNewsRepository = zhihuNewsRepository;
         mZhihuContentRepository = zhihuContentRepository;
     }
 
     public DetailsPresenter(@NonNull DetailsContract.View view,
+                            @NonNull GuokrHandpickNewsRepository guokrNewsRepository,
                             @NonNull GuokrHandpickContentRepository guokrContentRepository) {
         this.mView = view;
         this.mView.setPresenter(this);
+        mGuokrNewsRepository = guokrNewsRepository;
         mGuokrContentRepository = guokrContentRepository;
     }
 
@@ -62,13 +70,16 @@ public class DetailsPresenter implements DetailsContract.Presenter {
     }
 
     @Override
-    public void favorite(ContentType type, boolean favorite) {
+    public void favorite(ContentType type, int id, boolean favorite) {
         if (type == ContentType.TYPE_ZHIHU_DAILY) {
-            mZhihuContentRepository.favorite(favorite);
+            mZhihuContentRepository.favorite(id, favorite);
+            mZhihuNewsRepository.favoriteItem(id, favorite);
         } else if (type == ContentType.TYPE_DOUBAN_MOMENT) {
-            mDoubanContentRepository.favorite(favorite);
+            mDoubanNewsRepository.favoriteItem(id, favorite);
+            mDoubanContentRepository.favorite(id, favorite);
         } else {
-            mGuokrContentRepository.favorite(favorite);
+            mGuokrNewsRepository.favoriteItem(id, favorite);
+            mGuokrContentRepository.favorite(id, favorite);
         }
     }
 

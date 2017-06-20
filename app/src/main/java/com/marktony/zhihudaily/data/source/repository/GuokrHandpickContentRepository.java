@@ -81,9 +81,9 @@ public class GuokrHandpickContentRepository implements GuokrHandpickContentDataS
     }
 
     @Override
-    public void favorite(boolean favorite) {
-        mRemoteDataSource.favorite(favorite);
-        mLocalDataSource.favorite(favorite);
+    public void favorite(int id, boolean favorite) {
+        mRemoteDataSource.favorite(id, favorite);
+        mLocalDataSource.favorite(id, favorite);
         if (mContent != null) {
             mContent.setFavorite(favorite);
         }

@@ -154,7 +154,6 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
 
     @Override
     public void favoriteItem(int itemId, boolean favorite) {
-
         mRemoteDataSource.favoriteItem(itemId, favorite);
         mLocalDataSource.favoriteItem(itemId, favorite);
 

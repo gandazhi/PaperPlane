@@ -57,6 +57,7 @@ public class ZhihuDailyNewsRemoteDataSource implements ZhihuDailyNewsDataSource 
                         // Note: Only the timestamp of zhihu daily was set in remote source.
                         // The other two was set in repository due to structure of returning json.
                         long timestamp = DateFormatUtil.formatZhihuDailyDateStringToLong(response.body().getDate());
+
                         for (ZhihuDailyNewsQuestion item : response.body().getStories()) {
                             item.setTimestamp(timestamp);
                         }
