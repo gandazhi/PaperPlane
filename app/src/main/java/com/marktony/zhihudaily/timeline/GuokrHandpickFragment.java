@@ -37,10 +37,13 @@ public class GuokrHandpickFragment extends Fragment
     private View mEmptyView;
 
     private GuokrHandpickNewsAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     private int mOffset = 0;
 
     private boolean mIsFirstLoad = true;
+    private boolean mIsLoadingMore = false;
+    private int mListSize = 0;
 
     public GuokrHandpickFragment() {
         // Requires an empty constructor.
@@ -63,31 +66,13 @@ public class GuokrHandpickFragment extends Fragment
         });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            boolean isSlidingToLast = false;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                // 当不滚动时
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    // 获取最后一个完全显示的item position
-                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-                    int totalItemCount = manager.getItemCount();
-
-                    // 判断是否滚动到底部并且是向下滑动
-                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
-                        loadMore();
-                    }
-                }
-
-                super.onScrollStateChanged(recyclerView, newState);
-            }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                isSlidingToLast = dy > 0;
+                if (dy > 0 && mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1 && !mIsLoadingMore) {
+                    loadMore();
+                }
             }
         });
 
@@ -136,6 +121,14 @@ public class GuokrHandpickFragment extends Fragment
         } else {
             mAdapter.updateData(list);
         }
+
+        mListSize = list.size();
+        mIsLoadingMore = false;
+
+        if (mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
+            loadMore();
+        }
+
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
 
         for (GuokrHandpickNewsResult item : list) {
@@ -158,11 +151,13 @@ public class GuokrHandpickFragment extends Fragment
     public void initViews(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mEmptyView = view.findViewById(R.id.empty_view);
     }
 
     private void loadMore() {
+        mIsLoadingMore = true;
         mPresenter.load(true, false, mOffset, 20);
     }
 

@@ -23,9 +23,6 @@ import java.util.List;
 
 public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int TYPE_ITEM = 0x00;
-    private static final int TYPE_FOOTER = 0x01;
-
     @NonNull
     private final Context mContext;
 
@@ -41,52 +38,34 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        if (viewType == TYPE_ITEM) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.home_list_item_layout, viewGroup, false);
-            return new ItemViewHolder(view, mListener);
-        } else if (viewType == TYPE_FOOTER) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.list_footer, viewGroup, false);
-            return new FooterViewHolder(view);
-        }
-        return null;
+        return new ItemViewHolder(LayoutInflater.from(mContext).inflate(R.layout.home_list_item_layout, viewGroup, false), mListener);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-        if (viewHolder instanceof ItemViewHolder) {
+        ZhihuDailyNewsQuestion item = mList.get(i);
 
-            ZhihuDailyNewsQuestion item = mList.get(i);
-
-            if (item.getImages().get(0) == null){
-                ((ItemViewHolder)viewHolder).itemImg.setImageResource(R.drawable.placeholder);
-            } else {
-                Glide.with(mContext)
-                        .load(item.getImages().get(0))
-                        .asBitmap()
-                        .placeholder(R.drawable.placeholder)
-                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                        .error(R.drawable.placeholder)
-                        .centerCrop()
-                        .into(((ItemViewHolder)viewHolder).itemImg);
-            }
-            ((ItemViewHolder)viewHolder).title.setText(item.getTitle());
+        if (item.getImages().get(0) == null) {
+            ((ItemViewHolder) viewHolder).itemImg.setImageResource(R.drawable.placeholder);
+        } else {
+            Glide.with(mContext)
+                    .load(item.getImages().get(0))
+                    .asBitmap()
+                    .placeholder(R.drawable.placeholder)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .error(R.drawable.placeholder)
+                    .centerCrop()
+                    .into(((ItemViewHolder) viewHolder).itemImg);
         }
+        ((ItemViewHolder) viewHolder).title.setText(item.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return mList.isEmpty() ? 0 : mList.size() + 1;
+        return mList.isEmpty() ? 0 : mList.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (position + 1 == getItemCount()) {
-            return TYPE_FOOTER;
-        }
-        return TYPE_ITEM;
-    }
-
-    public void setItemClickListener(OnRecyclerViewItemOnClickListener listener){
+    public void setItemClickListener(OnRecyclerViewItemOnClickListener listener) {
         this.mListener = listener;
     }
 
@@ -114,16 +93,9 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         @Override
         public void onClick(View view) {
-            if (listener != null){
+            if (listener != null) {
                 listener.OnItemClick(view, getLayoutPosition());
             }
-        }
-    }
-
-    public class FooterViewHolder extends RecyclerView.ViewHolder {
-
-        public FooterViewHolder(View itemView) {
-            super(itemView);
         }
     }
 

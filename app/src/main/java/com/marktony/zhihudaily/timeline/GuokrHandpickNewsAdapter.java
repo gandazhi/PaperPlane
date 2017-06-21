@@ -23,9 +23,6 @@ import java.util.List;
 
 public class GuokrHandpickNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int TYPE_ITEM = 0x00;
-    private static final int TYPE_FOOTER = 0x01;
-
     @NonNull
     private final Context mContext;
 
@@ -41,42 +38,27 @@ public class GuokrHandpickNewsAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        switch (i) {
-            case TYPE_FOOTER:
-                return new FooterViewHolder(LayoutInflater.from(mContext).inflate(R.layout.list_footer, viewGroup, false));
-            case TYPE_ITEM:
-                return new ItemViewHolder(LayoutInflater.from(mContext).inflate(R.layout.home_list_item_layout, viewGroup, false), mListener);
-        }
-        return null;
-        /*return (getItemViewType(i) == TYPE_FOOTER) ? new FooterViewHolder(LayoutInflater.from(mContext).inflate(R.layout.home_list_item_layout, viewGroup, false))
-                : new ItemViewHolder(LayoutInflater.from(mContext).inflate(R.layout.list_footer, viewGroup, false), mListener);*/
+        return new ItemViewHolder(LayoutInflater.from(mContext).inflate(R.layout.home_list_item_layout, viewGroup, false), mListener);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-        if (viewHolder instanceof ItemViewHolder) {
-            GuokrHandpickNewsResult item = mList.get(i);
-            Glide.with(mContext)
-                    .load(item.getImageInfo().getUrl())
-                    .asBitmap()
-                    .placeholder(R.drawable.placeholder)
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .error(R.drawable.placeholder)
-                    .centerCrop()
-                    .into(((ItemViewHolder) viewHolder).imageView);
+        GuokrHandpickNewsResult item = mList.get(i);
+        Glide.with(mContext)
+                .load(item.getImageInfo().getUrl())
+                .asBitmap()
+                .placeholder(R.drawable.placeholder)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .error(R.drawable.placeholder)
+                .centerCrop()
+                .into(((ItemViewHolder) viewHolder).imageView);
 
-            ((ItemViewHolder) viewHolder).textView.setText(item.getTitle());
-        }
+        ((ItemViewHolder) viewHolder).textView.setText(item.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return mList.isEmpty() ? 0 : mList.size() + 1;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return (position + 1 == getItemCount()) ? TYPE_FOOTER : TYPE_ITEM;
+        return mList.isEmpty() ? 0 : mList.size();
     }
 
     public void setItemClickListener(OnRecyclerViewItemOnClickListener listener){
@@ -112,13 +94,6 @@ public class GuokrHandpickNewsAdapter extends RecyclerView.Adapter<RecyclerView.
             if (listener != null){
                 listener.OnItemClick(view, getLayoutPosition());
             }
-        }
-    }
-
-    public class FooterViewHolder extends RecyclerView.ViewHolder {
-
-        public FooterViewHolder(View itemView) {
-            super(itemView);
         }
     }
 

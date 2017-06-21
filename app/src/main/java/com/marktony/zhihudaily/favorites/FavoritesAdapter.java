@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.marktony.zhihudaily.R;
 import com.marktony.zhihudaily.data.DoubanMomentNewsPosts;
 import com.marktony.zhihudaily.data.GuokrHandpickNewsResult;
@@ -56,7 +58,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         mWrapperList = new ArrayList<>();
 
-        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
+        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_ZHIHU_CATEGORY));
         if (mZhihuList.isEmpty()) {
             mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         } else {
@@ -67,7 +69,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         }
 
-        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
+        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_DOUBAN_CATEGORY));
         if (mDoubanList.isEmpty()) {
             mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         } else {
@@ -84,7 +86,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         }
 
-        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
+        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_GUOKR_CATEGORY));
         if (mGuokrList.isEmpty()) {
             mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         } else {
@@ -103,9 +105,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             case ItemWrapper.TYPE_EMPTY:
                 viewHolder = new EmptyViewHolder(mLayoutInflater.inflate(R.layout.item_empty, viewGroup, false));
                 break;
-            case ItemWrapper.TYPE_CATEGORY:
-                viewHolder = new CategoryViewHolder(mLayoutInflater.inflate(R.layout.item_category, viewGroup, false));
-                break;
             case ItemWrapper.TYPE_ZHIHU:
                 viewHolder = new ZhihuItemViewHolder(mLayoutInflater.inflate(R.layout.home_list_item_layout, viewGroup, false), mListener);
                 break;
@@ -118,6 +117,11 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             case ItemWrapper.TYPE_GUOKR:
                 viewHolder = new GuokrViewHolder(mLayoutInflater.inflate(R.layout.home_list_item_layout, viewGroup, false), mListener);
                 break;
+            case ItemWrapper.TYPE_ZHIHU_CATEGORY:
+            case ItemWrapper.TYPE_DOUBAN_CATEGORY:
+            case ItemWrapper.TYPE_GUOKR_CATEGORY:
+                viewHolder = new CategoryViewHolder(mLayoutInflater.inflate(R.layout.item_category, viewGroup, false));
+                break;
             default:
                 break;
         }
@@ -126,7 +130,76 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+        ItemWrapper iw = mWrapperList.get(i);
+        switch (iw.viewType) {
+            case ItemWrapper.TYPE_ZHIHU:
+                ZhihuItemViewHolder zivh = (ZhihuItemViewHolder) viewHolder;
+                ZhihuDailyNewsQuestion question = mZhihuList.get(iw.index);
+                if (question.getImages().get(0) == null) {
+                    zivh.imageView.setImageResource(R.drawable.placeholder);
+                } else {
+                    Glide.with(mContext)
+                            .load(question.getImages().get(0))
+                            .asBitmap()
+                            .placeholder(R.drawable.placeholder)
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .error(R.drawable.placeholder)
+                            .centerCrop()
+                            .into(zivh.imageView);
+                }
+                zivh.textView.setText(question.getTitle());
+                break;
 
+            case ItemWrapper.TYPE_DOUBAN:
+                DoubanItemHolder dih = (DoubanItemHolder) viewHolder;
+                DoubanMomentNewsPosts post = mDoubanList.get(iw.index);
+
+                Glide.with(mContext)
+                        .load(post.getThumbs().get(0).getMedium().getUrl())
+                        .asBitmap()
+                        .placeholder(R.drawable.placeholder)
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .error(R.drawable.placeholder)
+                        .centerCrop()
+                        .into(dih.imageView);
+
+                dih.textView.setText(post.getTitle());
+                break;
+
+            case ItemWrapper.TYPE_DOUBAN_NO_IMG:
+                DoubanNoImageHolder dnih = (DoubanNoImageHolder) viewHolder;
+                DoubanMomentNewsPosts p = mDoubanList.get(iw.index);
+                dnih.textView.setText(p.getTitle());
+                break;
+
+            case ItemWrapper.TYPE_GUOKR:
+                GuokrViewHolder gvh = (GuokrViewHolder) viewHolder;
+                GuokrHandpickNewsResult r = mGuokrList.get(iw.index);
+                Glide.with(mContext)
+                        .load(r.getImageInfo().getUrl())
+                        .asBitmap()
+                        .placeholder(R.drawable.placeholder)
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .error(R.drawable.placeholder)
+                        .centerCrop()
+                        .into(gvh.imageView);
+
+                gvh.textView.setText(r.getTitle());
+                break;
+
+            case ItemWrapper.TYPE_ZHIHU_CATEGORY:
+                CategoryViewHolder cvh1 = (CategoryViewHolder) viewHolder;
+                cvh1.textViewCategory.setText(mContext.getString(R.string.zhihu_daily));
+                break;
+            case ItemWrapper.TYPE_DOUBAN_CATEGORY:
+                CategoryViewHolder cvh2 = (CategoryViewHolder) viewHolder;
+                cvh2.textViewCategory.setText(mContext.getString(R.string.douban_moment));
+                break;
+            case ItemWrapper.TYPE_GUOKR_CATEGORY:
+                CategoryViewHolder cvh3 = (CategoryViewHolder) viewHolder;
+                cvh3.textViewCategory.setText(mContext.getString(R.string.guokr_handpick));
+                break;
+        }
     }
 
     @Override
@@ -155,7 +228,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         mGuokrList.clear();
         mWrapperList.clear();
 
-        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
+        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_ZHIHU_CATEGORY));
         if (zhihuDailyNewsList.isEmpty()) {
             mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         } else {
@@ -166,7 +239,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         }
 
-        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
+        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_ZHIHU_CATEGORY));
         if (doubanMomentNewsList.isEmpty()) {
             mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         } else {
@@ -183,7 +256,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
         }
 
-        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_CATEGORY));
+        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_ZHIHU_CATEGORY));
         if (guokrHandpickNewsList.isEmpty()) {
             mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         } else {
@@ -315,9 +388,11 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public final static int TYPE_ZHIHU = 0x00;
         public final static int TYPE_DOUBAN = 0x01;
         public final static int TYPE_GUOKR = 0x02;
-        public final static int TYPE_CATEGORY = 0x03;
-        public final static int TYPE_EMPTY = 0x04;
-        public final static int TYPE_DOUBAN_NO_IMG = 0x05;
+        public final static int TYPE_EMPTY = 0x03;
+        public final static int TYPE_DOUBAN_NO_IMG = 0x04;
+        public final static int TYPE_ZHIHU_CATEGORY = 0x05;
+        public final static int TYPE_DOUBAN_CATEGORY = 0x06;
+        public final static int TYPE_GUOKR_CATEGORY = 0x07;
 
         public int viewType;
         public int index;

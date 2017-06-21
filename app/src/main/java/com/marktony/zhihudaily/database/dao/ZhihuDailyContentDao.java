@@ -21,7 +21,7 @@ public interface ZhihuDailyContentDao {
     @Query("SELECT * FROM zhihu_daily_content WHERE id = :id")
     ZhihuDailyContent queryContentById(int id);
 
-    @Query("SELECT * FROM zhihu_daily_content WHERE timestamp > :timestamp")
+    @Query("SELECT * FROM zhihu_daily_content WHERE timestamp < :timestamp")
     List<ZhihuDailyContent> queryAllTimeoutContents(long timestamp);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

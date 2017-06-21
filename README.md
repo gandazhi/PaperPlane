@@ -9,17 +9,12 @@
 **The project is under refactoring, if you wanna download the source code of version v3.2.0, please see the [release](https://github.com/TonnyL/PaperPlane/releases).**
 
 ## Introduction
-
-Paper Plane is a reading app based on Android platform which contains articles from Zhihu Daily, Guokr Handpick and Douban Moment.
-
-API of ZhiHuDaily comes from repository [ZhihuDailyPurify](https://github.com/izzyleung/ZhihuDailyPurify)'s [wiki](https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90).
-
-The architecture of this project is [Google Android Architecture Blueprints [beta]](https://github.com/googlesamples/android-architecture)'s todo-mvp.
+Paper Plane is an Android reading app containing articles from [Zhihu Daily](https://daily.zhihu.com/), [Guokr Handpick](http://www.guokr.com/mobile/) and [Douban Moment](https://moment.douban.com/app/). The project is built on [MVP architecture](https://github.com/googlesamples/android-architecture/tree/todo-mvp/) and design with [Material Design](https://material.io/) style.
 
 ## Screenshots
 ![screenshot](./art/screenshot.png)
 
-## Open the project in Android Studio
+## Build
 To open this project in Android Studio, begin by checking out of the branches, and then open the `PaperPlane/` dictionary in Android Studio. The following series of steps illustrate how to open the `PaperPlane` branch.
 
 Clone the repository:
@@ -32,29 +27,29 @@ checkout the master branch:
 git checkout master
 ```
 
-Note: If you want to review a different branch, replace the `master` with the name you want to checkout like the `dev`.
+Note: If you want to review a different branch, replace the `master` with the name you want to checkout like the `dev` (Confirm if the branch does exists).
 
 Finally open the `PaperPlane/` directory in Android Studio.
 
-## Download APK
-* [![google-play-badge](https://github.com/marktony/ZhiHuDaily/blob/master/art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.marktony.zhihudaily)
-* [Xiaomi Apps market](http://app.mi.com/detail/312703?ref=search)
-* [Cool market](http://www.coolapk.com/apk/com.marktony.zhihudaily)
-* Smartisan App Market
-* [Google Drive](https://drive.google.com/open?id=0B3yYs4KaSVg_MnpfVVY1S0s0MVU)
+## Google Play
+[![google-play-badge](art/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.marktony.zhihudaily)
 
-## Related open source libraries
-Name | Introduction
---------- | --------
-[Android Support Libraries](https://developer.android.com/topic/libraries/support-library/index.html) | The Android Support Library offers a number of features that are not built into the framework. These libraries offer backward-compatible versions of new features, provide useful UI elements that are not included in the framework, and provide a range of utilities that apps can draw on.
-[Glide](https://github.com/bumptech/glide) | An image loading and caching library for Android focused on smooth scrolling.
-[Gson](https://github.com/google/gson) | A Java serialization/deserialization library that can convert Java Objects into JSON and back.
-[MaterialDateTimePicker](https://github.com/wdullaer/MaterialDateTimePicker) | Pick a date or time on Android in style.
-[Volley](https://android.googlesource.com/platform/frameworks/volley/) | Volley is an HTTP library that makes networking for Android apps easier and most importantly, faster. Volley is available through the open AOSP repository.
+## Libraries
+| Library     | Intro     |
+| :------------- | :------------- |
+| [Android Support Libraries](https://developer.android.com/topic/libraries/support-library/index.html) | The Android Support Library offers a number of features that are not built into the framework. These libraries offer backward-compatible versions of new features, provide useful UI elements that are not included in the framework, and provide a range of utilities that apps can draw on. |
+| [Glide](https://github.com/bumptech/glide) | An image loading and caching library for Android focused on smooth scrolling. |
+| [Gson](https://github.com/google/gson) | A Java serialization/deserialization library that can convert Java Objects into JSON and back. |
+| [MaterialDateTimePicker](https://github.com/wdullaer/MaterialDateTimePicker) | Pick a date or time on Android in style. |
+| [Retrofit](https://github.com/square/retrofit) | Type-safe HTTP client for Android and Java by Square, Inc. |
+| [Room](https://developer.android.com/topic/libraries/architecture/room.html) | Room provides an abstraction layer over SQLite to allow fluent database access while harnessing the full power of SQLite. |
+
+## Contributions
+`Paper Plane` is a fully open sourced project. If you find a bug or want new features, do not hesitate to open an issue or create a pull request. Read the [CONTRIBUTION_GUIDELINES](CONTRIBUTION_GUIDELINES.md) for more detailed information.
 
 ## License
 
-    Copyright 2017 lizhaotailang
+    Copyright 2016 lizhaotailang
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

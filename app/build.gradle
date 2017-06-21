@@ -10,7 +10,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 18
-        versionName "V3.2.0"
+        versionName "V3.3.0"
 
         javaCompileOptions {
             annotationProcessorOptions {

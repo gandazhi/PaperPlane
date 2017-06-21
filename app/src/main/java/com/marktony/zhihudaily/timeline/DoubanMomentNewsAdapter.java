@@ -25,7 +25,6 @@ public class DoubanMomentNewsAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private static final int TYPE_ITEM = 0x00;
     private static final int TYPE_NO_IMG = 0x01;
-    private static final int TYPE_FOOTER = 0x02;
 
     @NonNull
     private Context mContext;
@@ -48,19 +47,12 @@ public class DoubanMomentNewsAdapter extends RecyclerView.Adapter<RecyclerView.V
                 return new ItemViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_list_item_layout, viewGroup, false), mListener);
             case TYPE_NO_IMG:
                 return new NoImgViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.home_list_item_without_image, viewGroup, false), mListener);
-            case TYPE_FOOTER:
-                return new FooterViewHolder(LayoutInflater.from(mContext).inflate(R.layout.list_footer, viewGroup, false));
         }
         return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-
-        if (viewHolder instanceof FooterViewHolder) {
-            return;
-        }
-
         DoubanMomentNewsPosts item = mList.get(i);
         if (viewHolder instanceof ItemViewHolder) {
 
@@ -82,14 +74,11 @@ public class DoubanMomentNewsAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
-        return mList.isEmpty() ? 0 : mList.size() + 1;
+        return mList.isEmpty() ? 0 : mList.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == mList.size()) {
-            return TYPE_FOOTER;
-        }
         return mList.get(position).getThumbs().isEmpty() ? TYPE_NO_IMG : TYPE_ITEM;
     }
 
@@ -152,10 +141,4 @@ public class DoubanMomentNewsAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    public class FooterViewHolder extends RecyclerView.ViewHolder {
-
-        public FooterViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
 }

@@ -42,10 +42,13 @@ public class DoubanMomentFragment extends Fragment
     private FloatingActionButton fab;
 
     private DoubanMomentNewsAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     private int mYear, mMonth, mDay;
 
+    private boolean mIsLoadingMore = false;
     private boolean mIsFirstLoad = true;
+    private int mListSize = 0;
 
     public DoubanMomentFragment() {
         // Requires default empty constructor.
@@ -78,32 +81,14 @@ public class DoubanMomentFragment extends Fragment
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
-            boolean isSlidingToLast = false;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                // 当不滚动时
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    // 获取最后一个完全显示的item position
-                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-                    int totalItemCount = manager.getItemCount();
-
-                    // 判断是否滚动到底部并且是向下滑动
-                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
-                        loadMore();
-                    }
-                }
-
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                isSlidingToLast = dy > 0;
+
                 if (dy >0 ) {
+                    if (mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1 && !mIsLoadingMore) {
+                        loadMore();
+                    }
                     fab.hide();
                 } else {
                     fab.show();
@@ -139,7 +124,8 @@ public class DoubanMomentFragment extends Fragment
     public void initViews(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mEmptyView = view.findViewById(R.id.empty_view);
         fab = getActivity().findViewById(R.id.fab);
     }
@@ -173,6 +159,14 @@ public class DoubanMomentFragment extends Fragment
         } else {
             mAdapter.updateData(list);
         }
+
+        mListSize = list.size();
+        mIsLoadingMore = false;
+
+        if (mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
+            loadMore();
+        }
+
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
 
         for (DoubanMomentNewsPosts item : list) {
@@ -184,6 +178,7 @@ public class DoubanMomentFragment extends Fragment
     }
 
     private void loadMore() {
+        mIsLoadingMore = true;
         Calendar c = Calendar.getInstance();
         c.set(mYear, mMonth, --mDay);
         mPresenter.load(true, false, c.getTimeInMillis());

@@ -43,10 +43,13 @@ public class ZhihuDailyFragment extends Fragment
     private FloatingActionButton fab;
 
     private ZhihuDailyNewsAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     private int mYear, mMonth, mDay;
 
+    private boolean mIsLoadingMore = false;
     private boolean mIsFirstLoad = true;
+    private int mListSize = 0;
 
     public ZhihuDailyFragment() {
         // An empty constructor is needed as a fragment.
@@ -79,36 +82,15 @@ public class ZhihuDailyFragment extends Fragment
             mPresenter.loadNews(true, true, c.getTimeInMillis());
         });
 
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            boolean isSlidingToLast = false;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                // 当不滚动时
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    // 获取最后一个完全显示的item position
-                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-                    int totalItemCount = manager.getItemCount();
-
-                    // 判断是否滚动到底部并且是向下滑动
-                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
-                        loadMore();
-                    }
-                }
-
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                isSlidingToLast = dy > 0;
-
-                // Show or hide fab
                 if (dy > 0) {
                     fab.hide();
+                    if (mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1 && !mIsLoadingMore) {
+                        loadMore();
+                    }
                 } else {
                     fab.show();
                 }
@@ -145,7 +127,8 @@ public class ZhihuDailyFragment extends Fragment
     public void initViews(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mEmptyView = view.findViewById(R.id.empty_view);
         fab = getActivity().findViewById(R.id.fab);
     }
@@ -180,6 +163,12 @@ public class ZhihuDailyFragment extends Fragment
             mAdapter.updateData(list);
         }
 
+        mIsLoadingMore = false;
+
+        if (mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
+            loadMore();
+        }
+
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
 
         // Cache data of the items
@@ -192,6 +181,7 @@ public class ZhihuDailyFragment extends Fragment
     }
 
     private void loadMore() {
+        mIsLoadingMore = true;
         Calendar c = Calendar.getInstance();
         c.set(mYear, mMonth, --mDay);
         mPresenter.loadNews(true, false, c.getTimeInMillis());

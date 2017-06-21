@@ -8,16 +8,23 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.preference.PreferenceManager;
 
 import com.marktony.zhihudaily.data.DoubanMomentContent;
+import com.marktony.zhihudaily.data.DoubanMomentNewsPosts;
 import com.marktony.zhihudaily.data.GuokrHandpickContentResult;
+import com.marktony.zhihudaily.data.GuokrHandpickNewsResult;
 import com.marktony.zhihudaily.data.PostType;
 import com.marktony.zhihudaily.data.ZhihuDailyContent;
+import com.marktony.zhihudaily.data.ZhihuDailyNewsQuestion;
 import com.marktony.zhihudaily.database.AppDatabase;
 import com.marktony.zhihudaily.database.DatabaseCreator;
 import com.marktony.zhihudaily.retrofit.RetrofitService;
+import com.marktony.zhihudaily.util.InfoConstants;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.List;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -41,6 +48,10 @@ public class CacheService extends Service {
     private RetrofitService.ZhihuDailyService mZhihuService;
     private RetrofitService.DoubanMomentService mDoubanService;
     private RetrofitService.GuokrHandpickService mGuokrService;
+
+    private boolean mZhihuCacheDone = false;
+    private boolean mDoubanCacheDone = false;
+    private boolean mGuokrCacheDone = false;
 
     @Override
     public void onCreate() {
@@ -138,6 +149,10 @@ public class CacheService extends Service {
                     e.printStackTrace();
                 } finally {
                     mDb.endTransaction();
+                    mZhihuCacheDone = true;
+                    if (mDoubanCacheDone && mGuokrCacheDone) {
+                        clearTimeoutContent();
+                    }
                 }
             }
         }).start();
@@ -169,6 +184,10 @@ public class CacheService extends Service {
                     e.printStackTrace();
                 } finally {
                     mDb.endTransaction();
+                    mDoubanCacheDone = true;
+                    if (mZhihuCacheDone && mGuokrCacheDone) {
+                        clearTimeoutContent();
+                    }
                 }
             }
         }).start();
@@ -200,6 +219,10 @@ public class CacheService extends Service {
                     e.printStackTrace();
                 } finally {
                     mDb.endTransaction();
+                    mGuokrCacheDone = true;
+                    if (mZhihuCacheDone && mDoubanCacheDone) {
+                        clearTimeoutContent();
+                    }
                 }
             }
         }).start();
@@ -214,10 +237,51 @@ public class CacheService extends Service {
             mDb = creator.getDatabase();
         }
 
+        int dayCount = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .getInt(InfoConstants.KEY_TIME_OF_SAVING_ARTICLES, 7);
+
         new Thread(() -> {
             if (mDb != null) {
                 mDb.beginTransaction();
                 try {
+
+                    long timeInMillis = Calendar.getInstance().getTimeInMillis() - dayCount*24*60*60*1000;
+
+                    // Clear cache of zhihu daily news
+                    List<ZhihuDailyNewsQuestion> zhihuTimeoutItems = mDb.zhihuDailyNewsDao().queryAllTimeoutItems(timeInMillis);
+                    for (ZhihuDailyNewsQuestion q : zhihuTimeoutItems) {
+                        mDb.zhihuDailyNewsDao().delete(q);
+                    }
+
+                    // Clear cache of zhihu daily contents
+                    List<ZhihuDailyContent> zhihuTimeoutContents = mDb.zhihuDailyContentDao().queryAllTimeoutContents(timeInMillis);
+                    for (ZhihuDailyContent c : zhihuTimeoutContents) {
+                        mDb.zhihuDailyContentDao().delete(c);
+                    }
+
+                    // Clear cache of guokr handpick news
+                    List<GuokrHandpickNewsResult> guokrTimeoutNews = mDb.guokrHandpickNewsDao().queryAllTimeoutItems(timeInMillis);
+                    for (GuokrHandpickNewsResult r : guokrTimeoutNews) {
+                        mDb.guokrHandpickNewsDao().delete(r);
+                    }
+
+                    // Clear cache of guokr handpick contents
+                    List<GuokrHandpickContentResult> guokrTimeoutContents = mDb.guokrHandpickContentDao().queryAllTimeoutContents(timeInMillis);
+                    for (GuokrHandpickContentResult r : guokrTimeoutContents) {
+                        mDb.guokrHandpickContentDao().delete(r);
+                    }
+
+                    // Clear cache of douban moment news
+                    List<DoubanMomentNewsPosts> doubanTimeoutNews = mDb.doubanMomentNewsDao().queryAllTimeoutItems(timeInMillis);
+                    for (DoubanMomentNewsPosts p : doubanTimeoutNews) {
+                        mDb.doubanMomentNewsDao().delete(p);
+                    }
+
+                    // Clear cache of douban moment contents
+                    List<DoubanMomentContent> doubanTimeoutContents = mDb.doubanMomentContentDao().queryAllTimeoutContents(timeInMillis);
+                    for (DoubanMomentContent c : doubanTimeoutContents) {
+                        mDb.doubanMomentContentDao().delete(c);
+                    }
 
                 } finally {
                     mDb.endTransaction();

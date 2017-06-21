@@ -32,6 +32,6 @@ public interface GuokrHandpickContentDao {
     void update(GuokrHandpickContentResult content);
 
     @Delete
-    void delete(GuokrHandpickNewsResult item);
+    void delete(GuokrHandpickContentResult item);
 
 }
