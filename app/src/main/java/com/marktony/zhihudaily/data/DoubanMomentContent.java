@@ -120,10 +120,6 @@ public class DoubanMomentContent {
     @SerializedName("title")
     private String title;
 
-    @ColumnInfo(name = "favorite")
-    @Expose
-    private boolean favorite;
-
     @ColumnInfo(name = "timestamp")
     @Expose
     private long timestamp;
@@ -286,14 +282,6 @@ public class DoubanMomentContent {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
     }
 
     public long getTimestamp() {

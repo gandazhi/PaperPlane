@@ -34,8 +34,11 @@ public class DetailsActivity extends AppCompatActivity {
     public static final String KEY_ARTICLE_TYPE = "KEY_ARTICLE_TYPE";
     public static final String KEY_ARTICLE_ID = "KEY_ARTICLE_ID";
     public static final String KEY_ARTICLE_TITLE = "KEY_ARTICLE_TITLE";
+    public static final String KEY_ARTICLE_IS_FAVORITE = "KEY_ARTICLE_IS_FAVORITE";
 
     private DetailsFragment mDetailsFragment;
+
+    private ContentType mType;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,8 +54,8 @@ public class DetailsActivity extends AppCompatActivity {
                     .commit();
         }
 
-        ContentType type = (ContentType) getIntent().getSerializableExtra(KEY_ARTICLE_TYPE);
-        if (type == ContentType.TYPE_ZHIHU_DAILY) {
+        mType = (ContentType) getIntent().getSerializableExtra(KEY_ARTICLE_TYPE);
+        if (mType == ContentType.TYPE_ZHIHU_DAILY) {
 
             new DetailsPresenter(mDetailsFragment,
                     ZhihuDailyNewsRepository.getInstance(ZhihuDailyNewsRemoteDataSource.getInstance(),
@@ -60,13 +63,13 @@ public class DetailsActivity extends AppCompatActivity {
                     ZhihuDailyContentRepository.getInstance(ZhihuDailyContentRemoteDataSource.getInstance(),
                             ZhihuDailyContentLocalDataSource.getInstance(DetailsActivity.this)));
 
-        } else if (type == ContentType.TYPE_DOUBAN_MOMENT) {
+        } else if (mType == ContentType.TYPE_DOUBAN_MOMENT) {
             new DetailsPresenter(mDetailsFragment,
                     DoubanMomentNewsRepository.getInstance(DoubanMomentNewsRemoteDataSource.getInstance(),
                             DoubanMomentNewsLocalDataSource.getInstance(DetailsActivity.this)),
                     DoubanMomentContentRepository.getInstance(DoubanMomentContentRemoteDataSource.getInstance(),
                             DoubanMomentContentLocalDataSource.getInstance(DetailsActivity.this)));
-        } else if (type == ContentType.TYPE_GUOKR_HANDPICK) {
+        } else if (mType == ContentType.TYPE_GUOKR_HANDPICK) {
             new DetailsPresenter(mDetailsFragment,
                     GuokrHandpickNewsRepository.getInstance(GuokrHandpickNewsRemoteDataSource.getInstance(),
                             GuokrHandpickNewsLocalDataSource.getInstance(DetailsActivity.this)),
@@ -78,9 +81,13 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ZhihuDailyContentRepository.destroyInstance();
-        DoubanMomentContentRepository.destroyInstance();
-        GuokrHandpickContentRepository.destroyInstance();
+        if (mType == ContentType.TYPE_ZHIHU_DAILY) {
+            ZhihuDailyContentRepository.destroyInstance();
+        } else if (mType == ContentType.TYPE_DOUBAN_MOMENT) {
+            DoubanMomentContentRepository.destroyInstance();
+        } else {
+            GuokrHandpickContentRepository.destroyInstance();
+        }
     }
 
     @Override

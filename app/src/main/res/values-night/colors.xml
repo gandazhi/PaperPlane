@@ -20,8 +20,9 @@
     <color name="colorPrimaryDark">#212a2f</color>
     <color name="colorAccent">#212a2f</color>
 
-    <color name="textColorPrimary">#616161</color>
     <color name="viewBackground">#212a2f</color>
+    <color name="colorPrimaryText">#e4e4e4</color>
+    <color name="colorSecondaryText">#b5b5b5</color>
 
     <color name="colorBaseBackground">#262626</color>
 

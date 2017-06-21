@@ -170,10 +170,6 @@ public class GuokrHandpickContentResult {
     @SerializedName("resource_url")
     private String resourceUrl;
 
-    @ColumnInfo(name = "favorite")
-    @Expose
-    private boolean favorite;
-
     @ColumnInfo(name = "timestamp")
     @Expose
     private long timestamp;
@@ -408,14 +404,6 @@ public class GuokrHandpickContentResult {
 
     public void setResourceUrl(String resourceUrl) {
         this.resourceUrl = resourceUrl;
-    }
-
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
     }
 
     public int getId() {

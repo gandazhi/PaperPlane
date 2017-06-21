@@ -22,7 +22,7 @@
     android:id="@+id/text_view_title"
     android:fontFamily="@font/product_family"
     android:foreground="?android:attr/selectableItemBackground"
-    android:textColor="@color/textColorPrimary"
+    android:textColor="@color/colorPrimaryText"
     android:paddingTop="@dimen/primary_margin"
     android:paddingBottom="@dimen/primary_margin"
     android:paddingLeft="@dimen/primary_margin"

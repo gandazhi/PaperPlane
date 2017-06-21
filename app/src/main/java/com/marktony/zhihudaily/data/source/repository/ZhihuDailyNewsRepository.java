@@ -2,7 +2,6 @@ package com.marktony.zhihudaily.data.source.repository;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.marktony.zhihudaily.data.ZhihuDailyNewsQuestion;
 import com.marktony.zhihudaily.data.source.datasource.ZhihuDailyNewsDataSource;
@@ -62,14 +61,12 @@ public class ZhihuDailyNewsRepository implements ZhihuDailyNewsDataSource {
             public void onNewsLoaded(@NonNull List<ZhihuDailyNewsQuestion> list) {
                 refreshCache(clearCache, list);
                 callback.onNewsLoaded(new ArrayList<>(mCachedItems.values()));
-
                 // Save these item to database.
                 saveAll(list);
             }
 
             @Override
             public void onDataNotAvailable() {
-
                 mLocalDataSource.getZhihuDailyNews(false, false, date, new LoadZhihuDailyNewsCallback() {
                     @Override
                     public void onNewsLoaded(@NonNull List<ZhihuDailyNewsQuestion> list) {

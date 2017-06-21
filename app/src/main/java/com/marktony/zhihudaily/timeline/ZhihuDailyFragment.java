@@ -47,7 +47,6 @@ public class ZhihuDailyFragment extends Fragment
 
     private int mYear, mMonth, mDay;
 
-    private boolean mIsLoadingMore = false;
     private boolean mIsFirstLoad = true;
     private int mListSize = 0;
 
@@ -88,7 +87,7 @@ public class ZhihuDailyFragment extends Fragment
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
                     fab.hide();
-                    if (mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1 && !mIsLoadingMore) {
+                    if (mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
                         loadMore();
                     }
                 } else {
@@ -153,6 +152,7 @@ public class ZhihuDailyFragment extends Fragment
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, list.get(i).getId());
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_ZHIHU_DAILY);
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, list.get(i).getTitle());
+                intent.putExtra(DetailsActivity.KEY_ARTICLE_IS_FAVORITE, list.get(i).isFavorite());
                 startActivity(intent);
 
                 mPresenter.outdate(list.get(i).getId());
@@ -163,11 +163,7 @@ public class ZhihuDailyFragment extends Fragment
             mAdapter.updateData(list);
         }
 
-        mIsLoadingMore = false;
-
-        if (mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
-            loadMore();
-        }
+        mListSize = list.size();
 
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
 
@@ -181,7 +177,6 @@ public class ZhihuDailyFragment extends Fragment
     }
 
     private void loadMore() {
-        mIsLoadingMore = true;
         Calendar c = Calendar.getInstance();
         c.set(mYear, mMonth, --mDay);
         mPresenter.loadNews(true, false, c.getTimeInMillis());

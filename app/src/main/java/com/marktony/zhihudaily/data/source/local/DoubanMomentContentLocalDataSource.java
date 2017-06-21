@@ -64,21 +64,6 @@ public class DoubanMomentContentLocalDataSource implements DoubanMomentContentDa
     }
 
     @Override
-    public void favorite(int id, boolean favorite) {
-        if (mDb == null) {
-            mDb = DatabaseCreator.getInstance().getDatabase();
-        }
-
-        if (mDb != null) {
-            new Thread(() -> {
-                DoubanMomentContent tmp = mDb.doubanMomentContentDao().queryContentById(id);
-                tmp.setFavorite(favorite);
-                mDb.doubanMomentContentDao().update(tmp);
-            }).start();
-        }
-    }
-
-    @Override
     public void saveContent(@NonNull DoubanMomentContent content) {
         if (mDb != null) {
             new Thread(() -> {

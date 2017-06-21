@@ -3,16 +3,16 @@
 [![Build Status](https://travis-ci.org/TonnyL/PaperPlane.svg?branch=master)](https://travis-ci.org/TonnyL/PaperPlane)
 
 <div align="center">
-	<img src="./art/logo.png" width="128">
+	<img src="./art/ic_launcher.png" width="128">
 </div>
-
-**The project is under refactoring, if you wanna download the source code of version v3.2.0, please see the [release](https://github.com/TonnyL/PaperPlane/releases).**
 
 ## Introduction
 Paper Plane is an Android reading app containing articles from [Zhihu Daily](https://daily.zhihu.com/), [Guokr Handpick](http://www.guokr.com/mobile/) and [Douban Moment](https://moment.douban.com/app/). The project is built on [MVP architecture](https://github.com/googlesamples/android-architecture/tree/todo-mvp/) and design with [Material Design](https://material.io/) style.
 
 ## Screenshots
-![screenshot](./art/screenshot.png)
+| Timeline    | Favorites    | Info | Details |
+| :-------------: | :-------------: |:-------------: | :-------------: |
+| ![Timeline](./art/timeline.png) | ![Favorites](./art/favorites.png) | ![Info](./art/info.png) | ![Details](./art/details.png) |
 
 ## Build
 To open this project in Android Studio, begin by checking out of the branches, and then open the `PaperPlane/` dictionary in Android Studio. The following series of steps illustrate how to open the `PaperPlane` branch.

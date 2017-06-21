@@ -20,7 +20,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="preferenceTheme">@style/myPreferenceScreen</item>
+        <item name="preferenceTheme">@style/MaterialPreferenceTheme</item>
         <item name="actionBarStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:actionBarStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
@@ -45,36 +45,38 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <!--定义字体颜色，在夜间模式时使用
-    定义scrollbar的类型，在xml文件中定义无效-->
-    <style name="myPreferenceScreen" parent="PreferenceThemeOverlay.v14.Material">
+    <style name="MaterialPreferenceTheme" parent="PreferenceThemeOverlay.v14.Material">
         <item name="android:fadeScrollbars">true</item>
         <item name="android:scrollbars">vertical</item>
         <item name="android:scrollbarFadeDuration">1</item>
+        <item name="android:background">@color/viewBackground</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
     </style>
 
     <!--自定义CollapsingToolbarLayout字体大小 custom the title's text size of CollapsingToolBarLayout-->
     <style name="ExpandedAppBar" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">21sp</item>
-        <item name="android:textColor">@drawable/nav_item_color</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">21sp</item>
-        <item name="android:textColor">@drawable/nav_item_color</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textStyle">normal</item>
     </style>
 
     <style name="ExpandedAppBarPlus1" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">21sp</item>
-        <item name="android:textColor">@drawable/nav_item_color</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="CollapsedAppBarPlus1" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">21sp</item>
-        <item name="android:textColor">@drawable/nav_item_color</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textStyle">normal</item>
     </style>
     <!--自定义CollapsingToolbarLayout字体大小 end-->

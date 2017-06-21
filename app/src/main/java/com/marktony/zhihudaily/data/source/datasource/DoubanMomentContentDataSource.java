@@ -20,8 +20,6 @@ public interface DoubanMomentContentDataSource {
 
     void getDoubanMomentContent(int id, @NonNull LoadDoubanMomentContentCallback callback);
 
-    void favorite(int id, boolean favorite);
-
     void saveContent(@NonNull DoubanMomentContent content);
 
 }

@@ -72,14 +72,11 @@ public class DetailsPresenter implements DetailsContract.Presenter {
     @Override
     public void favorite(ContentType type, int id, boolean favorite) {
         if (type == ContentType.TYPE_ZHIHU_DAILY) {
-            mZhihuContentRepository.favorite(id, favorite);
             mZhihuNewsRepository.favoriteItem(id, favorite);
         } else if (type == ContentType.TYPE_DOUBAN_MOMENT) {
             mDoubanNewsRepository.favoriteItem(id, favorite);
-            mDoubanContentRepository.favorite(id, favorite);
         } else {
             mGuokrNewsRepository.favoriteItem(id, favorite);
-            mGuokrContentRepository.favorite(id, favorite);
         }
     }
 

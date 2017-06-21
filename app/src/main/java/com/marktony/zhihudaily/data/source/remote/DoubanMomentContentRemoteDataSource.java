@@ -58,12 +58,6 @@ public class DoubanMomentContentRemoteDataSource implements DoubanMomentContentD
     }
 
     @Override
-    public void favorite(int id, boolean favorite) {
-        // Not required for the remote data source because the {@link TasksRepository} handles
-        // converting from a {@code taskId} to a {@link task} using its cached data.
-    }
-
-    @Override
     public void saveContent(@NonNull DoubanMomentContent content) {
         // Not required for the remote data source because the {@link TasksRepository} handles
         // converting from a {@code taskId} to a {@link task} using its cached data.

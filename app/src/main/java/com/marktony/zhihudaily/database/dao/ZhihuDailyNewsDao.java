@@ -33,7 +33,7 @@ public interface ZhihuDailyNewsDao {
     @Query("SELECT timestamp from zhihu_daily_news WHERE id = :id")
     long queryTimestampById(int id);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(List<ZhihuDailyNewsQuestion> items);
 
     @Update

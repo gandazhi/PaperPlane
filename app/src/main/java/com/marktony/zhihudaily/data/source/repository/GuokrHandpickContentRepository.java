@@ -81,15 +81,6 @@ public class GuokrHandpickContentRepository implements GuokrHandpickContentDataS
     }
 
     @Override
-    public void favorite(int id, boolean favorite) {
-        mRemoteDataSource.favorite(id, favorite);
-        mLocalDataSource.favorite(id, favorite);
-        if (mContent != null) {
-            mContent.setFavorite(favorite);
-        }
-    }
-
-    @Override
     public void saveContent(@NonNull GuokrHandpickContentResult content) {
         content.setTimestamp(DateFormatUtil.formatZhihuDailyDateStringToLong(content.getDatePublished()));
         mLocalDataSource.saveContent(content);

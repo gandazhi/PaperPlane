@@ -49,9 +49,7 @@ public class FavoritesFragment extends Fragment
 
         initViews(view);
 
-        mRefreshLayout.setOnRefreshListener(() -> {
-
-        });
+        mRefreshLayout.setOnRefreshListener(() -> mPresenter.loadFavorites());
 
         return view;
     }
@@ -108,6 +106,7 @@ public class FavoritesFragment extends Fragment
                     intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, zhihuList.get(mAdapter.getOriginalIndex(position)).getId());
                     intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_ZHIHU_DAILY);
                     intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, zhihuList.get(mAdapter.getOriginalIndex(position)).getTitle());
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_IS_FAVORITE, zhihuList.get(mAdapter.getOriginalIndex(position)).isFavorite());
                     startActivity(intent);
 
                 } else if (viewType == FavoritesAdapter.ItemWrapper.TYPE_DOUBAN
@@ -117,6 +116,7 @@ public class FavoritesFragment extends Fragment
                     intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, doubanList.get(mAdapter.getOriginalIndex(position)).getId());
                     intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_DOUBAN_MOMENT);
                     intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, doubanList.get(mAdapter.getOriginalIndex(position)).getTitle());
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_IS_FAVORITE, doubanList.get(mAdapter.getOriginalIndex(position)).isFavorite());
                     startActivity(intent);
 
                 } else if (viewType == FavoritesAdapter.ItemWrapper.TYPE_GUOKR) {
@@ -125,6 +125,7 @@ public class FavoritesFragment extends Fragment
                     intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, guokrList.get(mAdapter.getOriginalIndex(position)).getId());
                     intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_GUOKR_HANDPICK);
                     intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, guokrList.get(mAdapter.getOriginalIndex(position)).getTitle());
+                    intent.putExtra(DetailsActivity.KEY_ARTICLE_IS_FAVORITE, guokrList.get(mAdapter.getOriginalIndex(position)).isFavorite());
                     startActivity(intent);
 
                 }

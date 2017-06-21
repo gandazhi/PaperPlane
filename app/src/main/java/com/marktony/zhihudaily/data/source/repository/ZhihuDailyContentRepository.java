@@ -80,17 +80,6 @@ public class ZhihuDailyContentRepository implements ZhihuDailyContentDataSource 
     }
 
     @Override
-    public void favorite(int id, boolean favorite) {
-        mLocalDataSource.favorite(id, favorite);
-        mRemoteDataSource.favorite(id, favorite);
-
-        if (mContent != null) {
-            mContent.setFavorite(favorite);
-        }
-
-    }
-
-    @Override
     public void saveContent(@NonNull ZhihuDailyContent content) {
         // Note: Setting of timestamp was done in the {@link ZhihuDailyContentLocalDataSource} class.
         mLocalDataSource.saveContent(content);

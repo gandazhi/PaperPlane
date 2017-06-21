@@ -24,7 +24,7 @@ public interface ZhihuDailyContentDao {
     @Query("SELECT * FROM zhihu_daily_content WHERE timestamp < :timestamp")
     List<ZhihuDailyContent> queryAllTimeoutContents(long timestamp);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(ZhihuDailyContent content);
 
     @Update

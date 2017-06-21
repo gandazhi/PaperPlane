@@ -76,10 +76,6 @@ public class ZhihuDailyContent {
     @SerializedName("css")
     private List<String> css;
 
-    @ColumnInfo(name = "favorite")
-    @Expose
-    private boolean favorite;
-
     @ColumnInfo(name = "timestamp")
     @Expose
     private long timestamp;
@@ -170,14 +166,6 @@ public class ZhihuDailyContent {
 
     public void setCss(List<String> css) {
         this.css = css;
-    }
-
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
     }
 
     public long getTimestamp() {

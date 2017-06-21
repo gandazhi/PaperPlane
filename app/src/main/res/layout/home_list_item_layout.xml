@@ -32,7 +32,7 @@
         android:layout_weight="1"
         android:id="@+id/text_view_title"
         android:fontFamily="@font/product_family"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@color/colorPrimaryText"
         android:layout_marginEnd="16dp"
         android:gravity="center_vertical"
         android:maxLines="2"

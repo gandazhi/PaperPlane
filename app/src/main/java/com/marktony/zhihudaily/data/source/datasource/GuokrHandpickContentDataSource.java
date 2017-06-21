@@ -20,8 +20,6 @@ public interface GuokrHandpickContentDataSource {
 
     void getGuokrHandpickContent(int id, @NonNull LoadGuokrHandpickContentCallback callback);
 
-    void favorite(int id, boolean favorite);
-
     void saveContent(@NonNull GuokrHandpickContentResult content);
 
 }

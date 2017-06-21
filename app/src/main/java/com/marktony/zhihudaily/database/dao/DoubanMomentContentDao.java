@@ -24,7 +24,7 @@ public interface DoubanMomentContentDao {
     @Query("SELECT * FROM douban_moment_content WHERE timestamp < :timestamp")
     List<DoubanMomentContent> queryAllTimeoutContents(long timestamp);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(DoubanMomentContent content);
 
     @Update

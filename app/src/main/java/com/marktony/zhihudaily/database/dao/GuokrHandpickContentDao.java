@@ -25,7 +25,7 @@ public interface GuokrHandpickContentDao {
     @Query("SELECT * FROM guokr_handpick_content WHERE timestamp < :timestamp")
     List<GuokrHandpickContentResult> queryAllTimeoutContents(long timestamp);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(GuokrHandpickContentResult content);
 
     @Update

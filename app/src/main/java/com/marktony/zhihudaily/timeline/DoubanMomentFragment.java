@@ -46,7 +46,6 @@ public class DoubanMomentFragment extends Fragment
 
     private int mYear, mMonth, mDay;
 
-    private boolean mIsLoadingMore = false;
     private boolean mIsFirstLoad = true;
     private int mListSize = 0;
 
@@ -86,7 +85,7 @@ public class DoubanMomentFragment extends Fragment
                 super.onScrolled(recyclerView, dx, dy);
 
                 if (dy >0 ) {
-                    if (mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1 && !mIsLoadingMore) {
+                    if (mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
                         loadMore();
                     }
                     fab.hide();
@@ -150,6 +149,7 @@ public class DoubanMomentFragment extends Fragment
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, list.get(i).getId());
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_DOUBAN_MOMENT);
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, list.get(i).getTitle());
+                intent.putExtra(DetailsActivity.KEY_ARTICLE_IS_FAVORITE, list.get(i).isFavorite());
                 startActivity(intent);
 
                 mPresenter.outdate(list.get(i).getId());
@@ -161,11 +161,6 @@ public class DoubanMomentFragment extends Fragment
         }
 
         mListSize = list.size();
-        mIsLoadingMore = false;
-
-        if (mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
-            loadMore();
-        }
 
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
 
@@ -178,7 +173,6 @@ public class DoubanMomentFragment extends Fragment
     }
 
     private void loadMore() {
-        mIsLoadingMore = true;
         Calendar c = Calendar.getInstance();
         c.set(mYear, mMonth, --mDay);
         mPresenter.load(true, false, c.getTimeInMillis());

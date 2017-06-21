@@ -9,19 +9,19 @@
             android:id="@+id/nav_timeline"
             android:enabled="true"
             android:icon="@drawable/ic_activity_black_24dp"
-            android:title="Timeline" />
+            android:title="@string/timeline" />
 
         <item
             android:id="@+id/nav_favorites"
             android:enabled="true"
             android:icon="@drawable/ic_favorite_black_24dp"
-            android:title="Favorites" />
+            android:title="@string/favorites" />
 
         <item
             android:id="@+id/nav_info"
             android:enabled="true"
             android:icon="@drawable/ic_info_outline_black_24dp"
-            android:title="Info" />
+            android:title="@string/info" />
 
     </group>
 </menu>

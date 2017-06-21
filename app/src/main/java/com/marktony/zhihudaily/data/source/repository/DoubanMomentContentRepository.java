@@ -82,15 +82,6 @@ public class DoubanMomentContentRepository implements DoubanMomentContentDataSou
     }
 
     @Override
-    public void favorite(int id, boolean favorite) {
-        mLocalDataSource.favorite(id, favorite);
-        mRemoteDataSource.favorite(id, favorite);
-        if (mContent != null) {
-            mContent.setFavorite(favorite);
-        }
-    }
-
-    @Override
     public void saveContent(@NonNull DoubanMomentContent content) {
         content.setTimestamp(DateFormatUtil.formatDoubanMomentDateStringToLong(content.getPublishedTime()));
         mLocalDataSource.saveContent(content);

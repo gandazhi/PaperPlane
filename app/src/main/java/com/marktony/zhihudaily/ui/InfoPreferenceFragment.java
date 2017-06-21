@@ -114,21 +114,15 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
             AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
             dialog.setTitle(R.string.donate);
             dialog.setMessage(getString(R.string.donate_content));
-            dialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.positive), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    // 将指定账号添加到剪切板
-                    // add the alipay account to clipboard
-                    ClipboardManager manager = (ClipboardManager) getContext().getSystemService(CLIPBOARD_SERVICE);
-                    ClipData clipData = ClipData.newPlainText("text", getString(R.string.donate_account));
-                    manager.setPrimaryClip(clipData);
-                }
+            dialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.positive), (dialogInterface, i) -> {
+                // 将指定账号添加到剪切板
+                // add the alipay account to clipboard
+                ClipboardManager manager = (ClipboardManager) getContext().getSystemService(CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("text", getString(R.string.donate_account));
+                manager.setPrimaryClip(clipData);
             });
-            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.negative), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.negative), (dialogInterface, i) -> {
 
-                }
             });
             dialog.show();
             return true;

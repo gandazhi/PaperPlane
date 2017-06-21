@@ -131,6 +131,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         ItemWrapper iw = mWrapperList.get(i);
+
         switch (iw.viewType) {
             case ItemWrapper.TYPE_ZHIHU:
                 ZhihuItemViewHolder zivh = (ZhihuItemViewHolder) viewHolder;
@@ -191,10 +192,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 CategoryViewHolder cvh1 = (CategoryViewHolder) viewHolder;
                 cvh1.textViewCategory.setText(mContext.getString(R.string.zhihu_daily));
                 break;
+
             case ItemWrapper.TYPE_DOUBAN_CATEGORY:
                 CategoryViewHolder cvh2 = (CategoryViewHolder) viewHolder;
                 cvh2.textViewCategory.setText(mContext.getString(R.string.douban_moment));
                 break;
+
             case ItemWrapper.TYPE_GUOKR_CATEGORY:
                 CategoryViewHolder cvh3 = (CategoryViewHolder) viewHolder;
                 cvh3.textViewCategory.setText(mContext.getString(R.string.guokr_handpick));
@@ -223,6 +226,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void updateData(List<ZhihuDailyNewsQuestion> zhihuDailyNewsList,
                            List<DoubanMomentNewsPosts> doubanMomentNewsList,
                            List<GuokrHandpickNewsResult> guokrHandpickNewsList) {
+
         mZhihuList.clear();
         mDoubanList.clear();
         mGuokrList.clear();
@@ -236,10 +240,11 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 ItemWrapper iw = new ItemWrapper(ItemWrapper.TYPE_ZHIHU);
                 iw.index = i;
                 mWrapperList.add(iw);
+                mZhihuList.add(zhihuDailyNewsList.get(i));
             }
         }
 
-        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_ZHIHU_CATEGORY));
+        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_DOUBAN_CATEGORY));
         if (doubanMomentNewsList.isEmpty()) {
             mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         } else {
@@ -253,10 +258,11 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     iw.index = i;
                     mWrapperList.add(iw);
                 }
+                mDoubanList.add(doubanMomentNewsList.get(i));
             }
         }
 
-        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_ZHIHU_CATEGORY));
+        mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_GUOKR_CATEGORY));
         if (guokrHandpickNewsList.isEmpty()) {
             mWrapperList.add(new ItemWrapper(ItemWrapper.TYPE_EMPTY));
         } else {
@@ -264,6 +270,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 ItemWrapper iw = new ItemWrapper(ItemWrapper.TYPE_GUOKR);
                 iw.index = i;
                 mWrapperList.add(iw);
+                mGuokrList.add(guokrHandpickNewsList.get(i));
             }
         }
 

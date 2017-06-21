@@ -42,7 +42,6 @@ public class GuokrHandpickFragment extends Fragment
     private int mOffset = 0;
 
     private boolean mIsFirstLoad = true;
-    private boolean mIsLoadingMore = false;
     private int mListSize = 0;
 
     public GuokrHandpickFragment() {
@@ -70,7 +69,7 @@ public class GuokrHandpickFragment extends Fragment
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0 && mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1 && !mIsLoadingMore) {
+                if (dy > 0 && mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
                     loadMore();
                 }
             }
@@ -112,6 +111,7 @@ public class GuokrHandpickFragment extends Fragment
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_ID, list.get(i).getId());
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_TYPE, ContentType.TYPE_GUOKR_HANDPICK);
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, list.get(i).getTitle());
+                intent.putExtra(DetailsActivity.KEY_ARTICLE_IS_FAVORITE, list.get(i).isFavorite());
                 startActivity(intent);
 
                 mPresenter.outdate(list.get(i).getId());
@@ -123,11 +123,6 @@ public class GuokrHandpickFragment extends Fragment
         }
 
         mListSize = list.size();
-        mIsLoadingMore = false;
-
-        if (mLayoutManager.findLastCompletelyVisibleItemPosition() == mListSize - 1) {
-            loadMore();
-        }
 
         mEmptyView.setVisibility(list.isEmpty() ? View.VISIBLE : View.INVISIBLE);
 
@@ -157,7 +152,6 @@ public class GuokrHandpickFragment extends Fragment
     }
 
     private void loadMore() {
-        mIsLoadingMore = true;
         mPresenter.load(true, false, mOffset, 20);
     }
 

@@ -30,7 +30,7 @@ public interface DoubanMomentNewsDao {
     @Query("SELECT * FROM douban_moment_news WHERE timestamp < :timestamp")
     List<DoubanMomentNewsPosts> queryAllTimeoutItems(long timestamp);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(List<DoubanMomentNewsPosts> items);
 
     @Update

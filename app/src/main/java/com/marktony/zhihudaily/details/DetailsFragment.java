@@ -14,6 +14,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,7 +61,7 @@ public class DetailsFragment extends Fragment
     private String mTitle;
 
     private boolean mIsNightMode = false;
-    private boolean mFavorite = false;
+    private boolean mIsFavorite = false;
 
     public static int REQUEST_SHARE = 0;
     public static int REQUEST_COPY_LINK = 1;
@@ -77,6 +78,7 @@ public class DetailsFragment extends Fragment
         mType = (ContentType) getActivity().getIntent().getSerializableExtra(DetailsActivity.KEY_ARTICLE_TYPE);
         mTitle = getActivity().getIntent().getStringExtra(DetailsActivity.KEY_ARTICLE_TITLE);
         mIsNightMode = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(InfoConstants.KEY_NIGHT_MODE, false);
+        mIsFavorite = getActivity().getIntent().getBooleanExtra(DetailsActivity.KEY_ARTICLE_IS_FAVORITE, false);
     }
 
     public static DetailsFragment newInstance() {
@@ -134,15 +136,17 @@ public class DetailsFragment extends Fragment
             AppCompatTextView openWithBrowser = view.findViewById(R.id.text_view_open_with_browser);
             AppCompatTextView share = view.findViewById(R.id.text_view_share);
 
-            if (mFavorite) {
+            if (mIsFavorite) {
                 favorite.setText(R.string.unfavorite);
+            } else {
+                favorite.setText(R.string.favorite);
             }
 
             // add to bookmarks or delete from bookmarks
             favorite.setOnClickListener(v -> {
                 dialog.dismiss();
-                mPresenter.favorite(mType, mId, !mFavorite);
-                mFavorite = !mFavorite;
+                mIsFavorite = !mIsFavorite;
+                mPresenter.favorite(mType, mId, mIsFavorite);
             });
 
             // copy the article's link to clipboard
@@ -230,7 +234,6 @@ public class DetailsFragment extends Fragment
 
     @Override
     public void showZhihuDailyContent(@NonNull ZhihuDailyContent content) {
-        mFavorite = content.isFavorite();
 
         if (content.getBody() != null) {
             String result = content.getBody();
@@ -265,7 +268,6 @@ public class DetailsFragment extends Fragment
 
     @Override
     public void showDoubanMomentContent(@NonNull DoubanMomentContent content, @Nullable List<DoubanMomentNewsThumbs> list) {
-        mFavorite = content.isFavorite();
 
         String css;
         String body = content.getContent();
@@ -300,7 +302,6 @@ public class DetailsFragment extends Fragment
 
     @Override
     public void showGuokrHandpickContent(@NonNull GuokrHandpickContentResult content) {
-        mFavorite = content.isFavorite();
 
         setCover(content.getImageInfo().getUrl());
 

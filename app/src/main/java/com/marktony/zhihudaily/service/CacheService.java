@@ -237,15 +237,16 @@ public class CacheService extends Service {
             mDb = creator.getDatabase();
         }
 
-        int dayCount = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-                .getInt(InfoConstants.KEY_TIME_OF_SAVING_ARTICLES, 7);
+        int dayCount = getDayOfSavingArticles(
+                Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(CacheService.this).getString(InfoConstants.KEY_TIME_OF_SAVING_ARTICLES, "2")));
+
 
         new Thread(() -> {
             if (mDb != null) {
                 mDb.beginTransaction();
                 try {
 
-                    long timeInMillis = Calendar.getInstance().getTimeInMillis() - dayCount*24*60*60*1000;
+                    long timeInMillis = Calendar.getInstance().getTimeInMillis() - dayCount * 24 * 60 * 60 * 1000;
 
                     // Clear cache of zhihu daily news
                     List<ZhihuDailyNewsQuestion> zhihuTimeoutItems = mDb.zhihuDailyNewsDao().queryAllTimeoutItems(timeInMillis);
@@ -288,6 +289,21 @@ public class CacheService extends Service {
                 }
             }
         }).start();
+    }
+
+    private int getDayOfSavingArticles(int id) {
+        switch (id) {
+            case 0:
+                return 1;
+            case 1:
+                return 5;
+            case 2:
+                return 15;
+            case 3:
+                return 30;
+            default:
+                return 15;
+        }
     }
 
 }
