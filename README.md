@@ -1,11 +1,5 @@
 # Paper Plane
 
-[![Build Status](https://travis-ci.org/TonnyL/PaperPlane.svg?branch=master)](https://travis-ci.org/TonnyL/PaperPlane)
-
-<div align="center">
-	<img src="./art/ic_launcher.png" width="128">
-</div>
-
 ## Introduction
 Paper Plane is an Android reading app containing articles from [Zhihu Daily](https://daily.zhihu.com/), [Guokr Handpick](http://www.guokr.com/mobile/) and [Douban Moment](https://moment.douban.com/app/). The project is built on [MVP architecture](https://github.com/googlesamples/android-architecture/tree/todo-mvp/) and design with [Material Design](https://material.io/) style.
 

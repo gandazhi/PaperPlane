@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 lizhaotailang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.marktony.zhihudaily.timeline;
 
 import android.content.Context;
@@ -19,6 +35,8 @@ import java.util.List;
 
 /**
  * Created by lizhaotailang on 2017/5/21.
+ *
+ * Adapter between the data of {@link ZhihuDailyNewsQuestion} and {@link RecyclerView}.
  */
 
 public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -38,15 +56,17 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        return new ItemViewHolder(LayoutInflater.from(mContext).inflate(R.layout.home_list_item_layout, viewGroup, false), mListener);
+        return new ItemViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_universal_layout, viewGroup, false), mListener);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         ZhihuDailyNewsQuestion item = mList.get(i);
 
+        ItemViewHolder holder = (ItemViewHolder) viewHolder;
+
         if (item.getImages().get(0) == null) {
-            ((ItemViewHolder) viewHolder).itemImg.setImageResource(R.drawable.placeholder);
+            holder.itemImg.setImageResource(R.drawable.placeholder);
         } else {
             Glide.with(mContext)
                     .load(item.getImages().get(0))
@@ -55,9 +75,9 @@ public class ZhihuDailyNewsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .error(R.drawable.placeholder)
                     .centerCrop()
-                    .into(((ItemViewHolder) viewHolder).itemImg);
+                    .into(holder.itemImg);
         }
-        ((ItemViewHolder) viewHolder).title.setText(item.getTitle());
+        holder.title.setText(item.getTitle());
     }
 
     @Override

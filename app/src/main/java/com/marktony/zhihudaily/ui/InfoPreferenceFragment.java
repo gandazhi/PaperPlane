@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 lizhaotailang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.marktony.zhihudaily.ui;
 
 import android.content.ClipData;
@@ -24,13 +40,16 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * Created by lizhaotailang on 2017/5/21.
+ *
+ * A preference fragment that displays the setting options and
+ * about page.
  */
 
 public class InfoPreferenceFragment extends PreferenceFragmentCompat {
 
     private static final int MSG_GLIDE_CLEAR_CACHE_DONE = 1;
 
-    private  Handler handler = new Handler(message -> {
+    private final Handler handler = new Handler(message -> {
         switch (message.what) {
             case MSG_GLIDE_CLEAR_CACHE_DONE:
                 showMessage(R.string.clear_image_cache_successfully);
@@ -49,7 +68,6 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
         findPreference(InfoConstants.KEY_NIGHT_MODE).setOnPreferenceChangeListener((p, o) -> {
             if ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
                     == Configuration.UI_MODE_NIGHT_YES) {
-
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             } else {
 
@@ -84,13 +102,13 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
 
         // Open the github links
         findPreference("follow_me_on_github").setOnPreferenceClickListener(p -> {
-            CustomTabsHelper.openUrl(getContext(), getString(R.string.github_url));
+            CustomTabsHelper.openUrl(getContext(), getString(R.string.follow_me_on_github_desc));
             return true;
         });
 
         // Open the zhihu links
         findPreference("follow_me_on_zhihu").setOnPreferenceClickListener(p -> {
-            CustomTabsHelper.openUrl(getContext(), getString(R.string.zhihu_url));
+            CustomTabsHelper.openUrl(getContext(), getString(R.string.follow_me_on_zhihu_desc));
             return true;
         });
 
@@ -110,6 +128,11 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
             return true;
         });
 
+        findPreference("source_code").setOnPreferenceClickListener(p -> {
+            CustomTabsHelper.openUrl(getContext(), getString(R.string.source_code_desc));
+            return true;
+        });
+
         findPreference("coffee").setOnPreferenceClickListener(p -> {
             AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
             dialog.setTitle(R.string.donate);
@@ -120,6 +143,7 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
                 ClipboardManager manager = (ClipboardManager) getContext().getSystemService(CLIPBOARD_SERVICE);
                 ClipData clipData = ClipData.newPlainText("text", getString(R.string.donate_account));
                 manager.setPrimaryClip(clipData);
+                showMessage(R.string.copied_to_clipboard);
             });
             dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.negative), (dialogInterface, i) -> {
 

@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 lizhaotailang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.marktony.zhihudaily.timeline;
 
 import android.content.Intent;
@@ -28,6 +44,9 @@ import java.util.TimeZone;
 
 /**
  * Created by lizhaotailang on 2017/5/21.
+ *
+ * Main UI for the douban moment news.
+ * Displays a grid of {@link DoubanMomentNewsPosts}.
  */
 
 public class DoubanMomentFragment extends Fragment
@@ -104,6 +123,7 @@ public class DoubanMomentFragment extends Fragment
         mPresenter.start();
         Calendar c = Calendar.getInstance();
         c.set(mYear, mMonth, mDay);
+        setLoadingIndicator(mIsFirstLoad);
         if (mIsFirstLoad) {
             mPresenter.load(true, false, c.getTimeInMillis());
             mIsFirstLoad = false;
@@ -151,8 +171,6 @@ public class DoubanMomentFragment extends Fragment
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_TITLE, list.get(i).getTitle());
                 intent.putExtra(DetailsActivity.KEY_ARTICLE_IS_FAVORITE, list.get(i).isFavorite());
                 startActivity(intent);
-
-                mPresenter.outdate(list.get(i).getId());
 
             });
             mRecyclerView.setAdapter(mAdapter);

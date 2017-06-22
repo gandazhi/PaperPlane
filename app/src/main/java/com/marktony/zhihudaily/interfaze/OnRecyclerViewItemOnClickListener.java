@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 lizhaotailang
+ * Copyright 2016 lizhaotailang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@ import android.view.View;
 
 /**
  * Created by lizhaotailang on 2016/3/18.
+ *
+ * OnClickListener for {@link android.support.v7.widget.RecyclerView} item.
  */
 public interface OnRecyclerViewItemOnClickListener {
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright 2017 lizhaotailang
+  ~ Copyright 2016 lizhaotailang
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@
                 android:id="@+id/image_view"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
+                android:contentDescription="@string/image_view_cover_desc"
                 android:scrollbarStyle="insideInset"
                 android:src="@drawable/placeholder"
                 android:scrollbarAlwaysDrawVerticalTrack="true" />

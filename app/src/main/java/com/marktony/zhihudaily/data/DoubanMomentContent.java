@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 lizhaotailang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.marktony.zhihudaily.data;
 
 import android.arch.persistence.room.ColumnInfo;
@@ -7,16 +23,19 @@ import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.marktony.zhihudaily.database.converter.DoubanContentTypeConverters;
+import com.marktony.zhihudaily.database.converter.DoubanTypeConverters;
 
 import java.util.List;
 
 /**
  * Created by lizhaotailang on 2017/5/20.
+ *
+ * Immutable model class for douban moment details.
+ * Entity class for {@link com.google.gson.Gson} and {@link android.arch.persistence.room.Room}.
  */
 
 @Entity(tableName = "douban_moment_content")
-@TypeConverters(DoubanContentTypeConverters.class)
+@TypeConverters(DoubanTypeConverters.class)
 public class DoubanMomentContent {
 
     @ColumnInfo(name = "display_style")
@@ -119,10 +138,6 @@ public class DoubanMomentContent {
     @Expose
     @SerializedName("title")
     private String title;
-
-    @ColumnInfo(name = "timestamp")
-    @Expose
-    private long timestamp;
 
     public int getDisplayStyle() {
         return displayStyle;
@@ -284,11 +299,4 @@ public class DoubanMomentContent {
         this.title = title;
     }
 
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
 }

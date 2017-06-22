@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 lizhaotailang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.marktony.zhihudaily.details;
 
 import android.content.ClipData;
@@ -14,7 +30,6 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,6 +58,10 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * Created by lizhaotailang on 2017/5/24.
+ *
+ * Main UI for the details screen.
+ * Display the content of {@link ZhihuDailyContent}, {@link DoubanMomentContent} and {@link GuokrHandpickContentResult}.
+ * Shown by {@link DetailsActivity}. Works with {@link DetailsPresenter}.
  */
 
 public class DetailsFragment extends Fragment
@@ -188,7 +207,7 @@ public class DetailsFragment extends Fragment
         DetailsActivity activity = (DetailsActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+        activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
 
         mImageView = view.findViewById(R.id.image_view);
 
@@ -198,15 +217,10 @@ public class DetailsFragment extends Fragment
         mWebView = view.findViewById(R.id.web_view);
 
         mWebView.setScrollbarFadingEnabled(true);
-        //能够和js交互
         mWebView.getSettings().setJavaScriptEnabled(true);
-        //缩放,设置为不能缩放可以防止页面上出现放大和缩小的图标
         mWebView.getSettings().setBuiltInZoomControls(false);
-        //缓存
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        //开启DOM storage API功能
         mWebView.getSettings().setDomStorageEnabled(true);
-        //开启application Cache功能
         mWebView.getSettings().setAppCacheEnabled(false);
 
         // Show the images or not.
