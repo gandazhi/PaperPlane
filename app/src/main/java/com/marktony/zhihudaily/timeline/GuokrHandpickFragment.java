@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -163,6 +164,7 @@ public class GuokrHandpickFragment extends Fragment
     @Override
     public void initViews(View view) {
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
+        mRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorAccent));
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);

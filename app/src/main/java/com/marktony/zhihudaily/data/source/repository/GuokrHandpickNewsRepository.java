@@ -107,23 +107,9 @@ public class GuokrHandpickNewsRepository implements GuokrHandpickDataSource {
 
     @Override
     public void getFavorites(@NonNull LoadGuokrHandpickNewsCallback callback) {
-        if (mCachedItems != null) {
-            List<GuokrHandpickNewsResult> list = new ArrayList<>();
-            for (GuokrHandpickNewsResult item : mCachedItems.values()) {
-                if (item.isFavorite()) {
-                    list.add(item);
-                }
-            }
-            callback.onNewsLoad(list);
-            return;
-        }
-
         mLocalDataSource.getFavorites(new LoadGuokrHandpickNewsCallback() {
             @Override
             public void onNewsLoad(@NonNull List<GuokrHandpickNewsResult> list) {
-                for (GuokrHandpickNewsResult item : list) {
-                    mCachedItems.get(item.getId()).setFavorite(true);
-                }
                 callback.onNewsLoad(list);
             }
 

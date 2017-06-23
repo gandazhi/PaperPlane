@@ -36,7 +36,7 @@ import retrofit2.http.Query;
 
 public interface RetrofitService {
 
-    String ZHIHU_DAILY_BASE = "http://news.at.zhihu.com/api/4/news/";
+    String ZHIHU_DAILY_BASE = "https://news-at.zhihu.com/api/4/news/";
 
     String DOUBAN_MOMENT_BASE = "https://moment.douban.com/api/";
 

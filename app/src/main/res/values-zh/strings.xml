@@ -56,6 +56,8 @@
     <string name="rate">为应用评分</string>
     <string name="rate_desc">如果你喜欢纸飞机App,请在商店中给它一个好评吧</string>
     <string name="author">作者</string>
+    <string name="contributors">代码贡献者</string>
+    <string name="contributors_desc">https://github.com/TonnyL/PaperPlane/graphs/contributors</string>
     <string name="follow_me_on_github">在GitHub关注我</string>
     <string name="follow_me_on_github_desc">https://github.com/TonnyL</string>
     <string name="follow_me_on_zhihu">在知乎关注我</string>

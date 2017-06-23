@@ -100,6 +100,12 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
             return true;
         });
 
+        // Open the github contributors page
+        findPreference("contributors").setOnPreferenceClickListener( p -> {
+            CustomTabsHelper.openUrl(getContext(), getString(R.string.contributors_desc));
+            return true;
+        });
+
         // Open the github links
         findPreference("follow_me_on_github").setOnPreferenceClickListener(p -> {
             CustomTabsHelper.openUrl(getContext(), getString(R.string.follow_me_on_github_desc));
@@ -112,6 +118,7 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
             return true;
         });
 
+        // Feedback through sending an email
         findPreference("feedback").setOnPreferenceClickListener(p -> {
             try{
                 Uri uri = Uri.parse(getString(R.string.sendto));
@@ -128,11 +135,13 @@ public class InfoPreferenceFragment extends PreferenceFragmentCompat {
             return true;
         });
 
+        // Open the github home page
         findPreference("source_code").setOnPreferenceClickListener(p -> {
             CustomTabsHelper.openUrl(getContext(), getString(R.string.source_code_desc));
             return true;
         });
 
+        // Show the donation dialog
         findPreference("coffee").setOnPreferenceClickListener(p -> {
             AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
             dialog.setTitle(R.string.donate);

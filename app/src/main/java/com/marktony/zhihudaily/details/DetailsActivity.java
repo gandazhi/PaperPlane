@@ -99,13 +99,9 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mType == ContentType.TYPE_ZHIHU_DAILY) {
-            ZhihuDailyContentRepository.destroyInstance();
-        } else if (mType == ContentType.TYPE_DOUBAN_MOMENT) {
-            DoubanMomentContentRepository.destroyInstance();
-        } else {
-            GuokrHandpickContentRepository.destroyInstance();
-        }
+        ZhihuDailyContentRepository.destroyInstance();
+        DoubanMomentContentRepository.destroyInstance();
+        GuokrHandpickContentRepository.destroyInstance();
     }
 
     @Override

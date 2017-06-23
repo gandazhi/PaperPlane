@@ -108,24 +108,10 @@ public class DoubanMomentNewsRepository implements DoubanMomentNewsDataSource {
 
     @Override
     public void getFavorites(@NonNull LoadDoubanMomentDailyCallback callback) {
-        if (mCachedItems != null) {
-            List<DoubanMomentNewsPosts> list = new ArrayList<>();
-            for (DoubanMomentNewsPosts item : mCachedItems.values()) {
-                if (item.isFavorite()) {
-                    list.add(item);
-                }
-            }
-            callback.onNewsLoaded(list);
-            return;
-        }
-
         mLocalDataSource.getFavorites(new LoadDoubanMomentDailyCallback() {
             @Override
             public void onNewsLoaded(@NonNull List<DoubanMomentNewsPosts> list) {
                 callback.onNewsLoaded(list);
-                for (DoubanMomentNewsPosts item : list) {
-                    mCachedItems.get(item.getId()).setFavorite(true);
-                }
             }
 
             @Override

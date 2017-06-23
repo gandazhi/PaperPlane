@@ -64,6 +64,10 @@
 
     <PreferenceCategory android:title="@string/author">
 
+        <Preference android:title="@string/contributors"
+            android:key="contributors"
+            android:summary="@string/contributors_desc" />
+
         <Preference
             android:title="@string/follow_me_on_github"
             android:key="follow_me_on_github"
