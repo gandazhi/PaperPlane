@@ -4,7 +4,7 @@
 	<img src="./art/ic_launcher-web.png" width="128" alt="logo">
 </div>
 
-Paper Plane is an Android reading app containing articles from [Zhihu Daily](https://daily.zhihu.com/), [Guokr Handpick](http://www.guokr.com/mobile/) and [Douban Moment](https://moment.douban.com/app/). The project is built on [MVP architecture](https://github.com/googlesamples/android-architecture/tree/todo-mvp/) and design with [Material Design](https://material.io/) style.
+Paper Plane is an Android reading app containing articles from [Zhihu Daily](https://daily.zhihu.com/), [Guokr Handpick](http://www.guokr.com/mobile/) and [Douban Moment](https://moment.douban.com/app/). The project is built on [MVP architecture](https://github.com/googlesamples/android-architecture/tree/todo-mvp/) and designed with [Material Design](https://material.io/) style.
 
 ## Screenshots
 | Timeline    | Favorites    | Info | Details |
