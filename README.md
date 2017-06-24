@@ -1,5 +1,9 @@
 # Paper Plane
 
+<div align="center">
+	<img src="./art/ic_launcher-web.png" width="128" alt="logo">
+</div>
+
 Paper Plane is an Android reading app containing articles from [Zhihu Daily](https://daily.zhihu.com/), [Guokr Handpick](http://www.guokr.com/mobile/) and [Douban Moment](https://moment.douban.com/app/). The project is built on [MVP architecture](https://github.com/googlesamples/android-architecture/tree/todo-mvp/) and design with [Material Design](https://material.io/) style.
 
 ## Screenshots
@@ -39,6 +43,11 @@ Finally open the `PaperPlane/` directory in Android Studio.
 
 ## Contributions
 `Paper Plane` is a fully open sourced project. If you find a bug or want new features, do not hesitate to open an issue or create a pull request. Read the [CONTRIBUTION_GUIDELINES](CONTRIBUTION_GUIDELINES.md) for more detailed information.
+
+There is an entry in the app for the [GitHub Contributors page](https://github.com/TonnyL/PaperPlane/graphs/contributors).
+
+## Thanks to
+[wbinarytree](https://github.com/wbinarytree)
 
 ## License
 
