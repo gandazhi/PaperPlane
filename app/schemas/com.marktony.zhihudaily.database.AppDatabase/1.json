@@ -1,0 +1,987 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "1a712d30f2012123e0b70393d025b5a1",
+    "entities": [
+      {
+        "tableName": "zhihu_daily_news",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`images` TEXT, `type` INTEGER, `id` INTEGER, `ga_prefix` TEXT, `title` TEXT, `favorite` INTEGER, `timestamp` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "images",
+            "columnName": "images",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "gaPrefix",
+            "columnName": "ga_prefix",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "favorite",
+            "columnName": "favorite",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "douban_moment_news",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`display_style` INTEGER, `is_editor_choice` INTEGER, `published_time` TEXT, `url` TEXT, `short_url` TEXT, `is_liked` INTEGER, `column` TEXT, `app_css` INTEGER, `abstract` TEXT, `date` TEXT, `like_count` INTEGER, `comments_count` INTEGER, `thumbs` TEXT, `created_time` TEXT, `title` TEXT, `share_pic_url` TEXT, `type` TEXT, `id` INTEGER, `favorite` INTEGER, `timestamp` INTEGER, `is_followed` INTEGER, `uid` TEXT, `author_url` TEXT, `author_avatar` TEXT, `author_name` TEXT, `author_is_special_user` INTEGER, `author_n_posts` INTEGER, `author_alt` TEXT, `author_large_avatar` TEXT, `author_id` TEXT, `author_is_auth_author` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "displayStyle",
+            "columnName": "display_style",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "isEditorChoice",
+            "columnName": "is_editor_choice",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "publishedTime",
+            "columnName": "published_time",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "shortUrl",
+            "columnName": "short_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isLiked",
+            "columnName": "is_liked",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "column",
+            "columnName": "column",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "appCss",
+            "columnName": "app_css",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "abs",
+            "columnName": "abstract",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "likeCount",
+            "columnName": "like_count",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "commentsCount",
+            "columnName": "comments_count",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "thumbs",
+            "columnName": "thumbs",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "createdTime",
+            "columnName": "created_time",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "sharePicUrl",
+            "columnName": "share_pic_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "favorite",
+            "columnName": "favorite",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "author.isFollowed",
+            "columnName": "is_followed",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "author.uid",
+            "columnName": "uid",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.url",
+            "columnName": "author_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.avatar",
+            "columnName": "author_avatar",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.name",
+            "columnName": "author_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.isSpecialUser",
+            "columnName": "author_is_special_user",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "author.nPosts",
+            "columnName": "author_n_posts",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "author.alt",
+            "columnName": "author_alt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.largeAvatar",
+            "columnName": "author_large_avatar",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.id",
+            "columnName": "author_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.isAuthAuthor",
+            "columnName": "author_is_auth_author",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "guokr_handpick_news",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`image` TEXT, `is_replyable` INTEGER, `channels` TEXT, `channel_keys` TEXT, `preface` TEXT, `id` INTEGER, `copyright` TEXT, `image_description` TEXT, `is_show_summary` INTEGER, `minisite_key` TEXT, `subject_key` TEXT, `tags` TEXT, `date_published` TEXT, `avatar` TEXT, `replies_count` INTEGER, `is_author_external` INTEGER, `recommends_count` INTEGER, `title_hide` TEXT, `date_modified` TEXT, `url` TEXT, `title` TEXT, `small_image` TEXT, `summary` TEXT, `ukey_author` TEXT, `date_created` TEXT, `resource_url` TEXT, `favorite` INTEGER, `timestamp` INTEGER, `channel_url` TEXT, `channel_date_created` TEXT, `channel_name` TEXT, `channel_key` TEXT, `channel_articles_count` INTEGER, `author_ukey` TEXT, `author_is_title_authorized` TEXT, `author_nickname` TEXT, `author_master_category` TEXT, `author_amended_reliability` TEXT, `author_is_exists` INTEGER, `author_title` TEXT, `author_url` TEXT, `author_gender` TEXT, `author_followers_count` INTEGER, `author_resource_url` TEXT, `avatar_large` TEXT, `avatar_small` TEXT, `avatar_normal` TEXT, `image_info_url` TEXT, `image_info_width` INTEGER, `image_info_height` INTEGER, `minisite_name` TEXT, `minisite_url` TEXT, `minisite_introduction` TEXT, `minisite__key` TEXT, `minisite_date_created` TEXT, `minisite_icon` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "image",
+            "columnName": "image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isReplyable",
+            "columnName": "is_replyable",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "channels",
+            "columnName": "channels",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "channelKeys",
+            "columnName": "channel_keys",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "preface",
+            "columnName": "preface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "copyright",
+            "columnName": "copyright",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "imageDescription",
+            "columnName": "image_description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isShowSummary",
+            "columnName": "is_show_summary",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "minisiteKey",
+            "columnName": "minisite_key",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subjectKey",
+            "columnName": "subject_key",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "tags",
+            "columnName": "tags",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "datePublished",
+            "columnName": "date_published",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "authors",
+            "columnName": "avatar",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "repliesCount",
+            "columnName": "replies_count",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "isAuthorExternal",
+            "columnName": "is_author_external",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "recommendsCount",
+            "columnName": "recommends_count",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "titleHide",
+            "columnName": "title_hide",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "dateModified",
+            "columnName": "date_modified",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "smallImage",
+            "columnName": "small_image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "summary",
+            "columnName": "summary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ukeyAuthor",
+            "columnName": "ukey_author",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "dateCreated",
+            "columnName": "date_created",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "resourceUrl",
+            "columnName": "resource_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "favorite",
+            "columnName": "favorite",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "subject.url",
+            "columnName": "channel_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subject.dateCreated",
+            "columnName": "channel_date_created",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subject.name",
+            "columnName": "channel_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subject.key",
+            "columnName": "channel_key",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subject.articlesCount",
+            "columnName": "channel_articles_count",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "author.ukey",
+            "columnName": "author_ukey",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.isTitleAuthorized",
+            "columnName": "author_is_title_authorized",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.nickname",
+            "columnName": "author_nickname",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.masterCategory",
+            "columnName": "author_master_category",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.amendedReliability",
+            "columnName": "author_amended_reliability",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.isExists",
+            "columnName": "author_is_exists",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "author.title",
+            "columnName": "author_title",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.url",
+            "columnName": "author_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.gender",
+            "columnName": "author_gender",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.followersCount",
+            "columnName": "author_followers_count",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "author.resourceUrl",
+            "columnName": "author_resource_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.avatar.large",
+            "columnName": "avatar_large",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.avatar.small",
+            "columnName": "avatar_small",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.avatar.normal",
+            "columnName": "avatar_normal",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "imageInfo.url",
+            "columnName": "image_info_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "imageInfo.width",
+            "columnName": "image_info_width",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "imageInfo.height",
+            "columnName": "image_info_height",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "minisite.name",
+            "columnName": "minisite_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "minisite.url",
+            "columnName": "minisite_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "minisite.introduction",
+            "columnName": "minisite_introduction",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "minisite.key",
+            "columnName": "minisite__key",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "minisite.dateCreated",
+            "columnName": "minisite_date_created",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "minisite.icon",
+            "columnName": "minisite_icon",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "zhihu_daily_content",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`body` TEXT, `image_source` TEXT, `title` TEXT, `image` TEXT, `share_url` TEXT, `js` TEXT, `images` TEXT, `type` INTEGER, `id` INTEGER, `css` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "body",
+            "columnName": "body",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "imageSource",
+            "columnName": "image_source",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "image",
+            "columnName": "image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "shareUrl",
+            "columnName": "share_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "js",
+            "columnName": "js",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "images",
+            "columnName": "images",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "css",
+            "columnName": "css",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "douban_moment_content",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`display_style` INTEGER, `short_url` TEXT, `abstract` TEXT, `app_css` INTEGER, `like_count` INTEGER, `thumbs` TEXT, `created_time` TEXT, `id` INTEGER, `is_editor_choice` INTEGER, `original_url` TEXT, `content` TEXT, `share_pic_url` TEXT, `type` TEXT, `is_liked` INTEGER, `photos` TEXT, `published_time` TEXT, `url` TEXT, `column` TEXT, `comments_count` INTEGER, `title` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "displayStyle",
+            "columnName": "display_style",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "shortUrl",
+            "columnName": "short_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "abs",
+            "columnName": "abstract",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "appCss",
+            "columnName": "app_css",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "likeCount",
+            "columnName": "like_count",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "thumbs",
+            "columnName": "thumbs",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "createdTime",
+            "columnName": "created_time",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "isEditorChoice",
+            "columnName": "is_editor_choice",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "originalUrl",
+            "columnName": "original_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "sharePicUrl",
+            "columnName": "share_pic_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isLiked",
+            "columnName": "is_liked",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "photos",
+            "columnName": "photos",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "publishedTime",
+            "columnName": "published_time",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "column",
+            "columnName": "column",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "commentsCount",
+            "columnName": "comments_count",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "guokr_handpick_content",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`image` TEXT, `is_replyable` INTEGER, `channels` TEXT, `channel_keys` TEXT, `preface` TEXT, `copyright` TEXT, `image_description` TEXT, `content` TEXT, `is_show_summary` INTEGER, `minisite_key` TEXT, `subject_key` TEXT, `tags` TEXT, `date_published` TEXT, `replies_count` INTEGER, `is_author_external` INTEGER, `recommends_count` INTEGER, `title_hide` TEXT, `date_modified` TEXT, `url` TEXT, `title` TEXT, `id` INTEGER, `small_image` TEXT, `summary` TEXT, `ukey_author` TEXT, `date_created` TEXT, `resource_url` TEXT, `channel_url` TEXT, `channel_date_created` TEXT, `channel_name` TEXT, `channel_key` TEXT, `channel_articles_count` INTEGER, `author_ukey` TEXT, `author_is_title_authorized` TEXT, `author_nickname` TEXT, `author_master_category` TEXT, `author_amended_reliability` TEXT, `author_is_exists` INTEGER, `author_title` TEXT, `author_url` TEXT, `author_gender` TEXT, `author_followers_count` INTEGER, `author_resource_url` TEXT, `avatar_large` TEXT, `avatar_small` TEXT, `avatar_normal` TEXT, `image_info_url` TEXT, `image_info_width` INTEGER, `image_info_height` INTEGER, `minisite_name` TEXT, `minisite_url` TEXT, `minisite_introduction` TEXT, `minisite__key` TEXT, `minisite_date_created` TEXT, `minisite_icon` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "image",
+            "columnName": "image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isReplyable",
+            "columnName": "is_replyable",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "channels",
+            "columnName": "channels",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "channelKeys",
+            "columnName": "channel_keys",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "preface",
+            "columnName": "preface",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "copyright",
+            "columnName": "copyright",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "imageDescription",
+            "columnName": "image_description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isShowSummary",
+            "columnName": "is_show_summary",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "minisiteKey",
+            "columnName": "minisite_key",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subjectKey",
+            "columnName": "subject_key",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "tags",
+            "columnName": "tags",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "datePublished",
+            "columnName": "date_published",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "repliesCount",
+            "columnName": "replies_count",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "isAuthorExternal",
+            "columnName": "is_author_external",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "recommendsCount",
+            "columnName": "recommends_count",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "titleHide",
+            "columnName": "title_hide",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "dateModified",
+            "columnName": "date_modified",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "smallImage",
+            "columnName": "small_image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "summary",
+            "columnName": "summary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ukeyAuthor",
+            "columnName": "ukey_author",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "dateCreated",
+            "columnName": "date_created",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "resourceUrl",
+            "columnName": "resource_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subject.url",
+            "columnName": "channel_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subject.dateCreated",
+            "columnName": "channel_date_created",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subject.name",
+            "columnName": "channel_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subject.key",
+            "columnName": "channel_key",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "subject.articlesCount",
+            "columnName": "channel_articles_count",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "author.ukey",
+            "columnName": "author_ukey",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.isTitleAuthorized",
+            "columnName": "author_is_title_authorized",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.nickname",
+            "columnName": "author_nickname",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.masterCategory",
+            "columnName": "author_master_category",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.amendedReliability",
+            "columnName": "author_amended_reliability",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.isExists",
+            "columnName": "author_is_exists",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "author.title",
+            "columnName": "author_title",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.url",
+            "columnName": "author_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.gender",
+            "columnName": "author_gender",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.followersCount",
+            "columnName": "author_followers_count",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "author.resourceUrl",
+            "columnName": "author_resource_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.avatar.large",
+            "columnName": "avatar_large",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.avatar.small",
+            "columnName": "avatar_small",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author.avatar.normal",
+            "columnName": "avatar_normal",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "imageInfo.url",
+            "columnName": "image_info_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "imageInfo.width",
+            "columnName": "image_info_width",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "imageInfo.height",
+            "columnName": "image_info_height",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "minisite.name",
+            "columnName": "minisite_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "minisite.url",
+            "columnName": "minisite_url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "minisite.introduction",
+            "columnName": "minisite_introduction",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "minisite.key",
+            "columnName": "minisite__key",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "minisite.dateCreated",
+            "columnName": "minisite_date_created",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "minisite.icon",
+            "columnName": "minisite_icon",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1a712d30f2012123e0b70393d025b5a1\")"
+    ]
+  }
+}
